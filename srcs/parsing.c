@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/15 17:05:59 by psaulnie         ###   ########.fr       */
+/*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
+/*   Updated: 2022/03/15 17:07:50 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../inc/minishell.h"
 
-# include "../libft/libft.h"
+t_list	*parsing(char *cmd, char *envp[])
+{
+	t_list	*list;
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-/*	PARSING.C	*/
-
-t_list	*parsing(char *cmd, char *envp[]);
-
-#endif
+	printf("cmd\n");
+}

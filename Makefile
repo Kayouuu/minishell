@@ -6,11 +6,11 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:05:43 by psaulnie          #+#    #+#              #
-#    Updated: 2022/03/15 16:06:39 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/03/15 17:04:14 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/main.c
+SRCS = srcs/main.c srcs/parsing.c
 OBJS = ${SRCS:.c=.o}
 CFLAGS = -Wall -Wextra -Werror
 CC = gcc
@@ -24,7 +24,7 @@ NAME = minishell
 all: ${NAME}
 
 ${NAME}: ${OBJS} inc/minishell.h Makefile
-		${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+		${CC} ${CFLAGS} ${OBJS} -o ${NAME} -lreadline
 
 clean:
 		rm -f ${OBJS}

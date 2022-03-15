@@ -6,13 +6,15 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:05:43 by psaulnie          #+#    #+#              #
-#    Updated: 2022/03/15 17:04:14 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/03/15 19:14:13 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = srcs/main.c srcs/parsing.c
 OBJS = ${SRCS:.c=.o}
-CFLAGS = -Wall -Wextra -Werror
+LIBFT = libft
+LIBFT_LIB = libft/libft.a
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 CC = gcc
 NAME = minishell
 
@@ -21,15 +23,20 @@ NAME = minishell
 %.o:	%.c inc/minishell.h Makefile
 		${CC} ${CFLAGS} -c $< -o $@
 
-all: ${NAME}
+all: lib ${NAME}
 
 ${NAME}: ${OBJS} inc/minishell.h Makefile
-		${CC} ${CFLAGS} ${OBJS} -o ${NAME} -lreadline
+		${CC} ${CFLAGS} ${OBJS} ${LIBFT_LIB} -o ${NAME} -lreadline
+
+lib:
+	make all -C ${LIBFT}
 
 clean:
 		rm -f ${OBJS}
+		make -C libft clean
 
 fclean: clean
 		rm -f ${NAME}
+		make -C libft fclean
 
 re: fclean all

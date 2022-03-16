@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/16 16:19:36 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:04:39 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 	- [echo "'hi'"] [>] [d] [|] [xargs]
 */
 
-static void	free_and_exit(char *cmd, t_list *list)
+static int	skip_whitespace(char *cmd, int i)
 {
-	free(cmd);
-	ft_lstclear(&list, free);
-	ft_putstr_fd("Malloc error\n", 2);
-	exit(0);
+	while (cmd[i] == ' ' || cmd[i] == '\t'
+		|| cmd[i] == '\n' || cmd[i] == '\v'
+		|| cmd[i] == '\f' || cmd[i] == '\r')
+		i++;
+	return (i);
 }
 
 static int	is_useless(char *command)
@@ -46,60 +47,69 @@ static int	is_useless(char *command)
 	return (is_useless);
 }
 
+static t_index	add_to_list(char *cmd, t_index index, t_list **list)
+{
+	char	*command;
+
+	command = ft_stridup(cmd, index.i, index.j);
+	if (!command)
+	{
+		free(cmd);
+		ft_lstclear(list, free);
+		ft_putstr_fd("Malloc error\n", 2);
+		exit(0);
+	}
+	index.i += ft_strlen(command);
+	if (!is_useless(command))
+	{
+		if (!ft_lstadd_back(list, ft_lstnew(command)))
+		{
+			free(cmd);
+			ft_lstclear(list, free);
+			ft_putstr_fd("Malloc error\n", 2);
+			exit(0);
+		}
+		printf("Result = %s\n", command);
+	}
+	return (index);
+}
+
+static t_index	parsing_special_char(char *cmd, t_index index, t_list **list)
+{
+	if (index.i != 0)
+		index.i--;
+	index.i = skip_whitespace(cmd, index.i);
+	if (index.j - index.i != 0)
+		index = add_to_list(cmd, index, list);
+	while (cmd[index.j] && cmd[index.j] != '|' && cmd[index.j] != '\''
+		&& cmd[index.j] != '"' && cmd[index.j] != '>' && cmd[index.j] != ';')
+		index.j++;
+	return (index);
+}
+
 t_list	*parsing(char *cmd)
 {
 	t_list	*list;
-	char	*command;
-	int		state;
-	int		i;
-	int		j;
+	t_index	index;
 
-	i = 0;
-	while (cmd[i])
+	index.i = 0;
+	while (cmd[index.i])
 	{
-		j = i;
-		state = 0;
-		while (cmd[j])
+		index.j = index.i;
+		while (cmd[index.j])
 		{
-			if (cmd[j] == '|' || cmd[j] == '>'
-				|| cmd[j] == '<' || cmd[j] == ';')
+			if (cmd[index.j] == '|' || cmd[index.j] == '>'
+				|| cmd[index.j] == '<' || cmd[index.j] == ';')
 			{
-				if (i != 0)
-					i--;
-				while (cmd[i] == ' ' || cmd[i] == '\t' || cmd[i] == '\n'
-					|| cmd[i] == '\v' || cmd[i] == '\f' || cmd[i] == '\r')
-					i++;
-				state = 1;
-				if (j - i != 0)
-				{
-					command = ft_stridup(cmd, i, j);
-					if (!command)
-						free_and_exit(cmd, list);
-					i += ft_strlen(command);
-					if (!is_useless(command))
-						if (!ft_lstadd_back(&list, ft_lstnew(command)))
-							free_and_exit(cmd, list);
-				}
-				while (cmd[j] && cmd[j] != '|' && cmd[j] != '\''
-					&& cmd[j] != '"' && cmd[j] != '>' && cmd[j] != ';')
-					j++;
+				index = parsing_special_char(cmd, index, &list);
 				break ;
 			}
-			j++;
+			index.j++;
 		}
-		while (cmd[i] == ' ' || cmd[i] == '\t' || cmd[i] == '\n'
-			|| cmd[i] == '\v' || cmd[i] == '\f' || cmd[i] == '\r')
-			i++;
-		command = ft_stridup(cmd, i, j);
-		if (!command)
-			free_and_exit(cmd, list);
-		i += ft_strlen(command);
-		if (!is_useless(command))
-			if (!ft_lstadd_back(&list, ft_lstnew(command)))
-				free_and_exit(cmd, list);
-		if (cmd[i + 1])
-			i++;
+		index.i = skip_whitespace(cmd, index.i);
+		index = add_to_list(cmd, index, &list);
+		if (cmd[index.i + 1])
+			index.i++;
 	}
-	printf("%s\n", list->content);
 	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/16 15:46:49 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:49:49 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+typedef struct s_index
+{
+	int	i;
+	int	j;
+}	t_index;
 
 /*	PARSING.C	*/
 

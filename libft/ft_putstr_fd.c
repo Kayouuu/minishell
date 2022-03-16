@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 15:13:38 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/10 08:53:50 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/16 13:27:32 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "libft.h"
 #include <unistd.h>
-
+#include <stdio.h>
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	counter;

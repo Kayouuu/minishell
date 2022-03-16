@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/15 17:05:59 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/16 15:46:49 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 
 /*	PARSING.C	*/
 
-t_list	*parsing(char *cmd, char *envp[]);
+t_list	*parsing(char *cmd);
+
+/*	STR_UTILS.C	*/
+
+char	*ft_stridup(char *str, int start, int end);
 
 #endif

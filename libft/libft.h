@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:13:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/15 17:06:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:18:48 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-void			ft_lstadd_front(t_list **alst, t_list *new);
-void			ft_lstadd_back(t_list **alst, t_list *new);
+void			*ft_lstadd_front(t_list **alst, t_list *new);
+void			*ft_lstadd_back(t_list **alst, t_list *new);
 void			ft_lstdelone(t_list *lst, void (*del)(void *));
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));

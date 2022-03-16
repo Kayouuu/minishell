@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/16 13:56:19 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:08:36 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	free_and_exit(char *cmd, t_list *list)
 {
 	free(cmd);
 	ft_lstclear(&list, free);
+	ft_putstr_fd("Malloc error\n", 2);
 	exit(0);
 }
 
@@ -44,7 +45,7 @@ char	*ft_stridup(char *str, int start, int end)
 	return (returned_str);
 }
 
-int		is_useless(char *command)
+int	is_useless(char *command)
 {
 	int	i;
 	int	is_useless;

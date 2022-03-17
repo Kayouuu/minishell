@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 15:10:34 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/04 15:22:26 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/04 17:18:08 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/13 14:54:15 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Write the character c in the file fd 									  */
-
 #include "libft.h"
-#include <unistd.h>
 
 void	ft_putchar_fd(char c, int fd)
 {

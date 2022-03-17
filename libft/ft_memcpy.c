@@ -3,32 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 11:48:27 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/07 10:39:39 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/04 10:05:48 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/08 10:27:49 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Copy the content of a memory to another and return it */
-
 #include "libft.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t size)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	unsigned char	*d;
-	unsigned char	*s;
-	size_t			counter;
+	unsigned char	*ndest;
+	unsigned char	*nsrc;
+	unsigned int	i;
 
-	d = dest;
-	s = (unsigned char *) src;
-	counter = 0;
-	if (d == ((void *)0) && s == ((void *)0))
-		return (0);
-	while (counter < size)
+	ndest = dest;
+	nsrc = (unsigned char *)src;
+	i = 0;
+	if (dest == 0 && src == 0)
+		return (dest);
+	while (n > i)
 	{
-		d[counter] = s[counter];
-		counter++;
+		ndest[i] = nsrc[i];
+		i++;
 	}
 	return (dest);
 }

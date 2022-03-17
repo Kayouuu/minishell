@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   lstclear_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 15:43:49 by lbattest          #+#    #+#             */
-/*   Updated: 2021/11/15 15:45:19 by lbattest         ###   ########.fr       */
+/*   Created: 2022/03/16 15:52:49 by lbattest          #+#    #+#             */
+/*   Updated: 2022/03/17 09:43:14 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strrchr(const char *s, int c)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (s[i])
-		i++;
-	while (i >= 0)
+void	lstclear_char(t_list_char **lst, void (*del)(void *))
+{
+	t_list_char	*tmp;
+
+	while (*lst != 0)
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i--;
+		tmp = (*lst)->next;
+		lstdelone_char(*lst, del);
+		(*lst) = tmp;
 	}
-	return (0);
 }

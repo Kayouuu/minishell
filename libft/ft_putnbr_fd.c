@@ -3,31 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 15:31:36 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/14 09:35:56 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/04 17:29:13 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/07 10:48:39 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Write the integer n in the file fd										  */
-
 #include "libft.h"
-#include <unistd.h>
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	char	c;
-	long	nb;
-
-	nb = n;
+	if (n == -2147483648)
+	{
+		write(fd, "-2147483648", 11);
+		return ;
+	}
 	if (n < 0)
 	{
-		write(fd, "-", 1);
-		nb *= -1;
+		ft_putchar_fd('-', fd);
+		n = -n;
 	}
-	if (nb > 9)
-		ft_putnbr_fd(nb / 10, fd);
-	c = nb % 10 + '0';
-	write(fd, &c, 1);
+	if (n > 9)
+		ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
 }

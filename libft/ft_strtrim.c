@@ -3,101 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 14:54:45 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/10 08:52:38 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/09 11:52:32 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/15 16:07:03 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Remove characters from the start and the end of the string and			  */
-/* return a new one 											     		  */
-
 #include "libft.h"
 
-static char	*str_dup(const char *src, int counter_src, int end)
+static bool	is_sep(char c, char const *sep)
 {
-	char	*dest;
-	int		length;
-	int		counter_dest;
+	int	i;
 
-	counter_dest = 0;
-	length = end - counter_src;
-	if (length < 0)
-		length = 0;
-	dest = malloc(sizeof(char) * (length + 1));
-	if (!dest)
-		return (0);
-	while (counter_dest < length)
+	i = 0;
+	while (sep[i])
 	{
-		dest[counter_dest] = src[counter_src];
-		counter_dest++;
-		counter_src++;
+		if (sep[i] == c)
+			return (1);
+		i++;
 	}
-	dest[counter_dest] = '\0';
-	return (dest);
-}
-
-static int	first_trim(char const *s1, char const *set)
-{
-	int		counter_str;
-	int		counter_set;
-	int		is_from_set;
-
-	counter_str = 0;
-	counter_set = 0;
-	is_from_set = 0;
-	while (s1[counter_str])
-	{
-		while (set[counter_set])
-		{
-			if (set[counter_set] == s1[counter_str])
-				is_from_set = 1;
-			counter_set++;
-		}
-		if (!is_from_set)
-			break ;
-		is_from_set = 0;
-		counter_set = 0;
-		counter_str++;
-	}
-	return (counter_str);
-}
-
-static int	second_trim(char const *s1, char const *set)
-{
-	int		counter_set;
-	int		is_from_set;
-	int		length;
-
-	counter_set = 0;
-	length = ft_strlen(s1);
-	is_from_set = 1;
-	while (is_from_set)
-	{
-		is_from_set = 0;
-		counter_set = 0;
-		while (set[counter_set] && length >= 1)
-		{
-			if (set[counter_set] == s1[length - 1])
-				is_from_set = 1;
-			counter_set++;
-		}
-		length--;
-	}
-	return (length);
+	return (0);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	int		counter_str;
-	int		length;
-	char	*new_str;
+	size_t	i;
+	int		j;
+	char	*str;
+	int		len;
 
-	if (s1 == 0 || set == 0)
+	if (!s1)
 		return (0);
-	counter_str = first_trim(s1, set);
-	length = second_trim(s1, set);
-	new_str = str_dup(s1, counter_str, length + 1);
-	return (new_str);
+	if (!set)
+		return ((char *)s1);
+	i = 0;
+	j = ft_strlen(s1) - 1;
+	while (is_sep(s1[i], set) == 1)
+		i++;
+	while (is_sep(s1[j], set) == 1 && j != 0)
+		j--;
+	len = j - i;
+	str = ft_substr(s1, i, len + 1);
+	if (!str)
+		return (0);
+	return (str);
 }

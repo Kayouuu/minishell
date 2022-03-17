@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/16 17:04:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:45:10 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	is_useless(char *command)
 	return (is_useless);
 }
 
-static t_index	add_to_list(char *cmd, t_index index, t_list **list)
+static t_index	add_to_list(char *cmd, t_index index, t_list_char **list)
 {
 	char	*command;
 
@@ -55,17 +55,17 @@ static t_index	add_to_list(char *cmd, t_index index, t_list **list)
 	if (!command)
 	{
 		free(cmd);
-		ft_lstclear(list, free);
+		lstclear_char(list, free);
 		ft_putstr_fd("Malloc error\n", 2);
 		exit(0);
 	}
 	index.i += ft_strlen(command);
 	if (!is_useless(command))
 	{
-		if (!ft_lstadd_back(list, ft_lstnew(command)))
+		if (!lstadd_back_char(list, lstnew_char(command)))
 		{
 			free(cmd);
-			ft_lstclear(list, free);
+			lstclear_char(list, free);
 			ft_putstr_fd("Malloc error\n", 2);
 			exit(0);
 		}
@@ -74,7 +74,8 @@ static t_index	add_to_list(char *cmd, t_index index, t_list **list)
 	return (index);
 }
 
-static t_index	parsing_special_char(char *cmd, t_index index, t_list **list)
+static t_index	parsing_special_char(char *cmd, t_index index,
+	t_list_char **list)
 {
 	if (index.i != 0)
 		index.i--;
@@ -87,10 +88,10 @@ static t_index	parsing_special_char(char *cmd, t_index index, t_list **list)
 	return (index);
 }
 
-t_list	*parsing(char *cmd)
+t_list_char	*parsing(char *cmd)
 {
-	t_list	*list;
-	t_index	index;
+	t_list_char	*list;
+	t_index		index;
 
 	index.i = 0;
 	while (cmd[index.i])

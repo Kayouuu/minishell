@@ -3,25 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 13:25:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/11 10:18:17 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/05 12:52:55 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/09 10:01:40 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Allocate and clean a memory block with the value 0 and return his pointer */
-
-#include <stdlib.h>
 #include "libft.h"
 
-void	*ft_calloc(size_t elementCount, size_t elementSize)
+void	*ft_calloc(size_t count, size_t size)
 {
-	int		*allocated_memory;
+	unsigned char	*str;
 
-	allocated_memory = malloc(elementSize * elementCount);
-	if (!allocated_memory)
+	str = malloc(size * count);
+	if (!str)
 		return (0);
-	ft_bzero(allocated_memory, elementCount * elementSize);
-	return (allocated_memory);
+	ft_bzero(str, count * size);
+	return ((void *)str);
 }

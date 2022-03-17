@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/16 16:49:49 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:39:52 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ typedef struct s_index
 
 /*	PARSING.C	*/
 
-t_list	*parsing(char *cmd);
+t_list_char	*parsing(char *cmd);
 
 /*	STR_UTILS.C	*/
 
-char	*ft_stridup(char *str, int start, int end);
+char		*ft_stridup(char *str, int start, int end);
 
 #endif

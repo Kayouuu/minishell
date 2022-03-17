@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   lstadd_back_char.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 15:43:49 by lbattest          #+#    #+#             */
-/*   Updated: 2021/11/15 15:45:19 by lbattest         ###   ########.fr       */
+/*   Created: 2022/03/16 15:46:14 by lbattest          #+#    #+#             */
+/*   Updated: 2022/03/17 09:42:57 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strrchr(const char *s, int c)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (s[i])
-		i++;
-	while (i >= 0)
+void	*lstadd_back_char(t_list_char **alst, t_list_char *new)
+{
+	t_list_char	*temp;
+
+	if (!new)
+		return (NULL);
+	if (*alst == 0)
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i--;
+		*alst = new;
+		return ((void *) 1);
 	}
-	return (0);
+	temp = lstlast_char(*alst);
+	temp->next = new;
+	return ((void *)1);
 }

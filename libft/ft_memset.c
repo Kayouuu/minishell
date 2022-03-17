@@ -3,28 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 16:43:27 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/04 14:11:51 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/02 14:44:20 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/07 10:47:17 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Fill te memory of a given adress with a specific value */
-
 #include "libft.h"
 
-void	*ft_memset(void *pointer, int value, size_t size)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	size_t			counter;
-	unsigned char	*dest;
+	unsigned int	i;
+	unsigned char	*a;
 
-	counter = 0;
-	dest = pointer;
-	while (counter < size)
+	i = 0;
+	a = b;
+	while (len > i)
 	{
-		dest[counter] = value;
-		counter++;
+		a[i] = c;
+		i++;
 	}
-	return (pointer);
+	return (b);
 }

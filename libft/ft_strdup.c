@@ -3,34 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 12:35:34 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/07 11:49:24 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/05 12:38:50 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/07 14:35:22 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Duplicate a string using malloc and return it */
-
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup(char	*s1)
 {
-	char	*dest;
-	int		counter;
-	int		length;
+	int		i;
+	char	*array_ptr;
 
-	length = ft_strlen(src);
-	dest = malloc(sizeof(char) * length + 1);
-	counter = 0;
-	if (!dest)
-		return (0);
-	while (counter < length)
+	array_ptr = malloc((ft_strlen(s1) + 1) * sizeof(char));
+	if (!array_ptr)
+		return (NULL);
+	i = 0;
+	while (s1[i])
 	{
-		dest[counter] = src[counter];
-		counter++;
+		array_ptr[i] = s1[i];
+		i++;
 	}
-	dest[counter] = '\0';
-	return (dest);
+	array_ptr[i] = '\0';
+	return (array_ptr);
 }

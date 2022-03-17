@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 12:59:54 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/03 10:38:04 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/02 14:08:19 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/07 14:27:05 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Return 1 if the character is from the ASCII table */
-
-#include "libft.h"
-
-int	ft_isascii(int character)
+int	ft_isascii(int c)
 {
-	if (character < 0 || character > 127)
-		return (0);
-	return (1);
+	return (c >= 0 && c <= 127);
 }

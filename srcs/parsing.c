@@ -6,14 +6,14 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/17 11:52:17 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/17 11:57:09 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /*
-	Parsing function : parse the command sent
+	Parsing function : parse the command sent, it's the first part of the parsing
 	If there's is no special characters (|, >, <, ;), it will just create one
 	link. Else, the linked list will have many more links. Example :
 	-minishell > echo "'hi'" > d | xargs;

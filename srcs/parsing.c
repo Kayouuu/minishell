@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/18 14:11:08 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:27:03 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,6 @@ static t_index	parsing_loop(char *cmd, t_index index, t_list_char **list)
 	return (index);
 }
 
-static t_index	parsing_end(char *cmd, t_index index, t_list_char **list)
-{
-	index.i = skip_whitespace(cmd, index.i);
-	index = add_to_list(cmd, index, list);
-	if (cmd[index.i + 1])
-		index.i++;
-	return (index);
-}
-
 t_list_char	*parsing(char *cmd)
 {
 	t_list_char	*list;
@@ -108,7 +99,10 @@ t_list_char	*parsing(char *cmd)
 	while (cmd[index.i])
 	{
 		index = parsing_loop(cmd, index, &list);
-		index = parsing_end(cmd, index, &list);
+		index.i = skip_whitespace(cmd, index.i);
+		index = add_to_list(cmd, index, &list);
+		if (cmd[index.i + 1])
+			index.i++;
 	}
 	return (list);
 }

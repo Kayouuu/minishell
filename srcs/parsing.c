@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/17 11:57:09 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/18 13:59:35 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static t_index	add_to_list(char *cmd, t_index index, t_list_char **list)
 {
 	char	*command;
 
+	if (cmd[index.i + 1] && cmd[index.i] == cmd[index.i + 1])
+		index.j += 2;
 	command = ft_stridup(cmd, index.i, index.j);
 	if (!command)
 	{
@@ -50,8 +52,6 @@ static t_index	add_to_list(char *cmd, t_index index, t_list_char **list)
 static t_index	parsing_special_char(char *cmd, t_index index,
 	t_list_char **list)
 {
-	if (index.i != 0)
-		index.i--;
 	index.i = skip_whitespace(cmd, index.i);
 	if (index.j - index.i != 0)
 		index = add_to_list(cmd, index, list);
@@ -63,6 +63,7 @@ static t_index	parsing_special_char(char *cmd, t_index index,
 
 static t_index	parsing_loop(char *cmd, t_index index, t_list_char **list)
 {
+	index.i = skip_whitespace(cmd, index.i);
 	index.j = index.i;
 	while (cmd[index.j])
 	{
@@ -72,7 +73,8 @@ static t_index	parsing_loop(char *cmd, t_index index, t_list_char **list)
 			index.d_quote ^= 1;
 		if ((cmd[index.j] == '|' || cmd[index.j] == '>'
 				|| cmd[index.j] == '<' || cmd[index.j] == ';')
-			&& (index.d_quote == 0 && index.s_quote == 0))
+			&& (index.d_quote == 0 && index.s_quote == 0)
+			&& cmd[index.i] != cmd[index.i + 1])
 		{
 			index = parsing_special_char(cmd, index, list);
 			break ;
@@ -86,13 +88,6 @@ static t_index	parsing_end(char *cmd, t_index index, t_list_char **list)
 {
 	index.i = skip_whitespace(cmd, index.i);
 	index = add_to_list(cmd, index, list);
-	if ((cmd[index.i - 1] == '|' || cmd[index.i - 1] == '>'
-			|| cmd[index.i - 1] == '<' || cmd[index.i - 1] == ';')
-		&& !(cmd[index.i] == ' ' || cmd[index.i] == '\t'
-			|| cmd[index.i] == '\n' || cmd[index.i] == '\n'
-			|| cmd[index.i] == '\v' || cmd[index.i] == '\f'
-			|| cmd[index.i] == '\r'))
-		index.i--;
 	if (cmd[index.i + 1])
 		index.i++;
 	return (index);

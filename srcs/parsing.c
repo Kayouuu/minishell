@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/18 13:59:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:11:08 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ static t_index	parsing_loop(char *cmd, t_index index, t_list_char **list)
 {
 	index.i = skip_whitespace(cmd, index.i);
 	index.j = index.i;
+	if (index.i - 2 > -1 && (cmd[index.i - 2] == '|' || cmd[index.i - 2] == '>'
+			|| cmd[index.i - 2] == '<' || cmd[index.i - 2] == ';'))
+		index.i--;
 	while (cmd[index.j])
 	{
 		if (cmd[index.j] == '\'')

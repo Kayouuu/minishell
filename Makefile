@@ -6,11 +6,12 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:05:43 by psaulnie          #+#    #+#              #
-#    Updated: 2022/03/18 12:37:27 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/03/21 12:54:05 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/main.c srcs/parsing.c srcs/parsing_utils.c
+SRCS = srcs/main.c srcs/parsing.c srcs/parsing_utils.c \
+srcs/replace_var_and_quote.c
 OBJS = ${SRCS:.c=.o}
 LIBFT = libft
 LIBFT_LIB = libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:27:21 by lbattest          #+#    #+#             */
-/*   Updated: 2022/03/21 13:13:24 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/21 17:39:07 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ void		lstdelone_char(t_list_char *lst, void (*del)(void *));
 void		lstiter_char(t_list_char *lst, void (*f)(void *));
 void		lstclear_char(t_list_char **lst, void (*del)(void *));
 t_list_char	*lstmap_char(t_list_char *lst, void *(*f)(void *),
-	void (*del)(void *));
+				void (*del)(void *));
 #endif

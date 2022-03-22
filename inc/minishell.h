@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/21 14:37:18 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/22 10:04:59 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ typedef struct s_index
 	int		quotes;
 }	t_index;
 
+/*****************************************
+ *										 *
+ * 				  PARSING                *
+ * 										 *
+ *****************************************/
+
+/*	DQUOTE.C	*/
+
+char		*dquote(char *cmd, int arg);
+
 /*	PARSING.C	*/
 
 t_list_char	*parsing(char *cmd);
@@ -41,8 +51,13 @@ t_list_char	*parsing(char *cmd);
 int			skip_whitespace(char *cmd, int i);
 int			is_useless(char *command);
 
+/*	QUOTE_REMOVER.C	*/
+
+char		*remove_quote(t_list_char **start, char *cmd);
+int			count_size(char *cmd);
+
 /*	REPLACE_VAR_AND_QUOTE.C	*/
 
-t_list_char	*replace_var_and_quote(t_list_char *cmd);
+t_list_char	*replace_var_and_quote(t_list_char *cmd, char *envp[]);
 
 #endif

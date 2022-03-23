@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:31:56 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/22 15:56:51 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 09:49:44 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,27 @@ static t_index	change(char c, t_index i)
 int	count_size(char *cmd)
 {
 	t_index	index;
+	char	first;
 	int		i;
 
 	index.s_quote = 0;
 	index.d_quote = 0;
 	index.quotes = 0;
 	index.quote = '0';
+	first = '0';
 	i = 0;
 	while (cmd[i])
 	{
+		if (cmd[i] == '"' && first == '0')
+			first = '"';
+		else if (cmd[i] == '\'' && first == '0')
+			first = '\'';
 		index = change(cmd[i], index);
 		i++;
 	}
-	if (index.s_quote % 2 == 1)
+	if (index.s_quote % 2 == 1 && first == '\'')
 		return (-1);
-	if (index.d_quote % 2 == 1)
+	if (index.d_quote % 2 == 1 && first == '"')
 		return (-2);
 	return (i + index.quotes);
 }

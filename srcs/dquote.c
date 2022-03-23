@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:34:28 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/22 09:44:14 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 09:46:39 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ char	*dquote(char *cmd, int arg)
 	index.s_quote = 0;
 	index.d_quote = 0;
 	is_good = 0;
+	quote = '0';
 	if (arg == 0)
 		quote = '\'';
 	else if (arg == 1)
 		quote = '"';
+	printf("arg : %c\n", quote);
 	new_command = NULL;
 	new_command = ft_strjoin_gnl(new_command, "\n");
 	if (!new_command)

@@ -1,38 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 12:00:04 by psaulnie         ###   ########.fr       */
+/*   Created: 2022/03/23 11:45:57 by psaulnie          #+#    #+#             */
+/*   Updated: 2022/03/23 11:46:14 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	main(int argc, char *argv[], char *envp[])
+void	exit_error_msg(char *str)
 {
-	t_list_char	*command;
-	char		*cmd;
-	int			size;
-
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	while (1)
-	{
-		cmd = readline("\033[0;36mminishell> \033[0;37m");
-		size = count_size(cmd);
-		if (size == -1)
-			cmd = dquote(cmd, 0);
-		if (size == -2)
-			cmd = dquote(cmd, 1);
-		add_history(cmd);
-		command = parsing(cmd);
-		replace_var_and_quote(command);
-		free(cmd);
-	}
-	return (1);
+	ft_putendl_fd(str, 2);
+	exit (1);
 }

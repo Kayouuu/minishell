@@ -6,71 +6,70 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:31:56 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 09:49:44 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 11:14:21 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static t_index	change(char c, t_index i)
+static char	set_last_quote(char c, t_index index)
 {
-	if (c == '"')
+	if (index.last_quote == '0')
 	{
-		if (i.quote == '0')
-			i.quote = '"';
-		else if (i.quote == '"')
-			i.quote = '0';
-		else
-			i.quotes += 1;
-		i.d_quote += 1;
+		if (c == '"')
+			index.last_quote = '"';
+		else if (c == '\'')
+			index.last_quote = '\'';
+		if (index.last_quote != '0')
+			index.last_quote_index = index.i;
 	}
-	else if (c == '\'')
-	{
-		if (i.quote == '0')
-			i.quote = '\'';
-		else if (i.quote == '\'')
-			i.quote = '0';
-		else
-			i.quotes += 1;
-		i.s_quote += 1;
-	}
-	return (i);
+	return (index.last_quote);
 }
 
-int	count_size(char *cmd)
+static t_index	remove_quote_init(void)
 {
 	t_index	index;
-	char	first;
-	int		i;
 
-	index.s_quote = 0;
+	index.i = 0;
+	index.j = 0;
 	index.d_quote = 0;
-	index.quotes = 0;
-	index.quote = '0';
-	first = '0';
-	i = 0;
-	while (cmd[i])
+	index.s_quote = 0;
+	index.last_quote = '0';
+	index.last_quote_index = -1;
+	return (index);
+}
+
+static char	*remove_quote_loop(char *new_cmd, t_index index, char *cmd)
+{
+	while (cmd[index.i])
 	{
-		if (cmd[i] == '"' && first == '0')
-			first = '"';
-		else if (cmd[i] == '\'' && first == '0')
-			first = '\'';
-		index = change(cmd[i], index);
-		i++;
+		index.last_quote = set_last_quote(cmd[index.i], index);
+		if ((cmd[index.i] != '"' || index.last_quote != '"')
+			&& (cmd[index.i] != '\'' || index.last_quote != '\''))
+		{
+			new_cmd[index.j] = cmd[index.i];
+			index.j++;
+		}
+		else if (((cmd[index.i] == '"' && index.last_quote != '"')
+				|| (cmd[index.i] == '\'' && index.last_quote != '\''))
+			&& (index.last_quote == cmd[index.i]))
+		{
+			new_cmd[index.j] = cmd[index.i];
+			index.j++;
+		}
+		if (index.last_quote == cmd[index.i]
+			&& index.last_quote_index != index.i)
+			index.last_quote = '0';
+		index.i++;
 	}
-	if (index.s_quote % 2 == 1 && first == '\'')
-		return (-1);
-	if (index.d_quote % 2 == 1 && first == '"')
-		return (-2);
-	return (i + index.quotes);
+	new_cmd[index.j] = '\0';
+	return (new_cmd);
 }
 
 char	*remove_quote(t_list_char **start, char *cmd)
 {
 	t_index	index;
 	char	*new_cmd;
-	char	last_quote;
-	int		last_quote_index;
 	int		size;
 
 	size = count_size(cmd);
@@ -78,43 +77,9 @@ char	*remove_quote(t_list_char **start, char *cmd)
 	if (!new_cmd)
 	{
 		lstclear_char(start, free);
-		ft_putendl_fd("Malloc error", 2);
-		exit(0);
+		exit_error_msg("Malloc error");
 	}
-	index.i = 0;
-	index.j = 0;
-	index.d_quote = 0;
-	index.s_quote = 0;
-	last_quote = '0';
-	last_quote_index = -1;
-	while (cmd[index.i])
-	{
-		if (last_quote == '0')
-		{
-			if (cmd[index.i] == '"')
-				last_quote = '"';
-			else if (cmd[index.i] == '\'')
-				last_quote = '\'';
-			if (last_quote != '0')
-				last_quote_index = index.i;
-		}
-		if ((cmd[index.i] != '"' || last_quote != '"')
-			&& (cmd[index.i] != '\'' || last_quote != '\''))
-		{
-			new_cmd[index.j] = cmd[index.i];
-			index.j++;
-		}
-		else if (((cmd[index.i] == '"' && last_quote != '"')
-				|| (cmd[index.i] == '\'' && last_quote != '\''))
-			&& (last_quote == cmd[index.i]))
-		{
-			new_cmd[index.j] = cmd[index.i];
-			index.j++;
-		}
-		if (last_quote == cmd[index.i] && last_quote_index != index.i)
-			last_quote = '0';
-		index.i++;
-	}
-	new_cmd[index.j] = '\0';
+	index = remove_quote_init();
+	new_cmd = remove_quote_loop(new_cmd, index, cmd);
 	return (new_cmd);
 }

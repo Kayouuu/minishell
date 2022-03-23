@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 10:02:11 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 12:01:37 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ typedef struct s_index
 	int		d_quote;
 	char	quote;
 	int		quotes;
+	int		can_replace;
+	char	last_quote;
+	int		last_quote_index;
+	char	*new_cmd;
+	char	*var_name;
 }	t_index;
 
 typedef struct s_env
@@ -43,6 +48,10 @@ typedef struct s_env
  * 				  PARSING                *
  * 										 *
  *****************************************/
+
+/*	COMMAND_SIZE_COUNTER.C	*/
+
+int			count_size(char *cmd);
 
 /*	DQUOTE.C	*/
 
@@ -60,10 +69,14 @@ int			is_useless(char *command);
 /*	QUOTE_REMOVER.C	*/
 
 char		*remove_quote(t_list_char **start, char *cmd);
-int			count_size(char *cmd);
 
 /*	REPLACE_VAR_AND_QUOTE.C	*/
 
-t_list_char	*replace_var_and_quote(t_list_char *cmd, char *envp[]);
+char		*replace_env_var(t_list_char **start, char *cmd);
+t_list_char	*replace_var_and_quote(t_list_char *cmd);
+
+/*	UTILS.C	*/
+
+void		exit_error_msg(char *str);
 
 #endif

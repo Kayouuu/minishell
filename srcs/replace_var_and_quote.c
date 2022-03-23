@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 09:51:06 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 10:05:06 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,10 @@ char	*replace_env_var(t_list_char **start, char *cmd, char *envp[])
 t_list_char	*replace_var_and_quote(t_list_char *cmd, char *envp[])
 {
 	t_list_char	**start;
-	int			size;
 
 	start = &cmd;
 	while (cmd != NULL)
 	{
-		size = count_size(cmd->content);
-		printf("%d\n", size);
-		if (size == -1)
-			cmd->content = dquote(cmd->content, 0);
-		if (size == -2)
-			cmd->content = dquote(cmd->content, 1);
 		cmd->content = replace_env_var(start, cmd->content, envp);
 		cmd->content = remove_quote(start, cmd->content);
 		printf("[%s]\n", cmd->content);

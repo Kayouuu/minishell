@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:34:28 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 09:46:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 10:02:49 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,21 @@ char	*dquote(char *cmd, int arg)
 		quote = '\'';
 	else if (arg == 1)
 		quote = '"';
-	printf("arg : %c\n", quote);
 	new_command = NULL;
 	new_command = ft_strjoin_gnl(new_command, "\n");
 	if (!new_command)
-	{
-		// protection malloc
 		exit(0);
-	}
 	while (1)
 	{
 		command = readline("> ");
 		index.i = 0;
 		while (command[index.i])
-		{
-			if (command[index.i] == quote)
+			if (command[index.i++] == quote)
 				is_good ^= 1;
-			index.i++;
-		}
 		new_command = ft_strjoin_gnl(new_command, command);
 		if (!new_command)
 		{
-			// protection malloc
+			free(command);
 			exit(0);
 		}
 		free(command);
@@ -57,15 +50,12 @@ char	*dquote(char *cmd, int arg)
 			break ;
 		new_command = ft_strjoin_gnl(new_command, "\n");
 		if (!new_command)
-		{
-			// protection malloc
 			exit(0);
-		}
 	}
 	cmd = ft_strjoin_gnl(cmd, new_command);
 	if (!cmd)
 	{
-		// protection malloc
+		free(new_command);
 		exit(0);
 	}
 	free(new_command);

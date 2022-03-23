@@ -6,12 +6,17 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 12:00:54 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 13:41:06 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+/*
+	Replace_env_var function : find $ and check if it need to be replaced (if 
+	there's single/double quote), then find the name of the var wanted and copy
+	the string char by char
+ */
 static void	check_malloc(t_list_char **start, char *malloced)
 {
 	if (!malloced)
@@ -56,7 +61,7 @@ static t_index	replace(t_index var, char *cmd, t_list_char **start)
 			exit_error_msg("Malloc error");
 		}
 	}
-	else if (cmd[var.i])
+	else if (cmd[var.i] && cmd[var.j])
 		var.i++;
 	return (var);
 }

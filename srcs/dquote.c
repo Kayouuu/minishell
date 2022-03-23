@@ -6,11 +6,15 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:34:28 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 11:46:11 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 13:35:52 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+/*
+	Dquote function : loop a readline until it find the right quote
+*/
 
 static char	*dquote_loop(char *new_command, char quote, t_index index)
 {

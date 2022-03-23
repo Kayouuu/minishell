@@ -6,12 +6,15 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:31:56 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 11:14:21 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/23 13:33:40 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+/*
+	Remove_quote function : work like a strdup but pass the right quotes
+*/
 static char	set_last_quote(char c, t_index index)
 {
 	if (index.last_quote == '0')

@@ -6,31 +6,54 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 10:31:56 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 10:32:47 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/28 15:58:59 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+static t_index	check(char *cmd, t_index index)
+{
+	if ((index.j == 2 && cmd[index.i] == '"')
+		|| (index.j == 2 && cmd[index.i] == '\''))
+	{
+		index.last_quote = '0';
+		index.j = 0;
+	}
+	if (cmd[index.i] == '"' && index.last_quote != '\'')
+	{
+		index.last_quote = '"';
+		index.j += 1;
+	}
+	else if (cmd[index.i] == '\'' && index.last_quote != '"')
+	{
+		index.last_quote = '\'';
+		index.j += 1;
+	}
+	if (cmd[index.i] == '\'' && cmd[index.i] == '"')
+		index.j += 1;
+	return (index);
+}
+
 static t_index	change(char c, t_index i)
 {
-	if (c == '"')
+	if (c == '"' && i.last_quote != '\'')
 	{
 		if (i.quote == '0')
 			i.quote = '"';
 		else if (i.quote == '"')
 			i.quote = '0';
-		else
+		else if (i.last_quote != '\'')
 			i.quotes += 1;
 		i.d_quote += 1;
 	}
-	else if (c == '\'')
+	else if (c == '\'' && i.last_quote != '"')
 	{
 		if (i.quote == '0')
 			i.quote = '\'';
 		else if (i.quote == '\'')
 			i.quote = '0';
-		else
+		else if (i.last_quote != '"')
 			i.quotes += 1;
 		i.s_quote += 1;
 	}
@@ -40,27 +63,23 @@ static t_index	change(char c, t_index i)
 int	count_size(char *cmd)
 {
 	t_index	index;
-	char	first;
-	int		i;
 
 	index.s_quote = 0;
 	index.d_quote = 0;
 	index.quotes = 0;
 	index.quote = '0';
-	first = '0';
-	i = 0;
-	while (cmd[i])
+	index.last_quote = '0';
+	index.i = 0;
+	index.j = 0;
+	while (cmd[index.i])
 	{
-		if (cmd[i] == '"' && first == '0')
-			first = '"';
-		else if (cmd[i] == '\'' && first == '0')
-			first = '\'';
-		index = change(cmd[i], index);
-		i++;
+		index = check(cmd, index);
+		index = change(cmd[index.i], index);
+		index.i++;
 	}
-	if (index.s_quote % 2 == 1 && first == '\'')
+	if (index.s_quote % 2 == 1 && index.last_quote == '\'')
 		return (-1);
-	if (index.d_quote % 2 == 1 && first == '"')
+	if (index.d_quote % 2 == 1 && index.last_quote == '"')
 		return (-2);
-	return (i + index.quotes);
+	return (index.i + index.quotes);
 }

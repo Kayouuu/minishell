@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/28 15:03:05 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/28 17:07:03 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,18 @@ static t_index	skip_no_env_var(t_index var, char *cmd)
 			var.can_replace ^= 1;
 		var.j++;
 	}
+	if (cmd[var.j] == '$' && ft_isalnum(cmd[var.j + 1]) == 0)
+		var.j += 1;
+	if (cmd[var.j - 1] == '$' && cmd[var.j] == '?')
+		var.j += 1;
 	return (var);
 }
 
 static t_index	replace(t_index var, char *cmd, t_list_char **start)
 {
 	var.i = var.j;
-	if (cmd[var.i] == '$' && var.can_replace)
+	if ((cmd[var.i] == '$' && cmd[var.i + 1] && cmd[var.i + 1] != '?')
+		&& var.can_replace)
 	{
 		var.i++;
 		while (cmd[var.i] && ft_isalnum(cmd[var.i]))
@@ -81,7 +86,6 @@ char	*replace_env_var(t_list_char **start, char *cmd)
 			var.new_cmd = ft_strjoin_gnl(var.new_cmd,
 					ft_stridup(cmd, var.i, var.j));
 			check_malloc(start, var.new_cmd);
-
 		}
 		var = replace(var, cmd, start);
 	}
@@ -99,7 +103,7 @@ t_list_char	*replace_var_and_quote(t_list_char *cmd)
 	while (cmd != NULL)
 	{
 		cmd->content = replace_env_var(start, cmd->content);
-		//cmd->content = remove_quote(start, cmd->content);
+		// cmd->content = remove_quote(start, cmd->content);
 		printf("[%s]\n", cmd->content);
 		cmd = cmd->next;
 	}

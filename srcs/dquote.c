@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:34:28 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/28 15:02:58 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/29 11:43:05 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static char	*dquote_loop(char *new_command, char quote, t_index index)
 	while (1)
 	{
 		command = readline("> ");
+		if (!command)
+			exit(0);
 		index.i = 0;
 		while (command[index.i])
 			if (command[index.i++] == quote)

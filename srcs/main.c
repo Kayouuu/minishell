@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 12:00:04 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/29 10:03:06 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		cmd = readline("\033[0;36mminishell> \033[0;37m");
+		if (!cmd)
+		{
+			free(cmd);
+			return (0);
+		}
 		size = count_size(cmd);
 		if (size == -1)
 			cmd = dquote(cmd, 0);

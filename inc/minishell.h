@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/23 12:01:37 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/03/29 10:32:19 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ typedef struct s_env
 /*	COMMAND_SIZE_COUNTER.C	*/
 
 int			count_size(char *cmd);
+
+/*	COMMAND_SPLITTER.C		*/
+
+char		**command_splitter(char *cmd);
 
 /*	DQUOTE.C	*/
 

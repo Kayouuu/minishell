@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/30 09:52:47 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:51:41 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,15 @@ t_list_char	*replace_var_and_quote(t_list_char *cmd);
 /*	UTILS.C	*/
 
 void		exit_error_msg(char *str);
+
+
+
+
+void	*free_all(char **str);
+char	*get_path(char **envp, char *cmd);
+void	special_case(t_list_char *list, char **envp);
+void	error(int i, char *str);
+void	add_env(t_env *env, char *str);
+void	exec(char **cmd, t_env *env);
 
 #endif

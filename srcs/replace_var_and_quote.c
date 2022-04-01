@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/29 10:32:30 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:22:45 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static t_index	replace(t_index var, char *cmd, t_list_char **start)
 char	*replace_env_var(t_list_char **start, char *cmd)
 {
 	t_index	var;
+	char	*str;
 
 	var.i = 0;
 	var.can_replace = 1;
@@ -83,8 +84,9 @@ char	*replace_env_var(t_list_char **start, char *cmd)
 		var = skip_no_env_var(var, cmd);
 		if (var.i != var.j)
 		{
-			var.new_cmd = ft_strjoin_gnl(var.new_cmd,
-					ft_stridup(cmd, var.i, var.j));
+			str = ft_stridup(cmd, var.i, var.j);
+			var.new_cmd = ft_strjoin_gnl(var.new_cmd, str);
+			free(str);
 			check_malloc(start, var.new_cmd);
 		}
 		var = replace(var, cmd, start);
@@ -95,18 +97,15 @@ char	*replace_env_var(t_list_char **start, char *cmd)
 	return (var.new_cmd);
 }
 
-t_list_char	*replace_var_and_quote(t_list_char *cmd)
+void	replace_var_and_quote(t_list_char **cmd)
 {
-	t_list_char	**start;
+	t_list_char	*start;
 
-	start = &cmd;
-	while (cmd != NULL)
+	start = *cmd;
+	while (*cmd != NULL)
 	{
-		cmd->content = replace_env_var(start, cmd->content);
-		command_splitter(cmd->content);
-		// cmd->content = remove_quote(start, cmd->content);
-		printf("[%s]\n", cmd->content);
-		cmd = cmd->next;
+		(*cmd)->content = replace_env_var(&start, (*cmd)->content);
+		(*cmd) = (*cmd)->next;
 	}
-	return (*start);
+	*cmd = start;
 }

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/01 12:51:41 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:19:28 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char		*remove_quote(t_list_char **start, char *cmd);
 /*	REPLACE_VAR_AND_QUOTE.C	*/
 
 char		*replace_env_var(t_list_char **start, char *cmd);
-t_list_char	*replace_var_and_quote(t_list_char *cmd);
+void	replace_var_and_quote(t_list_char **cmd);
 
 /*	UTILS.C	*/
 

@@ -3,112 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/05 08:41:31 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/11 11:03:44 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/04 17:46:07 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/16 13:38:32 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Convert an integer into a string and return it 							  */
-
 #include "libft.h"
 
-static int	ft_nbr_size(int n)
+static int	ft_length(long nu)
 {
-	int	size;
-	int	nbr;
+	int	i;
 
-	size = 0;
-	nbr = n;
-	if (nbr == -2147483647 - 1)
-		return (11);
-	if (nbr < 0)
+	i = 0;
+	if (nu < 0 || nu == 0)
 	{
-		nbr *= -1;
-		size++;
+		nu = -nu;
+		i++;
 	}
-	while (nbr > 9)
+	while (nu / 10 > 0)
 	{
-		nbr /= 10;
-		size++;
+		nu = nu / 10;
+		i++;
 	}
-	size++;
-	return (size);
+	if (nu > 0 && nu < 10)
+		i++;
+	return (i);
 }
 
-static void	reverse(char *str, int size)
+static char	*ft_following(int length, long nu, char *str)
 {
-	int		counter;
-	char	tmp;
-
-	counter = 0;
-	tmp = 0;
-	while (counter <= size / 2)
+	while (length >= 0)
 	{
-		tmp = str[size - counter];
-		str[size - counter] = str[counter];
-		str[counter] = tmp;
-		counter++;
-	}
-}
-
-static void	convert(char *str, int n)
-{
-	int	num;
-	int	counter;
-
-	counter = 0;
-	num = 0;
-	while (n)
-	{
-		num = n % 10;
-		if (num > 9)
-			str[counter++] = 65 + (num - 10);
+		if (length == 0 && nu <= 0)
+			str[length] = '-';
 		else
-			str[counter++] = 48 + num;
-		n /= 10;
+			str[length] = nu % 10 + '0';
+		nu = nu / 10;
+		length--;
 	}
-}
-
-static char	*particular_cases(int n, char *str)
-{
-	if (n == -2147483647 - 1)
-	{
-		ft_memcpy(str, "-2147483648\0", 12);
-		return (str);
-	}
-	else if (n == 0)
-	{
-		str[0] = '0';
-		str[1] = '\0';
-		return (str);
-	}
-	return (0);
+	return (str);
 }
 
 char	*ft_itoa(int n)
 {
-	int		is_negative;
-	int		nbr;
+	long	nu;
+	int		length;
 	char	*str;
 
-	is_negative = 0;
-	nbr = ft_nbr_size(n);
-	str = malloc(sizeof(char) * (nbr + 1));
-	if (!str)
+	nu = n;
+	length = ft_length(nu);
+	str = ft_calloc(length + 1, sizeof(char));
+	if (str == 0)
 		return (0);
-	if (n == 0 || n == -2147483647 - 1)
-		return (particular_cases(n, str));
-	if (n < 0)
+	str[length] = '\0';
+	if (nu == 0)
 	{
-		is_negative = 1;
-		n *= -1;
+		str[0] = '0';
+		return (str);
 	}
-	convert(str, n);
-	if (is_negative)
-		str[nbr - 1] = '-';
-	str[nbr] = '\0';
-	reverse(str, nbr - 1);
-	return (str);
+	length--;
+	if (nu < 0)
+		nu = -nu;
+	return (ft_following(length, nu, str));
 }

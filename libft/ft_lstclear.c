@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 11:40:37 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/11 10:57:25 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/14 16:48:57 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/15 12:04:37 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/* Delete and clear the memory of the list until the end of it				  */
 
 #include "libft.h"
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*next;
+	t_list	*tmp;
 
-	while (*lst != NULL)
+	while (*lst != 0)
 	{
-		next = (*lst)->next;
-		ft_lstdelone((*lst), (*del));
-		(*lst) = next;
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		(*lst) = tmp;
 	}
 }

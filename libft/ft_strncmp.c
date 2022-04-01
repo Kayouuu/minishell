@@ -3,27 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 15:46:14 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/12/24 10:53:24 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/03 12:04:51 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/08 12:34:23 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Return the difference between the first two differents characters */
-
 #include "libft.h"
 
-int	ft_strncmp(const char *first, const char *second, size_t length)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t	n;
+	size_t	i;
 
-	n = 0;
-	while (n < length && (first[n] || second[n]))
-	{
-		if (first[n] != second[n])
-			return ((unsigned char)first[n] - second[n]);
-		n++;
-	}
-	return (0);
+	i = 0;
+	if (n <= 0)
+		return (0);
+	while (i + 1 < n && s1[i] && (unsigned char)s1[i] == (unsigned char)s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

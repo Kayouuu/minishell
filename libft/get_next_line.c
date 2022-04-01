@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/20 15:00:00 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/12/21 14:36:09 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/22 11:59:47 by lbattest          #+#    #+#             */
+/*   Updated: 2022/01/20 11:15:00 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*extract_nl(char **str)
+static char	*extract_nl(char **str)
 {
 	char	*save;
 	char	*tmp;
 
-	tmp = gnl_strndup(*str, '\n');
-	save = gnl_strndup(gnl_strchr(*str) + 1, '\0');
+	tmp = ft_strndup(*str, '\n');
+	save = ft_strndup(ft_strchr_gnl(*str, '\n') + 1, '\0');
 	free(*str);
 	*str = save;
 	return (tmp);
 }
 
-char	*clean(char *str)
+static char	*scotch(char *str)
 {
 	free(str);
 	return (0);
@@ -32,29 +32,29 @@ char	*clean(char *str)
 
 char	*get_next_line(int fd)
 {
-	char		buffer[BUFFER_SIZE + 1];
+	int			i;
+	char		buf[BUFFER_SIZE + 1];
 	static char	*str = NULL;
-	char		*returned_str;
-	int			readed;
+	char		*tmp;
 
-	returned_str = 0;
-	readed = 1;
-	if (read(fd, buffer, 0) < 0)
+	tmp = 0;
+	i = 1;
+	if (read(fd, buf, 0) < 0)
 		return (NULL);
-	while (!gnl_strchr(str) && readed != 0)
+	while (!ft_strchr_gnl(str, '\n') && i != 0)
 	{
-		readed = read(fd, buffer, BUFFER_SIZE);
-		if (readed < 0)
+		i = read(fd, buf, BUFFER_SIZE);
+		if (i < 0)
 			return (0);
-		buffer[readed] = '\0';
-		str = gnl_strjoin(str, buffer);
+		buf[i] = '\0';
+		str = ft_strjoin_gnl(str, buf);
 		if (!str)
 			return (0);
 	}
-	if (gnl_strchr(str))
+	if (ft_strchr_gnl(str, '\n'))
 		return (extract_nl(&str));
 	if (str && str[0])
-		returned_str = gnl_strndup(str, '\0');
-	str = clean(str);
-	return (returned_str);
+		tmp = ft_strndup(str, '\0');
+	str = scotch(str);
+	return (tmp);
 }

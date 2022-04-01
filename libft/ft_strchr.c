@@ -3,31 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 15:22:07 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/11 10:04:59 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/03 12:41:07 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/15 15:45:06 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Return the pointer of the first occurence of */
-/* the character c in the string str 			*/
-
-#include "libft.h"
-
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	int	n;
+	int	i;
 
-	n = 0;
-	while (str[n])
+	i = 0;
+	while (s[i])
 	{
-		if ((unsigned char)str[n] == (unsigned char)c
-			&& (unsigned char)c != '\0')
-			return ((char *) &str[n]);
-		n++;
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
 	}
 	if (c == '\0')
-		return ((char *) &str[n]);
+		return ((char *)&s[i]);
 	return (0);
 }

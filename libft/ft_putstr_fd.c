@@ -3,28 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 15:13:38 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/10 08:53:50 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/04 17:22:42 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/13 14:54:46 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Write the string s in the file fd										  */
-
 #include "libft.h"
-#include <unistd.h>
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	counter;
+	int	i;
 
-	if (s == 0 || fd == 0)
+	if (!s)
 		return ;
-	counter = 0;
-	while (s[counter])
+	i = 0;
+	while (s[i])
 	{
-		write(fd, &s[counter], 1);
-		counter++;
+		ft_putchar_fd(s[i], fd);
+		i++;
 	}
 }

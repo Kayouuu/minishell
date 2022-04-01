@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 08:32:40 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/04 14:09:00 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/04 14:36:16 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/15 15:43:34 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Return the pointer of the first occurence of searchedChar in memoryBlock.  */
-/* If not found, return 0       											  */
-
 #include "libft.h"
 
-void	*ft_memchr(const void *memoryBlock, int searchedChar, size_t size)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	counter;
+	size_t	i;
+	char	*a;
 
-	counter = 0;
-	while (counter < size)
+	i = 0;
+	a = (char *)s;
+	while (n > i)
 	{
-		if (*(char *)memoryBlock == (char) searchedChar)
-			return ((void *)memoryBlock);
-		memoryBlock++;
-		counter++;
+		if (a[i] == (char)c)
+			return ((void *)&s[i]);
+		i++;
 	}
 	return (0);
 }

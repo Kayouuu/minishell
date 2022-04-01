@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 10:50:44 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/09 11:30:42 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/14 15:28:12 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/14 15:39:32 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/* Return the size of the list												  */
 
 #include "libft.h"
 
 int	ft_lstsize(t_list *lst)
 {
-	int	counter;
+	int		i;
 
-	counter = 0;
-	while (lst)
+	i = 0;
+	if (lst == 0)
+		return (0);
+	if (lst->next == 0)
+		return (1);
+	while (lst->next != 0)
 	{
-		counter++;
-		lst = lst-> next;
+		i++;
+		lst = lst->next;
 	}
-	return (counter);
+	return (i + 1);
 }

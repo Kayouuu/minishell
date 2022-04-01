@@ -3,35 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/05 10:40:39 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/10 08:53:16 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/13 12:30:06 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/13 12:42:48 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/* Apply character by character a function passed in parameter using an index */
-/* and a character adress, then apply it on a string 						  */
-/* that the function return  												  */
 
 #include "libft.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	unsigned int	counter;
-	char			*new_str;
+	int		i;
+	char	*str;
 
-	if (s == 0 || (*f) == 0)
+	if (!s)
 		return (0);
-	counter = 0;
-	new_str = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!new_str)
+	str = (char *)s;
+	i = 0;
+	str = malloc(ft_strlen(s) + 1);
+	if (!str)
 		return (0);
-	while (s[counter])
+	while (s[i])
 	{
-		new_str[counter] = (*f)(counter, s[counter]);
-		counter++;
+		str[i] = f(i, s[i]);
+		i++;
 	}
-	new_str[counter] = '\0';
-	return (new_str);
+	str[i] = '\0';
+	return (str);
 }

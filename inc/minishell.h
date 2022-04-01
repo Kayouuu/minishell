@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/15 17:05:59 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:51:41 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,75 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_index
+{
+	int		i;
+	int		j;
+	int		s_quote;
+	int		d_quote;
+	char	quote;
+	int		quotes;
+	int		can_replace;
+	char	last_quote;
+	int		last_quote_index;
+	char	*new_cmd;
+	char	*var_name;
+}	t_index;
+
+typedef struct s_env
+{
+	char		**envp;
+	t_list_char	*addon_env;
+}				t_env;
+
+/*****************************************
+ *										 *
+ * 				  PARSING                *
+ * 										 *
+ *****************************************/
+
+/*	COMMAND_SIZE_COUNTER.C	*/
+
+int			count_size(char *cmd);
+
+/*	COMMAND_SPLITTER.C		*/
+
+char		**command_splitter(char *cmd);
+
+/*	DQUOTE.C	*/
+
+char		*dquote(char *cmd, int arg);
+
 /*	PARSING.C	*/
 
-t_list	*parsing(char *cmd, char *envp[]);
+t_list_char	*parsing(char *cmd);
+
+/*	PARSING_UTILS.C	*/
+
+int			skip_whitespace(char *cmd, int i);
+int			is_useless(char *command);
+
+/*	QUOTE_REMOVER.C	*/
+
+char		*remove_quote(t_list_char **start, char *cmd);
+
+/*	REPLACE_VAR_AND_QUOTE.C	*/
+
+char		*replace_env_var(t_list_char **start, char *cmd);
+t_list_char	*replace_var_and_quote(t_list_char *cmd);
+
+/*	UTILS.C	*/
+
+void		exit_error_msg(char *str);
+
+
+
+
+void	*free_all(char **str);
+char	*get_path(char **envp, char *cmd);
+void	special_case(t_list_char *list, char **envp);
+void	error(int i, char *str);
+void	add_env(t_env *env, char *str);
+void	exec(char **cmd, t_env *env);
 
 #endif

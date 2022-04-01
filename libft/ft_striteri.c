@@ -3,28 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 16:44:23 by psaulnie          #+#    #+#             */
-/*   Updated: 2021/11/10 08:54:38 by psaulnie         ###   ########.fr       */
+/*   Created: 2021/11/13 13:48:19 by lbattest          #+#    #+#             */
+/*   Updated: 2021/11/13 14:40:54 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Apply character by character a function passed in parameter using an index */
-/* and a character adress													  */
-
 #include "libft.h"
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	unsigned int	counter;
+	int	i;
 
-	counter = 0;
-	if (s == 0 || (*f) == 0)
+	i = 0;
+	if (!s)
 		return ;
-	while (s[counter])
+	while (s[i])
 	{
-		(*f)(counter, &s[counter]);
-		counter++;
+		f(i, s + i);
+		i++;
 	}
 }

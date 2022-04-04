@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/04/01 15:30:51 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/04/04 09:55:32 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ LST_SRCS	:=	main.c \
 				add_to_envp.c \
 				command_size_counter.c \
 				command_splitter.c \
-				dquote.c \
 				exec.c \
 				ft_getenv.c \
 				parsing.c \

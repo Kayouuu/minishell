@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/01 16:31:14 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/04 10:54:46 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void	replace_var_and_quote(t_list_char **cmd)
 	while (*cmd != NULL)
 	{
 		(*cmd)->content = replace_env_var(&start, (*cmd)->content);
+		printf("[%s]\n", (*cmd)->content);
 		(*cmd) = (*cmd)->next;
 	}
 	*cmd = start;

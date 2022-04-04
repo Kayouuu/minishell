@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/01 16:23:47 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/04 11:05:33 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static t_index	parsing_special_char(char *cmd, t_index index,
 	if (index.j - index.i != 0)
 		index = add_to_list(cmd, index, list);
 	while (cmd[index.j] && cmd[index.j] != '|' && cmd[index.j] != '\''
-		&& cmd[index.j] != '"' && cmd[index.j] != '>')
+		&& cmd[index.j] != '"')
 		index.j++;
 	return (index);
 }
@@ -64,8 +64,7 @@ static t_index	parsing_loop(char *cmd, t_index index, t_list_char **list)
 {
 	index.i = skip_whitespace(cmd, index.i);
 	index.j = index.i;
-	if (index.i - 2 > -1 && (cmd[index.i - 2] == '|' || cmd[index.i - 2] == '>'
-			|| cmd[index.i - 2] == '<'))
+	if (index.i - 2 > -1 && cmd[index.i - 2] == '|')
 		index.i--;
 	while (cmd[index.j])
 	{
@@ -73,8 +72,7 @@ static t_index	parsing_loop(char *cmd, t_index index, t_list_char **list)
 			index.s_quote ^= 1;
 		if (cmd[index.j] == '"')
 			index.d_quote ^= 1;
-		if ((cmd[index.j] == '|' || cmd[index.j] == '>'
-				|| cmd[index.j] == '<')
+		if ((cmd[index.j] == '|')
 			&& (index.d_quote == 0 && index.s_quote == 0)
 			&& cmd[index.i] != cmd[index.i + 1])
 		{

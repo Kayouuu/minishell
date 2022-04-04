@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/01 12:42:31 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/04 10:58:19 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	go_to(t_list_char *list)
 		list = list->next;
 		if (ft_memcmp(list->content, "-\0", 2) == 0)
 		{
-			
+
 		}
 		if (access(list->content, X_OK) == -1)
 			error(0, "");

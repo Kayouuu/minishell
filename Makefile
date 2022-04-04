@@ -6,15 +6,15 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/04/04 09:55:32 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/04/04 16:55:12 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	minishell
 
 CC		:=	gcc
-CSAN	:= -fsanitize=address -g3
 CFLAGS	:=	-Wall -Wextra -Werror
+CFLAGS	+= -fsanitize=address -g3
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
@@ -35,6 +35,7 @@ LST_SRCS	:=	main.c \
 				parsing_utils.c \
 				quote_remover.c \
 				replace_var_and_quote.c \
+				split_redirection.c
 
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 

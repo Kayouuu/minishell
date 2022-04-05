@@ -6,22 +6,11 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:53:18 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/05 14:40:33 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/05 15:30:25 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	*free_all(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		free(str[i++]);
-	free(str);
-	return (0);
-}
 
 static char	*get_envpath(char **envp)
 {

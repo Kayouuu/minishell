@@ -1,39 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 11:45:57 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 15:30:31 by psaulnie         ###   ########.fr       */
+/*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
+/*   Updated: 2022/04/05 15:27:34 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	exit_error_msg(char *str)
+void	start_execution(t_list_char **cmd)
 {
-	ft_putendl_fd(str, 2);
-	exit (1);
-}
-
-void	error(int i, char *str)
-{
-	if (i == 0)
-		perror("minishell");
-	else if (i == 1)
-		ft_putendl_fd(str, 2);
-	exit(1);
-}
-
-void	*free_all(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		free(str[i++]);
-	free(str);
-	return (0);
+		
 }

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 10:44:35 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 14:32:58 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/05 15:15:58 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ static void	error_case(char *new_str, char *new_link_str, t_list_char **start)
 
 static char	*redirection_split(char *cmd, t_list_char **start)
 {
-	char	c;
+	char	c[2];
 	char	*new_str;
 
-	c = cmd[0];
+	c[0] = cmd[0];
+	c[1] = '\0';
 	if (cmd[1] == cmd[0])
 	{
-		new_str = ft_strjoin(&c, &c);
+		new_str = ft_strjoin(c, c);
 		if (!new_str)
 		{
 			lstclear_char(start, free);
@@ -41,7 +42,7 @@ static char	*redirection_split(char *cmd, t_list_char **start)
 	}
 	else
 	{
-		new_str = ft_strdup(&c);
+		new_str = ft_strdup(c);
 		if (!new_str)
 		{
 			lstclear_char(start, free);

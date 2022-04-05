@@ -6,12 +6,16 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 10:18:49 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/05 14:34:06 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+/*
+	Split the command in the array
+	Example : [echo a > test b] ---> [echo a b] [> test]
+*/
 static t_list_char	*insert_new_link(t_index var, char *cmd,
 		t_list_char **start)
 {
@@ -97,5 +101,6 @@ void	split_redirection(t_list_char **cmd)
 		(*cmd)->content = splitter(&start, (*cmd)->content, cmd);
 		(*cmd) = (*cmd)->next;
 	}
+	split_redirection_and_filename(&start);
 	*cmd = start;
 }

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:39:26 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/04 16:52:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/05 09:36:11 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strcut(char *str, int i, int j)
 		}
 		n++;
 	}
-	new_str[n] = '\0';
+	new_str[k] = '\0';
 	free(str);
 	return (new_str);
 }

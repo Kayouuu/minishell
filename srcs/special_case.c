@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/04 10:58:19 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/04 12:09:21 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	echo(t_list_char *list)
 			printf("%s\n", list->content);
 	}
 }
+
 //pas fini ca
 static void	go_to(t_list_char *list)
 {
@@ -48,9 +49,7 @@ static void	go_to(t_list_char *list)
 	{
 		list = list->next;
 		if (ft_memcmp(list->content, "-\0", 2) == 0)
-		{
-
-		}
+			;
 		if (access(list->content, X_OK) == -1)
 			error(0, "");
 		if (chdir(list->content) == -1)

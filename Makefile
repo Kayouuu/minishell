@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
+#    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/04/04 09:55:32 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/04/06 12:39:28 by lbattest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ INCS	:=	$(addprefix $(DIR_INCS)/,$(LST_INCS))
 
 AR_LIBFT	:=	$(DIR_LIBFT)/libft.a
 
-all:	$(NAME)
+all:	lib $(NAME)
 
 $(NAME):	$(AR_LIBFT) $(OBJS)
 		$(CC) $(CFLAGS) $^ -o $@ -lreadline
@@ -55,11 +55,11 @@ $(NAME):	$(AR_LIBFT) $(OBJS)
 $(DIR_OBJS)/%.o:	$(DIR_SRCS)/%.c $(INCS) Makefile | $(DIR_OBJS)
 		$(CC) $(CFLAGS) -I  $(DIR_INCS) -c $< -o $@
 
-$(AR_LIBFT):
-		make -C $(DIR_LIBFT)
-
 $(DIR_OBJS):
 		mkdir -p $(DIR_OBJS)
+
+lib:
+		make -C $(DIR_LIBFT)
 
 clean:
 		rm -rf $(DIR_OBJS)

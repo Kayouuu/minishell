@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 10:44:35 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 15:15:58 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:07:56 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,68 @@
 	If we have "> test" then it will edit the array to have ">" " test"
 	Works for ">", "<", ">>", "<<"
 */
+
 static void	error_case(char *new_str, char *new_link_str, t_list_char **start)
 {
 	free(new_str);
 	free(new_link_str);
 	lstclear_char(start, free);
 	exit_error_msg("Malloc error");
+}
+
+static void	add_next(t_list_char **next_link, t_list_char **start,
+		t_list_char **command)
+{
+	t_list_char	*new_link;
+	t_index		var;
+	char		*next;
+	char		*cmd;
+
+	cmd = (*next_link)->content;
+	if (!cmd)
+		return ;
+	var.i = 0;
+	var.i = skip_whitespace(cmd, var.i);
+	while (cmd[var.i] && !ft_iswhitespace(cmd[var.i]) && var.quotes % 2 == 0)
+	{
+		if (cmd[var.i] == '\'' && (var.quotes == '0'))
+			var.quote = '\'';
+		if (cmd[var.i] == '"' && (var.quotes == '0'))
+			var.quote = '"';
+		if (cmd[var.i] == var.quotes)
+			var.quotes++;
+		if (var.quotes == 2)
+		{
+			var.quote = '0';
+			var.quotes = 0;
+		}
+		var.i++;
+	}
+	next = ft_stridup(cmd, 0, var.i);
+	if (!next)
+	{
+		lstclear_char(start, free);
+		exit_error_msg("Malloc error");
+	}
+	var.i = skip_whitespace(cmd, var.i);
+	new_link = lstnew_char(next);
+	if (!new_link)
+	{
+		free(next);
+		lstclear_char(start, free);
+		exit_error_msg("Malloc error");
+	}
+	(*next_link)->content = ft_strcut((*next_link)->content, 0, var.i - 1);
+	if (!(*next_link)->content)
+	{
+		(*next_link)->content = NULL;
+		lstclear_char(start, free);
+		free(next);
+		exit_error_msg("Malloc error");
+	}
+	(*command)->next = new_link;
+	new_link->next = *next_link;
+	(*start) = (*start)->next;
 }
 
 static char	*redirection_split(char *cmd, t_list_char **start)
@@ -54,10 +110,10 @@ static char	*redirection_split(char *cmd, t_list_char **start)
 
 static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 {
-	t_list_char	*new_link;
 	t_index		var;
-	char		*new_str;
+	t_list_char	*new_link;
 	char		*new_link_str;
+	char		*new_str;
 	char		c;
 
 	if (cmd[0] != '<' && cmd[0] != '>')
@@ -77,6 +133,7 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 		error_case(new_str, new_link_str, start);
 	new_link->next = (*command)->next;
 	(*command)->next = new_link;
+	add_next(&new_link, start, command);
 	return (new_str);
 }
 

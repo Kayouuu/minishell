@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 16:05:02 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:30:32 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ void		split_redirection(t_list_char **cmd);
 /*	SPLIT_REDIRECTION_AND_FILENAME.C	*/
 
 void		split_redirection_and_filename(t_list_char **cmd);
+
+/*	SPLIT_REDIRECTION_AND_FILENAME_NEXT.C	*/
+
+void		add_next(t_list_char **next_link, t_list_char **start,
+				t_list_char **command);	
 
 /*****************************************
  *										 *

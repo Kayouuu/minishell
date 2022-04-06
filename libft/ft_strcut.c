@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:39:26 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 09:36:11 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:38:30 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*ft_strcut(char *str, int i, int j)
 	if (j < i)
 		return (NULL);
 	new_str = malloc(sizeof(char) * (ft_strlen(str) - (j - i) + 1));
+	if (!new_str)
+		return (NULL);
 	while (str[n])
 	{
 		if (n < i || n > j)

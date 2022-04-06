@@ -6,13 +6,13 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 15:27:34 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/05 16:04:49 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	start_execution(t_list_char **cmd)
+void	start_execution(t_list_char **cmd, t_env env)
 {
-		
+
 }

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 15:26:02 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/06 12:38:53 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char *argv[], char *envp[])
 		free(cmd);
 		split_redirection(&command);
 		replace_var_and_quote(&command);
-		start_execution(&command);
+		// start_execution(&command, env);
 		lstclear_char(&command, free);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/04 11:35:28 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/05 15:30:39 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int			count_size(char *cmd);
 
 /*	COMMAND_SPLITTER.C		*/
 
+int			ft_iswhitespace(char c);
 char		**command_splitter(char *cmd);
 
 /*	DQUOTE.C	*/
@@ -83,18 +84,34 @@ void		replace_var_and_quote(t_list_char **cmd);
 
 void		split_redirection(t_list_char **cmd);
 
+/*	SPLIT_REDIRECTION_AND_FILENAME.C	*/
+
+void		split_redirection_and_filename(t_list_char **cmd);
+
+/*****************************************
+ *										 *
+ *               EXECUTION               *
+ * 										 *
+ *****************************************/
+
+/*	START_EXECUTION.C	*/
+
+void		start_execution(t_list_char **cmd);
+char		*get_path(char **envp, char *cmd);
+void		special_case(t_list_char *list, char **envp);
+void		error(int i, char *str);
+void		add_env(t_env *env, char *str);
+void		exec(char **cmd, t_env *env);
+
+/*****************************************
+ *										 *
+ *                 OTHER                 *
+ * 										 *
+ *****************************************/
+
 /*	UTILS.C	*/
 
 void		exit_error_msg(char *str);
-
-
-
-
-void	*free_all(char **str);
-char	*get_path(char **envp, char *cmd);
-void	special_case(t_list_char *list, char **envp);
-void	error(int i, char *str);
-void	add_env(t_env *env, char *str);
-void	exec(char **cmd, t_env *env);
+void		*free_all(char **str);
 
 #endif

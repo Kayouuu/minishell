@@ -11,7 +11,7 @@ ft_lstsize.c ft_lstadd_front.c ft_lstlast.c ft_lstdelone.c ft_lstadd_back.c \
 ft_lstiter.c ft_lstclear.c ft_lstmap.c ft_printf.c utils_printf.c \
 utils_printf_2.c lstadd_back_char.c lst_size_char.c lstadd_front_char.c \
 lstclear_char.c lstiter_char.c lstdelone_char.c lstmap_char.c lstnew_char.c \
-lstlast_char.c ft_stridup.c
+lstlast_char.c ft_stridup.c ft_strcut.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:27:21 by lbattest          #+#    #+#             */
-/*   Updated: 2022/03/21 18:16:34 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/04 16:53:27 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ long int	ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_strdup(char	*s1);
 char		*ft_stridup(char *str, int start, int end);
+char		*ft_strcut(char *str, int i, int j);
 
 //--	Part 2	-----//
 char		*ft_substr(char const *s, unsigned int start, size_t len);

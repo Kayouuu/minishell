@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strcut.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 11:45:57 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 15:30:31 by psaulnie         ###   ########.fr       */
+/*   Created: 2022/04/04 16:39:26 by psaulnie          #+#    #+#             */
+/*   Updated: 2022/04/05 09:36:11 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-void	exit_error_msg(char *str)
+/*	Cut from i to j and free str	*/
+
+char	*ft_strcut(char *str, int i, int j)
 {
-	ft_putendl_fd(str, 2);
-	exit (1);
-}
+	char	*new_str;
+	int		n;
+	int		k;
 
-void	error(int i, char *str)
-{
-	if (i == 0)
-		perror("minishell");
-	else if (i == 1)
-		ft_putendl_fd(str, 2);
-	exit(1);
-}
-
-void	*free_all(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		free(str[i++]);
+	n = 0;
+	k = 0;
+	if (j < i)
+		return (NULL);
+	new_str = malloc(sizeof(char) * (ft_strlen(str) - (j - i) + 1));
+	while (str[n])
+	{
+		if (n < i || n > j)
+		{
+			new_str[k] = str[n];
+			k++;
+		}
+		n++;
+	}
+	new_str[k] = '\0';
 	free(str);
-	return (0);
+	return (new_str);
 }

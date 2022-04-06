@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/29 11:42:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/04 12:00:53 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // MALLOC A PROTEGER
 
-static int	ft_iswhitespace(char c)
+int	ft_iswhitespace(char c)
 {
 	return ((c == ' ' || c == '\t' || c == '\n'
 			|| c == '\v' || c == '\f') && c);

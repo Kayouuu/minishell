@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/06 16:30:32 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/07 09:46:57 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ int			is_useless(char *command);
 /*	QUOTE_REMOVER.C	*/
 
 char		*remove_quote(t_list_char **start, char *cmd);
+
+/*	REMOVE_USELESS_COMMAND.C	*/
+
+void		remove_useless_command(t_list_char **cmd);
 
 /*	REPLACE_VAR_AND_QUOTE.C	*/
 

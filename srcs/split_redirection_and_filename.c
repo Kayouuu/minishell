@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 10:44:35 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/06 16:38:36 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/07 11:03:57 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 	char		*new_str;
 	char		c;
 
-	if (cmd[0] != '<' && cmd[0] != '>')
+	if ((cmd[0] != '<' && cmd[0] != '>') || ((cmd[0] == '<' && cmd[1] == '>')
+			|| (cmd[0] == '>' && cmd[1] == '<')))
 		return (cmd);
 	c = cmd[0];
 	new_str = redirection_split(cmd, start);

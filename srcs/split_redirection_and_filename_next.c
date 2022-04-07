@@ -6,12 +6,16 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:27:41 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/06 16:48:54 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/07 10:49:43 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+/*
+	This part is meant to add to the list the next command of the function
+	after : [echo a b] [>] [test echo a] => [echo a b] [>] [test] [echo a b]
+*/
 static void	error_handler(t_list_char **start)
 {
 	lstclear_char(start, free);
@@ -67,12 +71,10 @@ void	add_next(t_list_char **next_link, t_list_char **start,
 	var.i = skip_whitespace(cmd, var.i);
 	new_link = lstnew_char(next);
 	(*next_link)->content = ft_strcut((*next_link)->content, 0, var.i - 1);
-	if (!new_link || !(*next_link)->content)
+	if (!new_link)
 	{
-		if (!new_link)
-			free(next);
-		else
-			lstclear_char(&new_link, free);
+		free(next);
+		lstclear_char(&new_link, free);
 		error_handler(start);
 	}
 	link_list_correctly(command, new_link, next_link);

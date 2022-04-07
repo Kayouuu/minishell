@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 10:44:35 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/07 11:03:57 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/07 11:22:34 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 	Works for ">", "<", ">>", "<<"
 */
 
-static void	error_case(char *new_str, char *new_link_str, t_list_char **start)
+static void	error_case(char *new_str, char *new_link_str, t_list_char **start,
+			int error)
 {
+	if (error == 1)
+		free(new_link_str);
 	free(new_str);
-	free(new_link_str);
 	lstclear_char(start, free);
 	exit_error_msg("Malloc error");
 }
@@ -69,14 +71,10 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 	var.i = ft_strlen (new_str);
 	new_link_str = ft_strcut(cmd, 0, var.i - 1);
 	if (!new_link_str)
-	{
-		free(new_str);
-		lstclear_char(start, free);
-		exit_error_msg("Malloc error");
-	}
+		error_case(new_str, new_link_str, start, 0);
 	new_link = lstnew_char(new_link_str);
 	if (!new_link)
-		error_case(new_str, new_link_str, start);
+		error_case(new_str, new_link_str, start, 1);
 	new_link->next = (*command)->next;
 	(*command)->next = new_link;
 	add_next(&new_link, start, command);

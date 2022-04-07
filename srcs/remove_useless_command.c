@@ -6,36 +6,23 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:43:45 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/07 10:11:47 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/07 11:35:39 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// static char	**edit_array(t_list_char **start, char **cmd, t_list_char **command)
-// {
-	
-// }
-
 void	remove_useless_command(t_list_char **cmd)
 {
 	t_list_char	*start;
 	t_list_char	*current;
-	t_list_char *node;
 	int			to_free;
 
 	start = *cmd;
 	current = *cmd;
-	node = start;
 	to_free = 0;
 	while (*cmd != NULL)
 	{
-		if (to_free)
-		{
-			to_free = 0;
-			current = start;
-		}
-		// edit_array(&start, (*cmd)->content, cmd);
 		if (is_useless((*cmd)->content) || cmd[0] == '\0')
 		{
 			free((*cmd)->content);
@@ -48,6 +35,7 @@ void	remove_useless_command(t_list_char **cmd)
 		{
 			free(current);
 			current = start;
+			to_free = 0;
 		}
 	}
 	*cmd = start;

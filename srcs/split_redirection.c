@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/07 11:10:19 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/07 11:19:41 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_list_char	*insert_new_link(t_index var, char *cmd,
 {
 	char		*str;
 	t_list_char	*new_link;
+
 	str = ft_stridup(cmd, var.i, var.j);
 	if (!str)
 	{

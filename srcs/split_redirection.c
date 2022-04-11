@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/07 11:19:41 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/11 11:47:00 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 		new_link = insert_new_link(var, cmd, start);
 		new_link->next = (*command)->next;
 		(*command)->next = new_link;
-		cmd = ft_strcut(cmd, var.i, var.j);
+		cmd = ft_strcut(cmd, var.i, var.j - 1);
 		if (!cmd)
 		{
 			lstclear_char(start, free);

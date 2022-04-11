@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 10:23:52 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/04/11 12:08:13 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,13 @@ void		add_next(t_list_char **next_link, t_list_char **start,
 
 /*	START_EXECUTION.C	*/
 
-void		start_execution(t_list_char **cmd, char **envp);
+void		start_execution(t_list_char **cmd, t_env *env);
 char		*get_path(char **envp, char *cmd);
 void		special_case(t_list_char *list, char **envp);
 void		error(int i, char *str);
 void		add_env(t_env *env, char *str);
 void		exec(char **cmd, t_env *env);
+void		redirection(t_list_char *cmd);
 
 /*****************************************
  *										 *

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 10:22:40 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/04/11 12:20:08 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,31 @@
 
 void	start_execution(t_list_char **cmd, t_env *env)
 {
-	int	fd;
-	int	pid;
+	int			pid;
+	int			time;
+	t_list_char *cpy;
 
-	pid = fork();
-	while ((*cmd)->next != NULL)
+	time = 0;
+	(void)env;
+	while ((*cmd) != NULL)
 	{
-		special_case((*cmd), env->envp);
-		if (ft_memcmp((*cmd)->content, ">>\0", 3))
+		if (time == 0 || !ft_memcmp((*cmd)->content, "|\0", 2))
 		{
-			(*cmd) = (*cmd)->next;
-			fd = open((*cmd)->content, O_CREAT | O_APPEND | O_WRONLY, 0644);
-			if (fd < 0)
+			pid = fork();
+			if (pid == -1)
 				error(0, "");
-			if (dup2(fd, 1) < 0)
-				error(0, "");
-			if (close(fd) < 0)
-				error(0, "");
+			time++;
 		}
-		else if (ft_memcmp((*cmd)->content, ">\0", 2))
+		if (pid == 0)
 		{
-			(*cmd) = (*cmd)->next;
-			fd = open((*cmd)->content, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-			if (fd < 0)
-				error(0, "");
-			if (dup2(fd, 1) < 0)
-				error(0, "");
-			if (close(fd) < 0)
-				error(0, "");
-		}
-		else if (ft_memcmp((*cmd)->content, "<<\0", 3))/*here_doc avec delimiteur*/
-			;
-		else if (ft_memcmp((*cmd)->content, "<\0", 2))
-		{
-			(*cmd) = (*cmd)->next;
-			fd = open((*cmd)->content, O_RDONLY);
-			if (fd < 0)
-				error(0, "");
-			if (dup2(fd, 0) < 0)
-				error(0, "");
-			if (close(fd) < 0)
-				error(0, "");
-		}
-		else
+			cpy = (*cmd)->next;
+			if (cpy != NULL)
+				redirection(cpy);
 			exec(command_splitter((*cmd)->content), env);
-		if ((*cmd)->next != NULL)
-			(*cmd) = (*cmd)->next;
+		}
+			// special_case((*cmd), env->envp);
+		(*cmd) = (*cmd)->next;
 	}
+	while (wait(NULL) != -1)
+		;
 }

@@ -6,11 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/04/06 13:50:14 by lbattest         ###   ########.fr       */
-=======
-/*   Updated: 2022/04/07 10:18:56 by psaulnie         ###   ########.fr       */
->>>>>>> 52dfc236890cf41175807752764165952ebbb324
+/*   Updated: 2022/04/11 11:20:50 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +31,7 @@ int	main(int argc, char *argv[], char *envp[])
 		free(cmd);
 		split_redirection(&command);
 		replace_var_and_quote(&command);
-		start_execution(&command, envp);
+		start_execution(&command, &env);
 		lstclear_char(&command, free);
 	}
 	return (1);

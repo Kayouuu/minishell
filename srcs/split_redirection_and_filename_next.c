@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:27:41 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/07 10:49:43 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/11 11:46:21 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	add_next(t_list_char **next_link, t_list_char **start,
 	char		*cmd;
 
 	cmd = (*next_link)->content;
-	if (!cmd)
+	if (!cmd || !cmd[skipper(&cmd[1])])
 		return ;
 	var.i = skipper(cmd);
 	next = ft_stridup(cmd, 0, var.i);

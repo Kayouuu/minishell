@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 15:30:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:50:06 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void		split_redirection_and_filename(t_list_char **cmd);
 
 /*	START_EXECUTION.C	*/
 
-void		start_execution(t_list_char **cmd);
+void		start_execution(t_list_char **cmd, char **envp);
 char		*get_path(char **envp, char *cmd);
 void		special_case(t_list_char *list, char **envp);
 void		error(int i, char *str);

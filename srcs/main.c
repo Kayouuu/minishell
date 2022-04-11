@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/06 12:42:03 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:50:14 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char *argv[], char *envp[])
 		free(cmd);
 		split_redirection(&command);
 		replace_var_and_quote(&command);
-		start_execution(&command);
+		start_execution(&command, envp);
 		lstclear_char(&command, free);
 	}
 	return (1);

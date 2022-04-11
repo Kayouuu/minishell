@@ -6,11 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/04/04 13:54:51 by lbattest         ###   ########.fr       */
-=======
-/*   Updated: 2022/04/05 14:40:36 by psaulnie         ###   ########.fr       */
->>>>>>> 5d4c46bb76ed01f9b79ca4d8edaab543dcb59178
+/*   Updated: 2022/04/07 10:32:20 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +27,4 @@ void	exec(char **cmd, t_env *env)
 		error(0, "");
 	}
 }
+ 

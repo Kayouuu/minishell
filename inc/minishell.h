@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/06 13:50:06 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/04/11 10:23:52 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ int			is_useless(char *command);
 
 char		*remove_quote(t_list_char **start, char *cmd);
 
+/*	REMOVE_USELESS_COMMAND.C	*/
+
+void		remove_useless_command(t_list_char **cmd);
+
 /*	REPLACE_VAR_AND_QUOTE.C	*/
 
 char		*replace_env_var(t_list_char **start, char *cmd);
@@ -87,6 +91,11 @@ void		split_redirection(t_list_char **cmd);
 /*	SPLIT_REDIRECTION_AND_FILENAME.C	*/
 
 void		split_redirection_and_filename(t_list_char **cmd);
+
+/*	SPLIT_REDIRECTION_AND_FILENAME_NEXT.C	*/
+
+void		add_next(t_list_char **next_link, t_list_char **start,
+				t_list_char **command);	
 
 /*****************************************
  *										 *

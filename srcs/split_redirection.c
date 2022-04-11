@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/05 14:34:06 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/07 11:19:41 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 	if (cmd[var.j])
 		while (cmd[var.j] && !ft_iswhitespace(cmd[var.j]))
 			var.j++;
-	if (var.j != var.i && var.i != 0 && var.j != (int)ft_strlen(cmd) - 1)
+	if (var.j != var.i && var.i != 0)
 	{
 		new_link = insert_new_link(var, cmd, start);
 		new_link->next = (*command)->next;
@@ -102,5 +102,6 @@ void	split_redirection(t_list_char **cmd)
 		(*cmd) = (*cmd)->next;
 	}
 	split_redirection_and_filename(&start);
+	remove_useless_command(&start);
 	*cmd = start;
 }

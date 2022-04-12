@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/12 13:28:28 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:47:17 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,32 @@ static void	get_pwd(void)
 	return ;
 }
 
+static void	write_loop(int i, char **list)
+{
+	while (list[++i])
+	{
+		printf("%s", list[i]);
+		if (list[i + 1])
+			printf(" ");
+	}
+}
+
 static void	echo(char **list)
 {
+	int	i;
+
 	if (list[1] && ft_memcmp(list[1], "-n\0", 3) == 0)
 	{
+		i = 1;
 		if (list[2])
-			printf("%s", list[2]);
-		else
-			printf("");
+			write_loop(i, list);
 	}
 	else
 	{
+		i = 0;
 		if (list[1])
-			printf("%s\n", list[1]);
-		else
-			printf("\n");
+			write_loop(i, list);
+		printf("\n");
 	}
 }
 
@@ -58,6 +69,8 @@ int	special_case(char **list, char **envp, t_list_char **start)
 	int	i;
 
 	i = -1;
+	for (int j = 0; list[j]; j++)
+		dprintf(2, "[%s]\n", list[j]);
 	if (ft_memcmp(list[0], "pwd\0", 4) == 0)
 		get_pwd();
 	else if (ft_memcmp(list[0], "env\0", 4) == 0)

@@ -66,12 +66,13 @@ void	execution_pipe(t_data *data)
 				copy = data->cmd->next;
 				redirection(copy, data);
 			}
+			dprintf(2, "%s\n", data->cmd->content);
 			special_case(command_splitter(data->cmd->content),
 				data->env->envp, &data->start);
 			exec(command_splitter(data->cmd->content), data->env);
 		}
-		if (close(data->p[1]) < 0)
-			error(0, "");
+		// if (close(data->p[1]) < 0)
+		// 	error(0, "");
 		data->fdd = data->p[0];
 		data->cmd = data->cmd->next;
 	}

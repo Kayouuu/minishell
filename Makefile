@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/04/11 15:44:01 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/04/12 15:26:34 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ LST_SRCS	:=	main.c \
 				replace_var_and_quote.c \
 				split_redirection.c \
 				split_redirection_and_filename.c \
-				split_redirection_and_filename_next.c \
 				execution.c
 
 LST_OBJS	:=	$(LST_SRCS:.c=.o)

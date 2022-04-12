@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 11:03:34 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:32:42 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ static char	**put_in_char_array(t_list_char *cmd)
 		exit (0);
 	while (cmd != NULL)
 	{
-		commands[i] = cmd->content;
+		if (!is_useless(cmd->content))
+		{
+			commands[i] = cmd->content;
+			i++;
+		}
 		cmd = cmd->next;
-		i++;
 	}
 	commands[i] = NULL;
 	return (commands);

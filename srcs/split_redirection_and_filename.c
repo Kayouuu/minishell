@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 10:44:35 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/12 14:12:58 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 15:02:56 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 		return (cmd);
 	c = cmd[0];
 	new_str = redirection_split(cmd, start);
-	var.i = ft_strlen (new_str);
+	var.i = ft_strlen(new_str);
 	new_link_str = ft_strcut(cmd, 0, var.i - 1);
 	if (!new_link_str)
 		error_case(new_str, new_link_str, start, 0);
@@ -88,6 +88,7 @@ void	split_redirection_and_filename(t_list_char **cmd)
 	start = *cmd;
 	while (*cmd != NULL)
 	{
+		printf("{%s}\n", (*cmd)->content);
 		(*cmd)->content = splitter(&start, (*cmd)->content, cmd);
 		(*cmd) = (*cmd)->next;
 	}

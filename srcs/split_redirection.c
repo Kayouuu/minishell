@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 11:47:00 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 15:25:16 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ static t_index	skipper(t_index var, char *cmd)
 	var.j = var.i;
 	while (cmd[var.j] && !ft_iswhitespace(cmd[var.j]))
 		var.j++;
+	if (cmd[var.i] && cmd[var.i + 1]
+		&& !ft_iswhitespace(cmd[var.i + 1]) && var.i > 0)
+		var.j--;
 	return (var);
 }
 

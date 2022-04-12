@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 12:08:13 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 13:51:19 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,17 @@ typedef struct s_env
 	char		**envp;
 	t_list_char	*addon_env;
 }				t_env;
+
+typedef struct s_data
+{
+	int			old_stdin;
+	int			p[2];
+	int			fdd;
+	pid_t		pid;
+	t_env		*env;
+	t_list_char	*cmd;
+	t_list_char	*start;
+}				t_data;
 
 /*****************************************
  *										 *
@@ -107,11 +118,12 @@ void		add_next(t_list_char **next_link, t_list_char **start,
 
 void		start_execution(t_list_char **cmd, t_env *env);
 char		*get_path(char **envp, char *cmd);
-void		special_case(t_list_char *list, char **envp);
+int			special_case(char **list, char **envp, t_list_char **start);
 void		error(int i, char *str);
 void		add_env(t_env *env, char *str);
+void		execution_pipe(t_data *data);
 void		exec(char **cmd, t_env *env);
-void		redirection(t_list_char *cmd);
+void		redirection(t_list_char *cmd, t_data *data);
 
 /*****************************************
  *										 *

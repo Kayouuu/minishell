@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 10:44:35 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 11:44:16 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:12:58 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 		error_case(new_str, new_link_str, start, 1);
 	new_link->next = (*command)->next;
 	(*command)->next = new_link;
-	add_next(&new_link, start, command);
+	// add_next(&new_link, start, command);
 	return (new_str);
 }
 

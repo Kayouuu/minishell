@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 11:20:50 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:16:34 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_list_char	*command;
+	t_list_char	*start;
 	char		*cmd;
 	t_env		env;
 
@@ -31,8 +32,10 @@ int	main(int argc, char *argv[], char *envp[])
 		free(cmd);
 		split_redirection(&command);
 		replace_var_and_quote(&command);
+		printf("------------------------------------------\n");
+		start = command;
 		start_execution(&command, &env);
-		lstclear_char(&command, free);
+		lstclear_char(&start, free);
 	}
 	return (1);
 }

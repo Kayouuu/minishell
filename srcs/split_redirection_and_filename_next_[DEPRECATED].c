@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:27:41 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 11:46:21 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:12:23 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int	skipper(char *cmd)
 
 	var.i = 0;
 	var.i = skip_whitespace(cmd, var.i);
+	if (!cmd[var.i - 1])
+		return (var.i);
 	while (cmd[var.i] && !ft_iswhitespace(cmd[var.i]) && var.quotes % 2 == 0)
 	{
 		if (cmd[var.i] == '\'' && (var.quotes == '0'))
@@ -50,6 +52,8 @@ static int	skipper(char *cmd)
 		}
 		var.i++;
 	}
+	if (var.i == 0)
+		var.i++;
 	return (var.i);
 }
 
@@ -62,9 +66,11 @@ void	add_next(t_list_char **next_link, t_list_char **start,
 	char		*cmd;
 
 	cmd = (*next_link)->content;
-	if (!cmd || !cmd[skipper(&cmd[1])])
+	printf("[%s]\n", cmd);
+	if (!cmd || (*next_link)->next || !cmd[skipper(&cmd[1])])
 		return ;
 	var.i = skipper(cmd);
+	printf("%d\n", var.i);
 	next = ft_stridup(cmd, 0, var.i);
 	if (!next)
 		error_handler(start);

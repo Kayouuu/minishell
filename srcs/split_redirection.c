@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/12 15:25:16 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 18:17:26 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 {
 	t_index		var;
 	t_list_char	*new_link;
+	char		*str;
 
 	var.i = 0;
 	var.quote = '0';
@@ -79,11 +80,28 @@ static char	*splitter(t_list_char **start, char *cmd, t_list_char **command)
 	if (cmd[var.j])
 		while (cmd[var.j] && !ft_iswhitespace(cmd[var.j]))
 			var.j++;
-	if (var.j != var.i && var.i != 0)
+	if (var.j != var.i)
 	{
 		new_link = insert_new_link(var, cmd, start);
-		new_link->next = (*command)->next;
-		(*command)->next = new_link;
+		if (var.i != 0)
+		{
+			new_link->next = (*command)->next;
+			(*command)->next = new_link;
+		}
+		else
+		{
+			new_link->next = (*command)->next;
+			(*command)->next = new_link;
+			str = new_link->content;
+			cmd = ft_strcut(cmd, var.i, var.j - 1);
+			if (!cmd)
+			{
+				lstclear_char(start, free);
+				exit_error_msg("Malloc error");
+			}
+			new_link->content = cmd;
+			return (str);
+		}
 		cmd = ft_strcut(cmd, var.i, var.j - 1);
 		if (!cmd)
 		{

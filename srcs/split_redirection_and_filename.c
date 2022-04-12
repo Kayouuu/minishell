@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 10:44:35 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/12 15:02:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 17:14:00 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	split_redirection_and_filename(t_list_char **cmd)
 	start = *cmd;
 	while (*cmd != NULL)
 	{
-		printf("{%s}\n", (*cmd)->content);
 		(*cmd)->content = splitter(&start, (*cmd)->content, cmd);
 		(*cmd) = (*cmd)->next;
 	}

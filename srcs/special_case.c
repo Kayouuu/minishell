@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/12 14:47:17 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 15:44:34 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int	special_case(char **list, char **envp, t_list_char **start)
 	int	i;
 
 	i = -1;
-	for (int j = 0; list[j]; j++)
-		dprintf(2, "[%s]\n", list[j]);
 	if (ft_memcmp(list[0], "pwd\0", 4) == 0)
 		get_pwd();
 	else if (ft_memcmp(list[0], "env\0", 4) == 0)

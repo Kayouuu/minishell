@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/12 13:51:19 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 17:37:11 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ void		error(int i, char *str);
 void		add_env(t_env *env, char *str);
 void		execution_pipe(t_data *data);
 void		exec(char **cmd, t_env *env);
-void		redirection(t_list_char *cmd, t_data *data);
+void		redirection(t_data *data);
+int			is_cmd_special(char *cmd);
 
 /*****************************************
  *										 *

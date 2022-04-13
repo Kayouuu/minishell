@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/12 17:37:11 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:27:52 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+/*
+	SINGLE_RIN : >
+	DOUBLE_RIN : >>
+	SINGLE_ROUT : <
+	DOUBLE_ROUT : <<
+*/
+
+# define NONE 0
+# define SINGLE_RIN 1
+# define DOUBLE_RIN 2
+# define SINGLE_ROUT 3
+# define DOUBLE_ROUT 4
 
 typedef struct s_index
 {

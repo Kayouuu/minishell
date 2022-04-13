@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/11 17:19:09 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:21:11 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*replace_env_var(t_list_char **start, char *cmd)
 	var.i = 0;
 	var.can_replace = 1;
 	var.new_cmd = NULL;
-	while (cmd[var.i] != '\0')
+	while (cmd != NULL && cmd[var.i] != '\0')
 	{
 		var = skip_no_env_var(var, cmd);
 		if (var.i != var.j)

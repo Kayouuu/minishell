@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:31:45 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/03/21 17:38:52 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:20:40 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	is_useless(char *command)
 
 	i = 0;
 	is_useless = 1;
+	if (command == NULL)
+		return (0);
 	while (command[i])
 	{
 		if (!(command[i] == ' ' || command[i] == '\t' || command[i] == '\n'

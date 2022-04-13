@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:27:21 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/04 16:53:27 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:04:29 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_list_char
 {
 	char				*content;
 	struct s_list_char	*next;
+	int					*type;
+	char				**redirection_file;
 }				t_list_char;
 
 //--	Part 1	----//

@@ -6,7 +6,11 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/04/12 18:19:56 by lbattest         ###   ########.fr       */
+=======
+/*   Updated: 2022/04/14 15:59:31 by psaulnie         ###   ########.fr       */
+>>>>>>> 81089a56b63dd436182fb29d6bacd6ac073d3aa3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +40,7 @@ int	main(int argc, char *argv[], char *envp[])
 		start = command;
 		start_execution(&command, &env);
 		lstclear_char(&start, free);
+		// + free les tableaux de redirections
 	}
 	return (1);
 }

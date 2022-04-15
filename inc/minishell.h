@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/13 14:27:52 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/14 15:57:41 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,12 @@ void		replace_var_and_quote(t_list_char **cmd);
 
 void		split_redirection(t_list_char **cmd);
 
-/*	SPLIT_REDIRECTION_AND_FILENAME.C	*/
+/*	SPLIT_REDIRECTION_UTILS.C	*/
 
-void		split_redirection_and_filename(t_list_char **cmd);
-
-/*	SPLIT_REDIRECTION_AND_FILENAME_NEXT.C	*/
-
-void		add_next(t_list_char **next_link, t_list_char **start,
-				t_list_char **command);	
+int			iteration_nbr(char *cmd);
+char		*redirection_split(char *cmd);
+t_index		skipper(t_index var, char *cmd);
+int			set_redirection_type(char *redirection);
 
 /*****************************************
  *										 *

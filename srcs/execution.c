@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/12 17:37:34 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/14 14:39:05 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,28 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	data.cmd = *cmd;
 	data.start = *cmd;
 	data.env = env;
-	if (lstsize_char(data.cmd) == 1)
-	{
-		data.pid = fork();
-		if (data.pid == -1)
-			error(0, "");
-		if (data.pid == 0)
-		{
-			special_case(command_splitter(data.cmd->content),
-				data.env->envp, &data.start);
-			exec(command_splitter(data.cmd->content), data.env);
-		}
-		wait(NULL);
-	}
-	else
+	// if (lstsize_char(data.cmd) == 1)
+	// {
+	// 	data.pid = fork();
+	// 	if (data.pid == -1)
+	// 		error(0, "");
+	// 	if (data.pid == 0)
+	// 	{
+	// 		special_case(command_splitter(data.cmd->content),
+	// 			data.env->envp, &data.start);
+	// 		exec(command_splitter(data.cmd->content), data.env);
+	// 	}
+	// 	wait(NULL);
+	// }
+	// else
 		execution_pipe(&data);
 }
 
 void	execution_pipe(t_data *data)
 {
-	int	is_special;
-
-	is_special = 0;
 	data->fdd = 0;
 	while (data->cmd != NULL)
 	{
-		if (is_cmd_special(data->cmd->content))
-			is_special = 1;
-		else if (!ft_memcmp(data->cmd->content, "|\0", 2))
-			is_special = 0;
 		if (!ft_memcmp(data->cmd->content, "|\0", 2))
 			if (pipe(data->p) < 0)
 				error(0, "");
@@ -66,12 +59,9 @@ void	execution_pipe(t_data *data)
 				// dprintf(2, "{[%s]}\n", data->cmd->next->content);
 				redirection(data);
 			}
-			if (!is_special)
-			{
-				special_case(command_splitter(data->cmd->content),
-					data->env->envp, &data->start);
-				exec(command_splitter(data->cmd->content), data->env);
-			}
+			special_case(command_splitter(data->cmd->content),
+				data->env->envp, &data->start);
+			exec(command_splitter(data->cmd->content), data->env);
 			exit(0);
 		}
 		// if (close(data->p[1]) < 0)

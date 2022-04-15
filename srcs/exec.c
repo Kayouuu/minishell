@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/12 17:37:48 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/14 14:41:45 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,77 +15,74 @@
 void	redirection(t_data *data)
 {
 	int			fd;
-	t_list_char	*start;
+	int			i;
 
-	start = data->cmd;
-	if (data->cmd->next && is_cmd_special(data->cmd->next->content))
-		data->cmd = data->cmd->next;
-	if (data->cmd && !ft_memcmp(data->cmd->content, ">>\0", 3))
+	i = -1;
+	// printf("%d\n", data->cmd->type[0]);
+	while (data->cmd->type[++i] != -1)
 	{
-		data->cmd = data->cmd->next;
-		if (data->cmd == NULL)
+		dprintf(2, "[%d] - [%s]\n", data->cmd->type[i], data->cmd->redirection_file[i]);
+		if (data->cmd->type[i] == SINGLE_RIN)
 		{
-			lstclear_char(&data->start, free);
-			error(1, "minishell: syntax error near unexpected token `newline'");
+			if (data->cmd->redirection_file[i] == NULL)
+			{
+				lstclear_char(&data->cmd, free);
+				error(1, "minishell: syntax error near unexpected token `newline'");
+			}
+			fd = open(data->cmd->redirection_file[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+			if (fd < 0)
+				error(0, "");
+			if (dup2(fd, 1) < 0)
+				error(0, "");
+			if (close(fd) < 0)
+				error(0, "");
 		}
-		fd = open(data->cmd->content, O_CREAT | O_APPEND | O_WRONLY, 0644);
-		if (fd < 0)
-			error(0, "");
-		if (dup2(fd, data->old_stdin) < 0)
-			error(0, "");
-		if (close(fd) < 0)
-			error(0, "");
-		data->cmd = data->cmd->next;
-	}
-	else if (data->cmd && !ft_memcmp(data->cmd->content, ">\0", 2))
-	{
-		data->cmd = data->cmd->next;
-		if (data->cmd == NULL)
+		else if (data->cmd->type[i] == DOUBLE_RIN)
 		{
-			lstclear_char(&data->start, free);
-			error(1, "minishell: syntax error near unexpected token `newline'");
+			if (data->cmd->redirection_file[i] == NULL)
+			{
+				lstclear_char(&data->cmd, free);
+				error(1, "minishell: syntax error near unexpected token `newline'");
+			}
+			fd = open(data->cmd->redirection_file[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
+			if (fd < 0)
+				error(0, "");
+			if (dup2(fd, data->old_stdin) < 0)
+				error(0, "");
+			if (close(fd) < 0)
+				error(0, "");
 		}
-		fd = open(data->cmd->content, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		if (fd < 0)
-			error(0, "");
-		if (dup2(fd, 1) < 0)
-			error(0, "");
-		if (close(fd) < 0)
-			error(0, "");
-		data->cmd = data->cmd->next;
-	}
-	// else if (!ft_memcmp((*cmd)->content, "<<\0", 3))/*here_doc avec delimiteur*/
-	// 	;
-	else if (data->cmd && !ft_memcmp(data->cmd->content, "<\0", 2))
-	{
-		data->cmd = data->cmd->next;
-		if (data->cmd == NULL)
+		else if (data->cmd->type[i] == SINGLE_ROUT)
 		{
-			lstclear_char(&data->start, free);
-			error(1, "minishell: syntax error near unexpected token `newline'");
+			if (data->cmd->redirection_file[i] == NULL)
+			{
+				lstclear_char(&data->cmd, free);
+				error(1, "minishell: syntax error near unexpected token `newline'");
+			}
+			fd = open(data->cmd->redirection_file[i], O_RDONLY);
+			if (fd < 0)
+				error(0, "");
+			if (dup2(fd, 0) < 0)
+				error(0, "");
+			if (close(fd) < 0)
+				error(0, "");
 		}
-		fd = open(data->cmd->content, O_RDONLY);
-		if (fd < 0)
-			error(0, "");
-		if (dup2(fd, 0) < 0)
-			error(0, "");
-		if (close(fd) < 0)
-			error(0, "");
-		data->cmd = data->cmd->next;
+		// else if (data->cmd->type[i] == DOUBLE_ROUT)
+		// {
+		// 	/*here_doc avec delimiteur*/
+		// }
+		if (ft_memcmp(data->cmd->content, "|\0", 2) == 0)
+		{
+			if (dup2(data->p[1], 1) < 0)
+				error(0, "");
+			if (dup2(data->fdd, 0) < 0)
+				error(0, "");
+			if (close(data->p[0]) < 0)
+				error(0, "");
+			if (close(data->p[1]) < 0)
+				error(0, "");
+		}
 	}
-	if (data->cmd && !ft_memcmp(data->cmd->content, "|\0", 2))
-	{
-		if (dup2(data->p[1], 1) < 0)
-			error(0, "");
-		if (dup2(data->fdd, 0) < 0)
-			error(0, "");
-		if (close(data->p[0]) < 0)
-			error(0, "");
-		if (close(data->p[1]) < 0)
-			error(0, "");
-		data->cmd = data->cmd->next;
-	}
-	data->cmd = start;
 }
 
 void	exec(char **cmd, t_env *env)

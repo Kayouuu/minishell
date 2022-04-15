@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/14 14:41:45 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/15 14:17:24 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	redirection(t_data *data)
 			fd = open(data->cmd->redirection_file[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
 			if (fd < 0)
 				error(0, "");
-			if (dup2(fd, data->old_stdin) < 0)
+			if (dup2(fd, 1) < 0)
 				error(0, "");
 			if (close(fd) < 0)
 				error(0, "");

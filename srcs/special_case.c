@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/12 15:44:34 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/15 14:34:18 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,22 @@ static void	write_loop(int i, char **list)
 	}
 }
 
+static int check_flag(char *flag)
+{
+	int	i;
+	
+	i = 1;
+	while (flag[++i])
+		if (flag[i] != 'n')
+			return (1);
+	return (0);
+}
+
 static void	echo(char **list)
 {
 	int	i;
 
-	if (list[1] && ft_memcmp(list[1], "-n\0", 3) == 0)
+	if (list[1] && ft_memcmp(list[1], "-n", 2) == 0 && !check_flag(list[1]))
 	{
 		i = 1;
 		if (list[2])

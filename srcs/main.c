@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/12 18:14:00 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/12 18:19:56 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char *argv[], char *envp[])
 		replace_var_and_quote(&command);
 		printf("------------------------------------------\n");
 		start = command;
-		// start_execution(&command, &env);
+		start_execution(&command, &env);
 		lstclear_char(&start, free);
 	}
 	return (1);

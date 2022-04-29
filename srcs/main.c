@@ -6,18 +6,25 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/15 17:14:25 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/29 11:25:51 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	clear_list(t_list_char **start)
+void	clear_list(t_list_char **start)
 {
 	t_list_char	*tmp;
+	int			i;
 
+	i = 0;
 	while ((*start) != NULL)
 	{
+		while ((*start)->redirection_file[i])
+		{
+			free((*start)->redirection_file[i]);
+			i++;
+		}
 		free((*start)->redirection_file);
 		free((*start)->type);
 		free((*start)->content);
@@ -31,8 +38,8 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_list_char	*command;
 	t_list_char	*start;
-	char		*cmd;
 	t_env		env;
+	char		*cmd;
 
 	(void)argc;
 	(void)argv;
@@ -47,6 +54,8 @@ int	main(int argc, char *argv[], char *envp[])
 		free(cmd);
 		split_redirection(&command);
 		replace_var_and_quote(&command);
+		if (check_and_clean_parsing(&command) == 0)
+			continue ;
 		start = command;
 		start_execution(&command, &env);
 		clear_list(&start);

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/15 14:48:01 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/29 14:55:11 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	// 		error(0, "");
 	// 	if (data.pid == 0)
 	// 	{
+	// 		redirection(&data);
 	// 		special_case(command_splitter(data.cmd->content),
 	// 			data.env->envp, &data.start);
 	// 		exec(command_splitter(data.cmd->content), data.env);

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/15 16:56:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/29 11:24:09 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ typedef struct s_data
  * 				  PARSING                *
  * 										 *
  *****************************************/
+
+/*	CHECK_AND_CLEAN_PARSING.C	*/
+
+int			check_and_clean_parsing(t_list_char **cmd);
 
 /*	COMMAND_SIZE_COUNTER.C	*/
 
@@ -144,6 +148,10 @@ int			is_cmd_special(char *cmd);
  *                 OTHER                 *
  * 										 *
  *****************************************/
+
+/*	MAIN.C	*/
+
+void		clear_list(t_list_char **start);
 
 /*	UTILS.C	*/
 

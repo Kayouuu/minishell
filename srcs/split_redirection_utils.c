@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:04:51 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/15 17:00:06 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/29 13:40:24 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,21 @@ t_index	skipper(t_index var, char *cmd)
 
 int	set_redirection_type(char *redirection)
 {
+	int	result;
+
+	result = 0;
 	if (!ft_memcmp(redirection, ">\0", 2))
-		return (SINGLE_RIN);
+		result = SINGLE_RIN;
 	else if (!ft_memcmp(redirection, ">>\0", 3))
-		return (DOUBLE_RIN);
+		result = DOUBLE_RIN;
 	else if (!ft_memcmp(redirection, "<\0", 2))
-		return (SINGLE_ROUT);
+		result = SINGLE_ROUT;
 	else if (!ft_memcmp(redirection, "<<\0", 3))
-		return (DOUBLE_ROUT);
+		result = DOUBLE_ROUT;
 	else
-	{
 		printf("minishell: parse error near '%c'\n", redirection[0]);
-		return (0);
-	}
+	free(redirection);
+	return (result);
 }
 
 int	type_setter(t_index var, t_list_char **cmd, t_list_char **start)

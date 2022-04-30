@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/29 13:39:37 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/30 13:36:50 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,17 @@ static t_index	var_skipper(t_index var, t_list_char **cmd)
 	if ((*cmd)->content[var.j])
 		var.j++;
 	if ((*cmd)->content[var.j])
-		while ((*cmd)->content[var.j]
-			&& (!ft_iswhitespace((*cmd)->content[var.j])
-				&& ((*cmd)->content[var.j] != '<'
-					&& (*cmd)->content[var.j] != '>')))
+	{
+		while (((*cmd)->content[var.j]
+				&& (!ft_iswhitespace((*cmd)->content[var.j])
+					&& ((*cmd)->content[var.j] != '<'
+						&& (*cmd)->content[var.j] != '>'))))
+		{
+			if ((*cmd)->content[var.j] == '\'' || (*cmd)->content[var.j] == '"')
+				var.quotes ^= 1;
 			var.j++;
+		}
+	}
 	return (var);
 }
 
@@ -66,7 +72,7 @@ static void	splitter_loop(t_list_char **start, t_list_char **cmd,
 	while ((*cmd)->content != NULL && current < iteration)
 	{
 		var = var_skipper(var, cmd);
-		(*cmd)->type[current] = type_setter(var, cmd, start);
+		(*cmd)->type[current] = type_setter(var, cmd, start, current);
 		if ((*cmd)->type[current] == 0)
 			iteration = 0;
 		var = splitter_process(cmd, var, current);

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/29 11:24:09 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/30 13:24:23 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int			iteration_nbr(char *cmd);
 char		*redirection_split(char *cmd);
 t_index		skipper(t_index var, char *cmd);
 int			set_redirection_type(char *redirection);
-int			type_setter(t_index var, t_list_char **cmd, t_list_char **start);
+int			type_setter(t_index var, t_list_char **cmd, t_list_char **start, int current);
 
 /*****************************************
  *										 *

@@ -6,16 +6,16 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/15 14:17:24 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/30 13:27:07 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	redirection(t_data *data)
+void redirection(t_data *data)
 {
-	int			fd;
-	int			i;
+	int fd;
+	int i;
 
 	i = -1;
 	// printf("%d\n", data->cmd->type[0]);
@@ -85,15 +85,13 @@ void	redirection(t_data *data)
 	}
 }
 
-void	exec(char **cmd, t_env *env)
+void exec(char **cmd, t_env *env)
 {
-	char	*tmp;
+	char *tmp;
 
-	if (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3)
-		|| !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3)
-		|| !ft_memcmp(cmd[0], "|\0", 2))
+	if (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3) || !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3) || !ft_memcmp(cmd[0], "|\0", 2))
 	{
-		free_all(cmd);		
+		free_all(cmd);
 		exit(0);
 	}
 	tmp = get_path(env->envp, cmd[0]);
@@ -108,4 +106,3 @@ void	exec(char **cmd, t_env *env)
 	}
 	exit(0);
 }
- 

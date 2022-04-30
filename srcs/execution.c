@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/29 14:55:11 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/30 14:40:42 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	data.cmd = *cmd;
 	data.start = *cmd;
 	data.env = env;
-	// if (lstsize_char(data.cmd) == 1)
-	// {
-	// 	data.pid = fork();
-	// 	if (data.pid == -1)
-	// 		error(0, "");
-	// 	if (data.pid == 0)
-	// 	{
-	// 		redirection(&data);
-	// 		special_case(command_splitter(data.cmd->content),
-	// 			data.env->envp, &data.start);
-	// 		exec(command_splitter(data.cmd->content), data.env);
-	// 	}
-	// 	wait(NULL);
-	// }
-	// else
+	if (lstsize_char(data.cmd) == 1)
+	{
+		data.pid = fork();
+		if (data.pid == -1)
+			error(0, "");
+		if (data.pid == 0)
+		{
+			redirection(&data);
+			special_case(command_splitter(data.cmd->content),
+				data.env->envp, &data.start);
+			exec(command_splitter(data.cmd->content), data.env);
+		}
+		wait(NULL);
+	}
+	else
 		execution_pipe(&data);
 }
 

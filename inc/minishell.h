@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/30 13:24:23 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/04/30 14:22:32 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,15 @@ void		split_redirection(t_list_char **cmd);
 
 /*	SPLIT_REDIRECTION_UTILS.C	*/
 
-int			iteration_nbr(char *cmd);
 char		*redirection_split(char *cmd);
 t_index		skipper(t_index var, char *cmd);
 int			set_redirection_type(char *redirection);
-int			type_setter(t_index var, t_list_char **cmd, t_list_char **start, int current);
+int			type_setter(t_index var, t_list_char **cmd, t_list_char **start,
+				int current);
+
+/*	SPLIT_REDIRECTION_UTILS2.C	*/
+
+int			iteration_nbr(char *cmd);
 
 /*****************************************
  *										 *
@@ -131,17 +135,31 @@ int			type_setter(t_index var, t_list_char **cmd, t_list_char **start, int curre
  * 										 *
  *****************************************/
 
-/*	START_EXECUTION.C	*/
+/*	ADD_TO_ENVP.C	*/
 
-void		start_execution(t_list_char **cmd, t_env *env);
-char		*get_path(char **envp, char *cmd);
-int			special_case(char **list, char **envp, t_list_char **start);
-void		error(int i, char *str);
 void		add_env(t_env *env, char *str);
+
+/*	EXECUTION.C	*/
+
 void		execution_pipe(t_data *data);
-void		exec(char **cmd, t_env *env);
+void		start_execution(t_list_char **cmd, t_env *env);
+
+/*	EXEC.C	*/
+
 void		redirection(t_data *data);
+void		exec(char **cmd, t_env *env);
+
+/*	EXEC_UTILS.C	*/
+
 int			is_cmd_special(char *cmd);
+
+/*	GET_PATH.C	*/
+
+char		*get_path(char **envp, char *cmd);
+
+/*	SPECIAL_CASE.C	*/
+
+int			special_case(char **list, char **envp, t_list_char **start);
 
 /*****************************************
  *										 *
@@ -155,6 +173,7 @@ void		clear_list(t_list_char **start);
 
 /*	UTILS.C	*/
 
+void		error(int i, char *str);
 void		exit_error_msg(char *str);
 void		*free_all(char **str);
 

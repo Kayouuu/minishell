@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/30 13:36:50 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/02 16:55:15 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,20 @@ static t_index	var_skipper(t_index var, t_list_char **cmd)
 	if ((*cmd)->content[var.j])
 	{
 		while (((*cmd)->content[var.j]
-				&& (!ft_iswhitespace((*cmd)->content[var.j])
-					&& ((*cmd)->content[var.j] != '<'
-						&& (*cmd)->content[var.j] != '>'))))
+				&& (!ft_iswhitespace((*cmd)->content[var.j]))))
 		{
 			if ((*cmd)->content[var.j] == '\'' || (*cmd)->content[var.j] == '"')
-				var.quotes ^= 1;
-			var.j++;
+			{
+				var.quote = (*cmd)->content[var.j];
+				while ((*cmd)->content[var.j]
+					&& (*cmd)->content[var.j] != var.quote)
+					var.j++;
+				var.quote = '0';
+			}
+			if ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>')
+				break ;
+			if ((*cmd)->content[var.j])
+				var.j++;
 		}
 	}
 	return (var);

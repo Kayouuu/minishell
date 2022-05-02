@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/04/30 13:56:51 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/05/02 16:46:48 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	:=	minishell
 
 CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror
-# CFLAGS	+= -fsanitize=address -g3
+CFLAGS	+= -fsanitize=address -g3
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs

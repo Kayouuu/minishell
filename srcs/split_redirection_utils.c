@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:04:51 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/30 13:56:28 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/02 16:55:24 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ char	*redirection_split(char *cmd)
 
 t_index	skipper(t_index var, char *cmd)
 {
-	while (cmd != NULL && cmd[var.i]
-		&& (cmd[var.i] != '<' && cmd[var.i] != '>' && var.quotes % 2 == 0))
+	while (cmd != NULL && cmd[var.i])
 	{
-		if (cmd[var.i] == '\'' && (var.quotes == '0'))
-			var.quote = '\'';
-		if (cmd[var.i] == '"' && (var.quotes == '0'))
-			var.quote = '"';
-		if (cmd[var.i] == var.quotes)
-			var.quotes++;
-		if (var.quotes == 2)
+		if (cmd[var.i] == '\'' || cmd[var.i] == '"')
 		{
+			var.quote = cmd[var.i];
+			var.i++;
+			while (cmd[var.i] && cmd[var.i] != var.quote)
+				var.i++;
+			if (cmd[var.i])
+				var.i++;
 			var.quote = '0';
-			var.quotes = 0;
 		}
+		if (cmd[var.i] == '>' || cmd[var.i] == '<')
+			break ;
 		var.i++;
 	}
 	var.j = var.i;

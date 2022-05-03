@@ -6,21 +6,21 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:53:18 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/12 15:35:41 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:08:57 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static char	*get_envpath(char **envp)
+char	*get_envvar(char **envp, char *var)
 {
 	int		i;
 
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_memcmp(envp[i], "PATH=", 5) == 0)
-			return (&envp[i][5]);
+		if (ft_memcmp(envp[i], var, ft_strlen(var)) == 0)
+			return (&envp[i][ft_strlen(var)]);
 		i++;
 	}
 	return (NULL);
@@ -40,7 +40,7 @@ char	*get_path(char **envp, char *cmd)
 
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
-	path = get_envpath(envp);
+	path = get_envvar(envp, "PATH=");
 	if (!path)
 		return (NULL);
 	i = 0;

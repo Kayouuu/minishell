@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 09:53:37 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/03 09:36:59 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/03 15:54:58 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_getenv(t_env env, char *name)
 		if (ft_strnstr(env.addon_env->content, name, ft_strlen(name)))
 		{
 			returned_env = ft_strdup(ft_strnstr(env.addon_env->content,
-						name, ft_strlen(name)) + ft_strlen(name) + 1);
+						name, ft_strlen(name) + 1) + ft_strlen(name) + 1);
 			if (!returned_env)
 				return (NULL);
 			break ;

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/02 16:54:33 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/03 11:12:16 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,16 @@ void	clear_list(t_list_char **start)
 	i = 0;
 	while ((*start) != NULL)
 	{
-		while ((*start)->redirection_file[i])
+		printf("A\n");
+		if ((*start)->redirection_file)
 		{
-			free((*start)->redirection_file[i]);
-			i++;
+			while ((*start)->redirection_file[i])
+			{
+				free((*start)->redirection_file[i]);
+				i++;
+			}
+			free((*start)->redirection_file);
 		}
-		free((*start)->redirection_file);
 		free((*start)->type);
 		free((*start)->content);
 		tmp = (*start)->next;
@@ -50,15 +54,15 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!cmd)
 			exit (0);
 		add_history(cmd);
+		cmd = replace_env_var(cmd);
 		command = parsing(cmd);
 		free(cmd);
 		split_redirection(&command);
-		replace_var_and_quote(&command);
 		if (check_and_clean_parsing(&command) == 0)
 			continue ;
 		start = command;
 		start_execution(&command, &env);
-		clear_list(&start);
+		// clear_list(&start);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/02 16:55:15 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/03 11:01:03 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,22 @@ static t_index	splitter_process(t_list_char **cmd,
 		var.k++;
 	var.k = skip_whitespace((*cmd)->content, var.k);
 	var.j = var.k;
-	while ((*cmd)->content[var.j]
-		&& !ft_iswhitespace((*cmd)->content[var.j])
-		&& (*cmd)->content[var.j] != '|' && (*cmd)->content[var.j] != '>'
-		&& (*cmd)->content[var.j] != '<')
+	if ((*cmd)->content[var.j] == '"' || (*cmd)->content[var.j] == '\'')
+	{
+		var.quote = (*cmd)->content[var.j];
 		var.j++;
+		while ((*cmd)->content[var.j] && (*cmd)->content[var.j] != var.quote)
+			var.j++;
+		var.j++;
+	}
+	else
+	{
+		while ((*cmd)->content[var.j]
+			&& !ft_iswhitespace((*cmd)->content[var.j])
+			&& (*cmd)->content[var.j] != '|' && (*cmd)->content[var.j] != '>'
+			&& (*cmd)->content[var.j] != '<')
+			var.j++;
+	}
 	(*cmd)->redirection_file[current] = ft_stridup((*cmd)->content,
 			var.k, var.j);
 	if ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>')

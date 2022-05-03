@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/02 16:46:48 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/05/03 10:44:27 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ LST_SRCS	:=	main.c \
 				parsing_utils.c \
 				quote_remover.c \
 				remove_useless_command.c \
-				replace_var_and_quote.c \
+				replace_env_var.c \
 				split_redirection.c \
 				split_redirection_utils.c \
 				split_redirection_utils2.c \

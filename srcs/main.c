@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 14:13:34 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:58:50 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
+	env.error_code = 0;
 	env.envp = envp;
 	while (1)
 	{
@@ -50,7 +51,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!cmd)
 			exit (0);
 		add_history(cmd);
-		cmd = replace_env_var(cmd);
+		cmd = replace_env_var(cmd, env);
+		printf("---------\n%s\n", cmd);
 		command = parsing(cmd);
 		free(cmd);
 		split_redirection(&command);

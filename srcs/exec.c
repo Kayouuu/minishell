@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/04 11:15:51 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:23:19 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void redirection(t_data *data)
 	int i;
 
 	i = -1;
-	printf("%d\n", data->cmd->type[0]);
+	// printf("%d\n", data->cmd->type[0]);
 	while (data->cmd->type[++i] != -1)
 	{
 		dprintf(2, "[%d] - [%s]\n", data->cmd->type[i], data->cmd->redirection_file[i]);

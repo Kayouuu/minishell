@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/04 14:05:09 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/05/04 15:08:22 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	:=	minishell
 
 CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror
-CFLAGS	+= -fsanitize=address -g3
+# CFLAGS	+= -fsanitize=address -g3
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
@@ -36,6 +36,7 @@ LST_SRCS	:=	main.c \
 				quote_remover.c \
 				remove_useless_command.c \
 				replace_env_var.c \
+				replace_env_var_exit_status.c \
 				split_redirection.c \
 				split_redirection_utils.c \
 				split_redirection_utils2.c \

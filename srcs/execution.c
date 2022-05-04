@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 11:17:21 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:09:21 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	{
 		redirection(&data);
 		if (special_case(command_splitter(data.cmd->content, &data.start),
-				data.env, &data.start) == 0)
+				data.env) == 0)
 		{
 			data.pid = fork();
 			if (data.pid == -1)
@@ -64,7 +64,7 @@ void	execution_pipe(t_data *data)
 				redirection(data);
 			}
 			special_case(command_splitter(data->cmd->content, &data->start),
-				data->env, &data->start);
+				data->env);
 			exec(command_splitter(data->cmd->content, &data->start), data->env);
 			exit(0);
 		}

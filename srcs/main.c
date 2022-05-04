@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 11:26:21 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:07:40 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,27 @@ void	clear_list(t_list_char **start)
 	t_list_char	*tmp;
 	int			i;
 
-	while ((*start) != NULL)
+	while (*start != 0)
 	{
+		tmp = (*start)->next;
 		i = 0;
 		while ((*start)->redirection_file[i] != NULL)
 		{
 			free((*start)->redirection_file[i]);
 			i++;
 		}
-		free((*start)->redirection_file);
 		free((*start)->type);
 		free((*start)->content);
-		tmp = (*start)->next;
-		free(*start);
-		start = &tmp;
+		free((*start)->redirection_file);
+		lstdelone_char(*start, free);
+		(*start) = tmp;
 	}
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_list_char	*command;
-	t_list_char	*start;
+	t_list_char	**start;
 	t_env		env;
 	char		*cmd;
 
@@ -56,9 +56,9 @@ int	main(int argc, char *argv[], char *envp[])
 		split_redirection(&command);
 		if (check_and_clean_parsing(&command) == 0)
 			continue ;
-		start = command;
+		start = &command;
 		start_execution(&command, &env);
-		// clear_list(&start);
+		clear_list(start);
 	}
 	return (1);
 }

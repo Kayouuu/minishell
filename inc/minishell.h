@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 10:48:10 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:08:53 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ char		*get_path(char **envp, char *cmd);
 
 /*	SPECIAL_CASE.C	*/
 
-int			special_case(char **list, t_env *env, t_list_char **start);
+int			special_case(char **list, t_env *env);
 
 /*****************************************
  *										 *

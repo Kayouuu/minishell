@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/03 15:59:36 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 10:49:59 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	data.env = env;
 	if (lstsize_char(data.cmd) == 1)
 	{
-		if (special_case(command_splitter(data.cmd->content),
+		if (special_case(command_splitter(data.cmd->content, &data.start),
 				data.env, &data.start) == 0)
 		{
 			data.pid = fork();
@@ -31,7 +31,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 			if (data.pid == 0)
 			{
 				redirection(&data);
-				exec(command_splitter(data.cmd->content), data.env);
+				exec(command_splitter(data.cmd->content, &data.start), data.env);
 			}
 			wait(NULL);
 		}
@@ -62,9 +62,9 @@ void	execution_pipe(t_data *data)
 				// dprintf(2, "{[%s]}\n", data->cmd->next->content);
 				redirection(data);
 			}
-			special_case(command_splitter(data->cmd->content),
+			special_case(command_splitter(data->cmd->content, &data->start),
 				data->env, &data->start);
-			exec(command_splitter(data->cmd->content), data->env);
+			exec(command_splitter(data->cmd->content, &data->start), data->env);
 			exit(0);
 		}
 		// if (close(data->p[1]) < 0)

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/03 16:08:16 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 10:48:10 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			count_size(char *cmd);
 /*	COMMAND_SPLITTER.C		*/
 
 int			ft_iswhitespace(char c);
-char		**command_splitter(char *cmd);
+char		**command_splitter(char *cmd, t_list_char **start);
 
 /*	DQUOTE.C	*/
 

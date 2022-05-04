@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 10:29:24 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 11:18:43 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,11 @@ static t_index	splitter_process(t_list_char **cmd,
 			var.j++;
 		var.j++;
 	}
-	else
-	{
-		while ((*cmd)->content[var.j]
-			&& !ft_iswhitespace((*cmd)->content[var.j])
-			&& (*cmd)->content[var.j] != '|' && (*cmd)->content[var.j] != '>'
-			&& (*cmd)->content[var.j] != '<')
-			var.j++;
-	}
+	while ((*cmd)->content[var.j]
+		&& !ft_iswhitespace((*cmd)->content[var.j])
+		&& (*cmd)->content[var.j] != '|' && (*cmd)->content[var.j] != '>'
+		&& (*cmd)->content[var.j] != '<')
+		var.j++;
 	(*cmd)->redirection_file[current] = ft_stridup((*cmd)->content,
 			var.k, var.j);
 	if ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>')
@@ -132,6 +129,7 @@ void	split_redirection(t_list_char **cmd)
 {
 	t_list_char	*start;
 	char		*tmp;
+	int			i;
 
 	start = *cmd;
 	while (*cmd != NULL)
@@ -141,6 +139,13 @@ void	split_redirection(t_list_char **cmd)
 		free(tmp);
 		printf("[%s]\n", (*cmd)->content);
 		splitter(&start, cmd);
+		i = 0;
+		while ((*cmd)->redirection_file[i])
+		{
+			(*cmd)->redirection_file[i] = remove_quote(&start,
+					(*cmd)->redirection_file[i]);
+			i++;
+		}
 		(*cmd) = (*cmd)->next;
 	}
 	remove_useless_command(&start);

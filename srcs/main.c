@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 09:41:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 11:26:21 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,15 @@ void	clear_list(t_list_char **start)
 	t_list_char	*tmp;
 	int			i;
 
-	i = 0;
 	while ((*start) != NULL)
 	{
-		printf("A\n");
-		if ((*start)->redirection_file)
+		i = 0;
+		while ((*start)->redirection_file[i] != NULL)
 		{
-			while ((*start)->redirection_file[i])
-			{
-				free((*start)->redirection_file[i]);
-				i++;
-			}
-			free((*start)->redirection_file);
+			free((*start)->redirection_file[i]);
+			i++;
 		}
+		free((*start)->redirection_file);
 		free((*start)->type);
 		free((*start)->content);
 		tmp = (*start)->next;

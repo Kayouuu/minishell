@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 14:07:40 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:13:34 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	clear_list(t_list_char **start)
 		free((*start)->type);
 		free((*start)->content);
 		free((*start)->redirection_file);
-		lstdelone_char(*start, free);
+		free((*start));
 		(*start) = tmp;
 	}
 }

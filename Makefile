@@ -6,7 +6,7 @@
 #    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/04 14:43:42 by lbattest         ###   ########.fr        #
+#    Updated: 2022/05/05 13:37:14 by lbattest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ LST_SRCS	:=	main.c \
 				quote_remover.c \
 				remove_useless_command.c \
 				replace_env_var.c \
+				replace_env_var_exit_status.c \
 				split_redirection.c \
 				split_redirection_utils.c \
 				split_redirection_utils2.c \

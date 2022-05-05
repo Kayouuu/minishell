@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 11:18:43 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:23:33 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,6 @@
 	Split the command in the array
 	Example : [echo a > test b] ---> [echo a b] => [3] [test]
 */
-
-static t_index	var_skipper(t_index var, t_list_char **cmd)
-{
-	var.i = 0;
-	var.quote = '0';
-	var.quotes = 0;
-	var = skipper(var, (*cmd)->content);
-	while ((*cmd)->content[var.j]
-		&& (*cmd)->content[var.j + 1] == (*cmd)->content[var.j])
-		var.j++;
-	if ((*cmd)->content[var.j])
-		var.j++;
-	if ((*cmd)->content[var.j])
-	{
-		while (((*cmd)->content[var.j]
-				&& (!ft_iswhitespace((*cmd)->content[var.j]))))
-		{
-			if ((*cmd)->content[var.j] == '\'' || (*cmd)->content[var.j] == '"')
-			{
-				var.quote = (*cmd)->content[var.j];
-				while ((*cmd)->content[var.j]
-					&& (*cmd)->content[var.j] != var.quote)
-					var.j++;
-				var.quote = '0';
-			}
-			if ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>')
-				break ;
-			if ((*cmd)->content[var.j])
-				var.j++;
-		}
-	}
-	return (var);
-}
 
 static t_index	splitter_process(t_list_char **cmd,
 		t_index var, int current)

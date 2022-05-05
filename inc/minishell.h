@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 10:48:10 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/05 10:26:50 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ typedef struct s_index
 	int		last_quote_index;
 	char	*new_cmd;
 	char	*var_name;
+	int		is_exit_status;
 }	t_index;
 
 typedef struct s_env
 {
 	char		**envp;
 	t_list_char	*addon_env;
+	int			error_code;
 }				t_env;
 
 typedef struct s_data
@@ -91,6 +93,10 @@ char		**command_splitter(char *cmd, t_list_char **start);
 
 char		*dquote(char *cmd, int arg);
 
+/*	FT_GETENV.C	*/
+
+char		*ft_getenv(t_env env, char *name);
+
 /*	PARSING.C	*/
 
 t_list_char	*parsing(char *cmd);
@@ -114,8 +120,12 @@ void		replace_env_var_redirection(t_list_char **start, t_list_char **cmd);
 
 /*	REPLACE_VAR_AND_QUOTE.C	*/
 
-char		*replace_env_var(char *cmd);
+char		*replace_env_var(char *cmd, t_env env);
 void		replace_var_and_quote(t_list_char **cmd);
+
+/*	REPLACE_ENV_VAR_EXIT_STATUS.C	*/
+
+char		*replace_env_var_exit_status(t_index var, char *cmd, t_env env);
 
 /*	SPLIT_REDIRECTION.C	*/
 
@@ -132,6 +142,7 @@ int			type_setter(t_index var, t_list_char **cmd, t_list_char **start,
 /*	SPLIT_REDIRECTION_UTILS2.C	*/
 
 int			iteration_nbr(char *cmd);
+t_index		var_skipper(t_index var, t_list_char **cmd);
 
 /*****************************************
  *										 *
@@ -164,7 +175,7 @@ char		*get_path(char **envp, char *cmd);
 
 /*	SPECIAL_CASE.C	*/
 
-int			special_case(char **list, t_env *env, t_list_char **start);
+int			special_case(char **list, t_env *env);
 
 /*****************************************
  *										 *

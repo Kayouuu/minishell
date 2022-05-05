@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/03 11:06:23 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/05 10:30:57 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,18 @@ static t_index	skip_no_env_var(t_index var, char *cmd)
 	if (cmd[var.j] == '$' && ft_isalnum(cmd[var.j + 1]) == 0)
 		var.j += 1;
 	if (var.j > 0 && cmd[var.j - 1] == '$' && cmd[var.j] == '?')
+	{
 		var.j += 1;
+		if (cmd[var.j] != '$')
+			var.j += 1;
+	}
 	return (var);
 }
 
-static t_index	replace(t_index var, char *cmd)
+static t_index	replace(t_index var, char *cmd, t_env env)
 {
+	char	*env_var;
+
 	var.i = var.j;
 	if ((cmd[var.i] == '$' && cmd[var.i + 1] && cmd[var.i + 1] != '?')
 		&& var.can_replace)
@@ -53,19 +59,20 @@ static t_index	replace(t_index var, char *cmd)
 		var.var_name = ft_stridup(cmd, var.j + 1, var.i);
 		if (!var.var_name)
 			exit_error_msg("Malloc error");
-		var.new_cmd = ft_strjoin_gnl(var.new_cmd, getenv(var.var_name));
+		env_var = ft_getenv(env, var.var_name);
+		var.new_cmd = ft_strjoin_gnl(var.new_cmd, env_var);
+		if (env_var)
+			free(env_var);
+		free((var.var_name));
 		if (!var.new_cmd)
-		{
-			free(var.var_name);
 			exit_error_msg("Malloc error");
-		}
 	}
 	else if (cmd[var.i] && cmd[var.j])
 		var.i++;
 	return (var);
 }
 
-char	*replace_env_var(char *cmd)
+char	*replace_env_var(char *cmd, t_env env)
 {
 	t_index	var;
 	char	*str;
@@ -83,10 +90,12 @@ char	*replace_env_var(char *cmd)
 			free(str);
 			check_malloc(var.new_cmd);
 		}
-		var = replace(var, cmd);
+		var = replace(var, cmd, env);
 	}
 	var.new_cmd = ft_strjoin_gnl(var.new_cmd, "\0");
 	check_malloc(var.new_cmd);
 	free(cmd);
+	var.i = 0;
+	var.new_cmd = replace_env_var_exit_status(var, var.new_cmd, env);
 	return (var.new_cmd);
 }

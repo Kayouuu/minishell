@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/12 14:32:42 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 10:53:28 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ int	ft_iswhitespace(char c)
 			|| c == '\v' || c == '\f') && c);
 }
 
-static char	**put_in_char_array(t_list_char *cmd)
+static char	**put_in_char_array(t_list_char *cmd, t_list_char **start)
 {
 	char		**commands;
+	char		*tmp;
 	int			i;
 
 	i = 0;
@@ -33,7 +34,8 @@ static char	**put_in_char_array(t_list_char *cmd)
 	{
 		if (!is_useless(cmd->content))
 		{
-			commands[i] = cmd->content;
+			tmp = cmd->content;
+			commands[i] = remove_quote(start, cmd->content);
 			i++;
 		}
 		cmd = cmd->next;
@@ -42,7 +44,7 @@ static char	**put_in_char_array(t_list_char *cmd)
 	return (commands);
 }
 
-char	**command_splitter(char *cmd)
+char	**command_splitter(char *cmd, t_list_char **start)
 {
 	t_list_char	*command;
 	char		**new_cmd;
@@ -66,6 +68,6 @@ char	**command_splitter(char *cmd)
 		if (cmd[var.i])
 			var.i++;
 	}
-	new_cmd = put_in_char_array(command);
+	new_cmd = put_in_char_array(command, start);
 	return (new_cmd);
 }

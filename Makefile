@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
+#    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/04/14 15:57:58 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/05/04 14:43:42 by lbattest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	:=	minishell
 
 CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror
-# CFLAGS	+= -fsanitize=address -g3
+CFLAGS	+= -fsanitize=address -g3
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
@@ -35,9 +35,11 @@ LST_SRCS	:=	main.c \
 				parsing_utils.c \
 				quote_remover.c \
 				remove_useless_command.c \
-				replace_var_and_quote.c \
+				replace_env_var.c \
 				split_redirection.c \
 				split_redirection_utils.c \
+				split_redirection_utils2.c \
+				check_and_clean_parsing.c \
 				execution.c \
 				exec_utils.c
 

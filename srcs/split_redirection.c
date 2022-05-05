@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/14 17:05:33 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 11:18:43 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,53 +23,74 @@ static t_index	var_skipper(t_index var, t_list_char **cmd)
 	var.quote = '0';
 	var.quotes = 0;
 	var = skipper(var, (*cmd)->content);
+	while ((*cmd)->content[var.j]
+		&& (*cmd)->content[var.j + 1] == (*cmd)->content[var.j])
+		var.j++;
 	if ((*cmd)->content[var.j])
 		var.j++;
 	if ((*cmd)->content[var.j])
-		while ((*cmd)->content[var.j]
-			&& (!ft_iswhitespace((*cmd)->content[var.j])
-				&& ((*cmd)->content[var.j] != '<'
-					&& (*cmd)->content[var.j] != '>')))
-			var.j++;
+	{
+		while (((*cmd)->content[var.j]
+				&& (!ft_iswhitespace((*cmd)->content[var.j]))))
+		{
+			if ((*cmd)->content[var.j] == '\'' || (*cmd)->content[var.j] == '"')
+			{
+				var.quote = (*cmd)->content[var.j];
+				while ((*cmd)->content[var.j]
+					&& (*cmd)->content[var.j] != var.quote)
+					var.j++;
+				var.quote = '0';
+			}
+			if ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>')
+				break ;
+			if ((*cmd)->content[var.j])
+				var.j++;
+		}
+	}
 	return (var);
 }
 
-static int	splitter_loop(t_list_char **start, t_list_char **cmd,
+static t_index	splitter_process(t_list_char **cmd,
+		t_index var, int current)
+{
+	var.k = var.i;
+	while ((*cmd)->content[var.k]
+		&& ((*cmd)->content[var.k] == '<' || (*cmd)->content[var.k] == '>'))
+		var.k++;
+	var.k = skip_whitespace((*cmd)->content, var.k);
+	var.j = var.k;
+	if ((*cmd)->content[var.j] == '"' || (*cmd)->content[var.j] == '\'')
+	{
+		var.quote = (*cmd)->content[var.j];
+		var.j++;
+		while ((*cmd)->content[var.j] && (*cmd)->content[var.j] != var.quote)
+			var.j++;
+		var.j++;
+	}
+	while ((*cmd)->content[var.j]
+		&& !ft_iswhitespace((*cmd)->content[var.j])
+		&& (*cmd)->content[var.j] != '|' && (*cmd)->content[var.j] != '>'
+		&& (*cmd)->content[var.j] != '<')
+		var.j++;
+	(*cmd)->redirection_file[current] = ft_stridup((*cmd)->content,
+			var.k, var.j);
+	if ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>')
+		var.j--;
+	return (var);
+}
+
+static void	splitter_loop(t_list_char **start, t_list_char **cmd,
 		int iteration, int current)
 {
-	char		*str;
-	char		*redirection;
-	int			j;
 	t_index		var;
 
 	while ((*cmd)->content != NULL && current < iteration)
 	{
 		var = var_skipper(var, cmd);
-		str = ft_stridup((*cmd)->content, var.i, var.j);
-		if (!str)
-		{
-			lstclear_char(start, free);
-			exit_error_msg("Malloc error");
-		}
-		redirection = redirection_split(str);
-		(*cmd)->type[current] = set_redirection_type(redirection);
+		(*cmd)->type[current] = type_setter(var, cmd, start, current);
 		if ((*cmd)->type[current] == 0)
-			return (0);
-		j = var.i;
-		while ((*cmd)->content[j]
-			&& ((*cmd)->content[j] == '>' || (*cmd)->content[j] == '<'))
-			j++;
-		j = skip_whitespace((*cmd)->content, j);
-		if ((*cmd)->content[var.j - 1] == '<' || (*cmd)->content[var.j - 1] == '>')
-			var.j = skip_whitespace((*cmd)->content, var.j);
-		else
-			var.j--;
-		(*cmd)->redirection_file[current] = ft_stridup((*cmd)->content,
-				j, var.j);
-		if ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>')
-		{
-			var.j--;
-		}
+			iteration = 0;
+		var = splitter_process(cmd, var, current);
 		(*cmd)->content = ft_strcut((*cmd)->content, var.i, var.j);
 		if (!(*cmd)->content || !(*cmd)->redirection_file[current])
 		{
@@ -85,12 +106,9 @@ static int	splitter_loop(t_list_char **start, t_list_char **cmd,
 	}
 	(*cmd)->type[current] = -1;
 	(*cmd)->redirection_file[current] = NULL;
-	for (int i = 0; (*cmd)->type[i] != -1; i++)
-		printf("[%d]-[%s]\n", (*cmd)->type[i], (*cmd)->redirection_file[i]);
-	return (1);
 }
 
-static int	splitter(t_list_char **start, t_list_char **cmd)
+static void	splitter(t_list_char **start, t_list_char **cmd)
 {
 	int			iteration;
 	int			current;
@@ -100,19 +118,18 @@ static int	splitter(t_list_char **start, t_list_char **cmd)
 	(*cmd)->type = malloc(sizeof(int) * (iteration + 1));
 	(*cmd)->redirection_file = malloc(sizeof(char *) * (iteration + 1));
 	if (!(*cmd)->redirection_file || !(*cmd)->type)
-		exit_error_msg("Malloc error");
-	if (!splitter_loop(start, cmd, iteration, current))
 	{
-		//free
-		return (0);
+		ft_putendl_fd("Malloc error", 2);
+		exit(0);
 	}
-	return (1);
+	splitter_loop(start, cmd, iteration, current);
 }
 
 void	split_redirection(t_list_char **cmd)
 {
 	t_list_char	*start;
 	char		*tmp;
+	int			i;
 
 	start = *cmd;
 	while (*cmd != NULL)
@@ -121,8 +138,14 @@ void	split_redirection(t_list_char **cmd)
 		(*cmd)->content = ft_strtrim((*cmd)->content, " \t\n\b\f");
 		free(tmp);
 		printf("[%s]\n", (*cmd)->content);
-		if (!splitter(&start, cmd))
-			return ;
+		splitter(&start, cmd);
+		i = 0;
+		while ((*cmd)->redirection_file[i])
+		{
+			(*cmd)->redirection_file[i] = remove_quote(&start,
+					(*cmd)->redirection_file[i]);
+			i++;
+		}
 		(*cmd) = (*cmd)->next;
 	}
 	remove_useless_command(&start);

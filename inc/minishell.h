@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/14 15:57:41 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 10:48:10 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_index
 {
 	int		i;
 	int		j;
+	int		k;
 	int		s_quote;
 	int		d_quote;
 	char	quote;
@@ -73,6 +74,10 @@ typedef struct s_data
  * 										 *
  *****************************************/
 
+/*	CHECK_AND_CLEAN_PARSING.C	*/
+
+int			check_and_clean_parsing(t_list_char **cmd);
+
 /*	COMMAND_SIZE_COUNTER.C	*/
 
 int			count_size(char *cmd);
@@ -80,7 +85,7 @@ int			count_size(char *cmd);
 /*	COMMAND_SPLITTER.C		*/
 
 int			ft_iswhitespace(char c);
-char		**command_splitter(char *cmd);
+char		**command_splitter(char *cmd, t_list_char **start);
 
 /*	DQUOTE.C	*/
 
@@ -103,9 +108,13 @@ char		*remove_quote(t_list_char **start, char *cmd);
 
 void		remove_useless_command(t_list_char **cmd);
 
+/*	REPLACE_ENV_VAR_REDIRECTION	*/
+
+void		replace_env_var_redirection(t_list_char **start, t_list_char **cmd);
+
 /*	REPLACE_VAR_AND_QUOTE.C	*/
 
-char		*replace_env_var(t_list_char **start, char *cmd);
+char		*replace_env_var(char *cmd);
 void		replace_var_and_quote(t_list_char **cmd);
 
 /*	SPLIT_REDIRECTION.C	*/
@@ -114,10 +123,15 @@ void		split_redirection(t_list_char **cmd);
 
 /*	SPLIT_REDIRECTION_UTILS.C	*/
 
-int			iteration_nbr(char *cmd);
 char		*redirection_split(char *cmd);
 t_index		skipper(t_index var, char *cmd);
 int			set_redirection_type(char *redirection);
+int			type_setter(t_index var, t_list_char **cmd, t_list_char **start,
+				int current);
+
+/*	SPLIT_REDIRECTION_UTILS2.C	*/
+
+int			iteration_nbr(char *cmd);
 
 /*****************************************
  *										 *
@@ -125,17 +139,32 @@ int			set_redirection_type(char *redirection);
  * 										 *
  *****************************************/
 
-/*	START_EXECUTION.C	*/
+/*	ADD_TO_ENVP.C	*/
 
-void		start_execution(t_list_char **cmd, t_env *env);
-char		*get_path(char **envp, char *cmd);
-int			special_case(char **list, char **envp, t_list_char **start);
-void		error(int i, char *str);
 void		add_env(t_env *env, char *str);
+
+/*	EXECUTION.C	*/
+
 void		execution_pipe(t_data *data);
-void		exec(char **cmd, t_env *env);
+void		start_execution(t_list_char **cmd, t_env *env);
+
+/*	EXEC.C	*/
+
 void		redirection(t_data *data);
+void		exec(char **cmd, t_env *env);
+
+/*	EXEC_UTILS.C	*/
+
 int			is_cmd_special(char *cmd);
+
+/*	GET_PATH.C	*/
+
+char		*get_envvar(char **envp, char *var);
+char		*get_path(char **envp, char *cmd);
+
+/*	SPECIAL_CASE.C	*/
+
+int			special_case(char **list, t_env *env, t_list_char **start);
 
 /*****************************************
  *										 *
@@ -143,8 +172,13 @@ int			is_cmd_special(char *cmd);
  * 										 *
  *****************************************/
 
+/*	MAIN.C	*/
+
+void		clear_list(t_list_char **start);
+
 /*	UTILS.C	*/
 
+void		error(int i, char *str);
 void		exit_error_msg(char *str);
 void		*free_all(char **str);
 

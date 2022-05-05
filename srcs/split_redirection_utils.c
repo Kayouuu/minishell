@@ -6,41 +6,11 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:04:51 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/14 16:27:50 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/02 16:55:24 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int	iteration_nbr(char *cmd)
-{
-	t_index	var;
-	int		nbr;
-
-	var.i = 0;
-	var.quote = '0';
-	var.quotes = 0;
-	nbr = 0;
-	while (cmd != NULL && cmd[var.i] && (cmd[var.i] != '|' && var.quote == '0'))
-	{
-		if (cmd[var.i + 1] != '\0' && cmd[var.i + 1] == cmd[var.i])
-			var.i++;
-		if (cmd[var.i] == '\'' && (var.quotes == '0'))
-			var.quote = '\'';
-		if (cmd[var.i] == '"' && (var.quotes == '0'))
-			var.quote = '"';
-		if (cmd[var.i] == var.quotes)
-			var.quotes++;
-		if (var.quotes == 2)
-		{
-			var.quote = '0';
-			var.quotes = 0;
-		}
-		if ((cmd[var.i++] == '<' || cmd[var.i] == '>') && (var.quote == '0'))
-			nbr++;
-	}
-	return (nbr);
-}
 
 char	*redirection_split(char *cmd)
 {
@@ -67,20 +37,20 @@ char	*redirection_split(char *cmd)
 
 t_index	skipper(t_index var, char *cmd)
 {
-	while (cmd != NULL && cmd[var.i] && (cmd[var.i] != '<' && cmd[var.i] != '>'
-			&& var.quotes % 2 == 0))
+	while (cmd != NULL && cmd[var.i])
 	{
-		if (cmd[var.i] == '\'' && (var.quotes == '0'))
-			var.quote = '\'';
-		if (cmd[var.i] == '"' && (var.quotes == '0'))
-			var.quote = '"';
-		if (cmd[var.i] == var.quotes)
-			var.quotes++;
-		if (var.quotes == 2)
+		if (cmd[var.i] == '\'' || cmd[var.i] == '"')
 		{
+			var.quote = cmd[var.i];
+			var.i++;
+			while (cmd[var.i] && cmd[var.i] != var.quote)
+				var.i++;
+			if (cmd[var.i])
+				var.i++;
 			var.quote = '0';
-			var.quotes = 0;
 		}
+		if (cmd[var.i] == '>' || cmd[var.i] == '<')
+			break ;
 		var.i++;
 	}
 	var.j = var.i;
@@ -92,18 +62,39 @@ t_index	skipper(t_index var, char *cmd)
 
 int	set_redirection_type(char *redirection)
 {
+	int	result;
+
+	result = 0;
 	if (!ft_memcmp(redirection, ">\0", 2))
-		return (SINGLE_RIN);
+		result = SINGLE_RIN;
 	else if (!ft_memcmp(redirection, ">>\0", 3))
-		return (DOUBLE_RIN);
+		result = DOUBLE_RIN;
 	else if (!ft_memcmp(redirection, "<\0", 2))
-		return (SINGLE_ROUT);
+		result = SINGLE_ROUT;
 	else if (!ft_memcmp(redirection, "<<\0", 3))
-		return (DOUBLE_ROUT);
+		result = DOUBLE_ROUT;
 	else
-	{
 		printf("minishell: parse error near '%c'\n", redirection[0]);
-		free(redirection);
-		return (0);
+	free(redirection);
+	return (result);
+}
+
+int	type_setter(t_index var, t_list_char **cmd, t_list_char **start,
+				int current)
+{
+	int		result;
+	char	*str;
+	char	*redirection;
+
+	str = ft_stridup((*cmd)->content, var.i, var.j);
+	if (!str)
+	{
+		(*cmd)->redirection_file[current + 1] = NULL;
+		clear_list(start);
+		ft_putendl_fd("Malloc error", 2);
+		exit(0);
 	}
+	redirection = redirection_split(str);
+	result = set_redirection_type(redirection);
+	return (result);
 }

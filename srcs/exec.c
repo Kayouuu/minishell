@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/04/14 14:41:45 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:47:42 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	redirection(t_data *data)
 {
-	int			fd;
-	int			i;
+	int	fd;
+	int	i;
 
 	i = -1;
-	// printf("%d\n", data->cmd->type[0]);
 	while (data->cmd->type[++i] != -1)
 	{
 		dprintf(2, "[%d] - [%s]\n", data->cmd->type[i], data->cmd->redirection_file[i]);
@@ -47,7 +46,7 @@ void	redirection(t_data *data)
 			fd = open(data->cmd->redirection_file[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
 			if (fd < 0)
 				error(0, "");
-			if (dup2(fd, data->old_stdin) < 0)
+			if (dup2(fd, 1) < 0)
 				error(0, "");
 			if (close(fd) < 0)
 				error(0, "");
@@ -85,15 +84,13 @@ void	redirection(t_data *data)
 	}
 }
 
-void	exec(char **cmd, t_env *env)
+void exec(char **cmd, t_env *env)
 {
-	char	*tmp;
+	char *tmp;
 
-	if (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3)
-		|| !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3)
-		|| !ft_memcmp(cmd[0], "|\0", 2))
+	if (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3) || !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3) || !ft_memcmp(cmd[0], "|\0", 2))
 	{
-		free_all(cmd);		
+		free_all(cmd);
 		exit(0);
 	}
 	tmp = get_path(env->envp, cmd[0]);
@@ -108,4 +105,3 @@ void	exec(char **cmd, t_env *env)
 	}
 	exit(0);
 }
- 

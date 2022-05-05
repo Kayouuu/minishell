@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/04/14 14:39:05 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/05 12:01:00 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,25 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	data.cmd = *cmd;
 	data.start = *cmd;
 	data.env = env;
-	// if (lstsize_char(data.cmd) == 1)
-	// {
-	// 	data.pid = fork();
-	// 	if (data.pid == -1)
-	// 		error(0, "");
-	// 	if (data.pid == 0)
-	// 	{
-	// 		special_case(command_splitter(data.cmd->content),
-	// 			data.env->envp, &data.start);
-	// 		exec(command_splitter(data.cmd->content), data.env);
-	// 	}
-	// 	wait(NULL);
-	// }
-	// else
+	if (lstsize_char(data.cmd) == 1)
+	{
+		redirection(&data);
+		if (special_case(command_splitter(data.cmd->content, &data.start),
+				data.env, &data.start) == 0)
+		{
+			data.pid = fork();
+			if (data.pid == -1)
+				error(0, "");
+			if (data.pid == 0)
+				exec(command_splitter(data.cmd->content, &data.start),
+					data.env);
+			wait(NULL);
+		}
+		else
+			lstclear_char(&data.start, free);
+		dup2(data.old_stdin, 1);
+	}
+	else
 		execution_pipe(&data);
 }
 
@@ -43,31 +48,49 @@ void	execution_pipe(t_data *data)
 	while (data->cmd != NULL)
 	{
 		if (!ft_memcmp(data->cmd->content, "|\0", 2))
+		{
 			if (pipe(data->p) < 0)
 				error(0, "");
-		data->pid = fork();
-		if (data->pid == -1)
-			error(0, "");
-		if (data->pid == 0)
-		{
-			redirection(data);
-			if (data->cmd && !ft_memcmp(data->cmd->content, "|\0", 2))
+			if (data->cmd->next)
 				data->cmd = data->cmd->next;
-			if (data->cmd != NULL && data->cmd->next != NULL
-				&& !ft_memcmp(data->cmd->next->content, ">\0", 2))
+			else
 			{
-				// dprintf(2, "{[%s]}\n", data->cmd->next->content);
-				redirection(data);
+				ft_putendl_fd("error pipe", 2);
+				return ;
 			}
-			special_case(command_splitter(data->cmd->content),
-				data->env->envp, &data->start);
-			exec(command_splitter(data->cmd->content), data->env);
-			exit(0);
 		}
+		redirection(data);
+		if (special_case(command_splitter(data->cmd->content, &data->start),
+				data->env, &data->start) == 0)
+		{
+			data->pid = fork();
+			if (data->pid == -1)
+				error(0, "");
+			if (data->pid == 0)
+			{
+				if (data->cmd && !ft_memcmp(data->cmd->content, "|\0", 2))
+					data->cmd = data->cmd->next;
+				if (data->cmd != NULL && data->cmd->next != NULL
+					&& !ft_memcmp(data->cmd->next->content, ">\0", 2))
+				{
+					// dprintf(2, "{[%s]}\n", data->cmd->next->content);
+					redirection(data);
+				}
+				exec(command_splitter(data->cmd->content, &data->start), data->env);
+				exit(0);
+			}
+		}
+		dup2(data->old_stdin, 1);
 		// if (close(data->p[1]) < 0)
 		// 	error(0, "");
 		data->fdd = data->p[0];
-		data->cmd = data->cmd->next;
+		if (data->cmd->next)
+			data->cmd = data->cmd->next;
+		else
+		{
+			lstclear_char(&data->start, free);
+			break ;
+		}
 	}
 	while (wait(NULL) != -1)
 		;

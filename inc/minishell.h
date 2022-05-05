@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 15:13:33 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/05 10:26:50 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,10 @@ char		**command_splitter(char *cmd, t_list_char **start);
 /*	DQUOTE.C	*/
 
 char		*dquote(char *cmd, int arg);
+
+/*	FT_GETENV.C	*/
+
+char		*ft_getenv(t_env env, char *name);
 
 /*	PARSING.C	*/
 

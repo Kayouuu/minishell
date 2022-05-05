@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 10:39:53 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:43:48 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ void	clear_list(t_list_char **start)
 	}
 }
 
+void	signalhandler(int status)
+{
+	(void)status;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_list_char	*command;
@@ -47,7 +56,9 @@ int	main(int argc, char *argv[], char *envp[])
 	env.envp = envp;
 	while (1)
 	{
-		cmd = readline("\033[0;36mminishell> \033[0;37m");
+		signal(SIGINT, signalhandler);
+		signal(SIGQUIT, 0);
+		cmd = readline("minishell> ");
 		if (!cmd)
 			exit (0);
 		add_history(cmd);

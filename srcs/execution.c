@@ -6,16 +6,25 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 14:09:21 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:48:38 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+static void	signalhandler(int status)
+{
+	(void)status;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+}
+
 void	start_execution(t_list_char **cmd, t_env *env)
 {
 	t_data	data;
 
+	signal(SIGINT, signalhandler);
 	data.old_stdin = dup(1);
 	data.cmd = *cmd;
 	data.start = *cmd;
@@ -30,9 +39,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 			if (data.pid == -1)
 				error(0, "");
 			if (data.pid == 0)
-			{
 				exec(command_splitter(data.cmd->content, &data.start), data.env);
-			}
 			wait(NULL);
 		}
 		dup2(data.old_stdin, 1);

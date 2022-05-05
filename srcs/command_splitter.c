@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_splitter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 10:53:28 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:53:04 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ char	**command_splitter(char *cmd, t_list_char **start)
 			var.i++;
 	}
 	new_cmd = put_in_char_array(command, start);
+	lstclear_char(&command, NULL);
 	return (new_cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 13:36:31 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:00:48 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	start_execution(t_list_char **cmd, t_env *env)
 					data.env);
 			wait(NULL);
 		}
-		else
-			lstclear_char(&data.start, free);
 		dup2(data.old_stdin, 1);
 	}
 	else
@@ -61,7 +59,7 @@ void	execution_pipe(t_data *data)
 		}
 		redirection(data);
 		if (special_case(command_splitter(data->cmd->content, &data->start),
-				data->env, &data->start) == 0)
+				data->env) == 0)
 		{
 			data->pid = fork();
 			if (data->pid == -1)
@@ -77,7 +75,6 @@ void	execution_pipe(t_data *data)
 					redirection(data);
 				}
 				exec(command_splitter(data->cmd->content, &data->start), data->env);
-				exit(0);
 			}
 		}
 		dup2(data->old_stdin, 1);
@@ -88,7 +85,7 @@ void	execution_pipe(t_data *data)
 			data->cmd = data->cmd->next;
 		else
 		{
-			lstclear_char(&data->start, free);
+			// lstclear_char(&data->start, free);
 			break ;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/05 13:37:05 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:55:25 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ static void	write_env(t_env *env)
 
 int	special_case(char **list, t_env *env)
 {
-	(void)start;
 	if (ft_memcmp(list[0], "pwd\0", 4) == 0)
 		get_pwd();
 	else if (ft_memcmp(list[0], "env\0", 4) == 0)
@@ -125,12 +124,11 @@ int	special_case(char **list, t_env *env)
 		go_to(list, env);
 	// else if (ft_memcmp(list->content, "export\0", 7) == 0)
 	// 	export();
+	// else if (ft_memcmp(list->content, "unset\0", 7) == 0)
+	// 	;
 	else
 		return (0);
 	free_all(list);
-<<<<<<< HEAD
 	// lstclear_char(start, free);
-=======
->>>>>>> db2cb1c9efda9bc0dd988ac904afa43fb3089026
 	return (1);
 }

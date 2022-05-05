@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/05 13:36:49 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:48:28 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ void	redirection(t_data *data)
 	}
 }
 
-void exec(char **cmd, t_env *env)
+void	exec(char **cmd, t_env *env)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3) || !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3) || !ft_memcmp(cmd[0], "|\0", 2))
 	{

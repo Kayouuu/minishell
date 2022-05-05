@@ -6,19 +6,20 @@
 #    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/05 13:44:54 by lbattest         ###   ########.fr        #
+#    Updated: 2022/05/05 15:04:23 by lbattest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	minishell
 
-CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror
-# CFLAGS	+= -fsanitize=address -g3
-
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
 DIR_INCS	:=	inc
+
+CC		:=	gcc
+LDFLAGS := -L/usr/include -lreadline -L $(HOME)/.brew/opt/readline/lib -Llibft -lft
+CFLAGS	:=	-I $(DIR_INCS) -I $(HOME)/.brew/opt/readline/include -Wall -Wextra -Werror
+# CFLAGS	+= -fsanitize=address -g3
 
 DIR_LIBFT	:=	libft
 
@@ -58,10 +59,10 @@ AR_LIBFT	:=	$(DIR_LIBFT)/libft.a
 all:	lib $(NAME)
 
 $(NAME):	$(AR_LIBFT) $(OBJS)
-		$(CC) $(CFLAGS) $^ -o $@ -lreadline
+		$(CC) $(LDFLAGS) $^ -o $@
 
 $(DIR_OBJS)/%.o:	$(DIR_SRCS)/%.c $(INCS) Makefile | $(DIR_OBJS)
-		$(CC) $(CFLAGS) -I  $(DIR_INCS) -c $< -o $@
+		$(CC) $(CFLAGS) -c $< -o $@
 
 $(DIR_OBJS):
 		mkdir -p $(DIR_OBJS)

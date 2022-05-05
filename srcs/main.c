@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/05 14:54:05 by lbattest         ###   ########.fr       */
+=======
+/*   Updated: 2022/05/05 14:56:14 by psaulnie         ###   ########.fr       */
+>>>>>>> 2b9c79a99ba4576c01239c8a86aaff9e7cab337d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +38,15 @@ void	clear_list(t_list_char **start)
 	}
 }
 
+void	signalhandler(int status)
+{
+	(void)status;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_list_char	*command;
@@ -47,7 +60,9 @@ int	main(int argc, char *argv[], char *envp[])
 	env.envp = envp;
 	while (1)
 	{
-		cmd = readline("\033[0;36mminishell> \033[0;37m");
+		signal(SIGINT, signalhandler);
+		signal(SIGQUIT, 0);
+		cmd = readline("minishell> ");
 		if (!cmd)
 			exit (0);
 		add_history(cmd);

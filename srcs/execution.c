@@ -6,16 +6,25 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 15:00:48 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:04:00 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+static void	signalhandler(int status)
+{
+	(void)status;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+}
+
 void	start_execution(t_list_char **cmd, t_env *env)
 {
 	t_data	data;
 
+	signal(SIGINT, signalhandler);
 	data.old_stdin = dup(1);
 	data.cmd = *cmd;
 	data.start = *cmd;

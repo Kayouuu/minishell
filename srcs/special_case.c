@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/04 14:08:40 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:59:46 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	echo(char **list)
 	}
 }
 
-//pas fini ca
+//cd - a finir
 static void	go_to(char **list, t_env *env)
 {
 	if (list[1])
@@ -95,7 +95,7 @@ static void	go_to(char **list, t_env *env)
 	}
 }
 
-static void write_env(t_env *env)
+static void	write_env(t_env *env)
 {
 	int	i;
 
@@ -112,6 +112,7 @@ static void write_env(t_env *env)
 
 int	special_case(char **list, t_env *env)
 {
+	(void)start;
 	if (ft_memcmp(list[0], "pwd\0", 4) == 0)
 		get_pwd();
 	else if (ft_memcmp(list[0], "env\0", 4) == 0)

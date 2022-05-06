@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 15:04:00 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/06 09:57:17 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	t_data	data;
 
 	signal(SIGINT, signalhandler);
+	signal(SIGQUIT, signalhandler);
 	data.old_stdin = dup(1);
 	data.cmd = *cmd;
 	data.start = *cmd;

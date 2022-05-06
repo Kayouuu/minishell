@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/06 10:07:37 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/06 12:05:54 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,18 @@ void	clear_list(t_list_char **start)
 	}
 }
 
-void	signalhandler(int status)
+t_list_char	*start_parsing(char *cmd, t_env env)
+{
+	t_list_char	*command;
+
+	cmd = replace_env_var(cmd, env);
+	command = parsing(cmd);
+	free(cmd);
+	split_redirection(&command);
+	return (command);
+}
+
+static void	signalhandler(int status)
 {
 	if (status == SIGQUIT)
 	{
@@ -47,17 +58,6 @@ void	signalhandler(int status)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-}
-
-t_list_char	*start_parsing(char *cmd, t_env env)
-{
-	t_list_char	*command;
-
-	cmd = replace_env_var(cmd, env);
-	command = parsing(cmd);
-	free(cmd);
-	split_redirection(&command);
-	return (command);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -74,7 +74,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		signal(SIGINT, signalhandler);
-		signal(SIGQUIT, signalhandler); // mettre fonction inutile
+		signal(SIGQUIT, signalhandler);
 		cmd = readline("minishell> ");
 		if (!cmd)
 			break ;

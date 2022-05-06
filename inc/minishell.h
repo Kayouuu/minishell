@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 14:30:34 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/06 11:48:04 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 	DOUBLE_RIN : >>
 	SINGLE_ROUT : <
 	DOUBLE_ROUT : <<
+	DOUBLE_ROUT_PARTICULAR : << with a quoted filename
 */
 
 # define NONE 0
@@ -34,6 +35,7 @@
 # define DOUBLE_RIN 2
 # define SINGLE_ROUT 3
 # define DOUBLE_ROUT 4
+# define DOUBLE_ROUT_PARTICULAR 5
 
 typedef struct s_index
 {
@@ -135,7 +137,6 @@ void		split_redirection(t_list_char **cmd);
 
 char		*redirection_split(char *cmd);
 t_index		skipper(t_index var, char *cmd);
-int			set_redirection_type(char *redirection);
 int			type_setter(t_index var, t_list_char **cmd, t_list_char **start,
 				int current);
 

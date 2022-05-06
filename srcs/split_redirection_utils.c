@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:04:51 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/02 16:55:24 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/06 12:05:00 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*redirection_split(char *cmd)
 			exit_error_msg("Malloc error");
 		i++;
 	}
-	free(cmd);
 	return (new_str);
 }
 
@@ -60,9 +59,27 @@ t_index	skipper(t_index var, char *cmd)
 	return (var);
 }
 
-int	set_redirection_type(char *redirection)
+int	set_type_double_rout(char *cmd)
 {
 	int	result;
+	int	i;
+
+	i = 0;
+	result = DOUBLE_ROUT;
+	cmd = ft_strchr(cmd, '<') + 2;
+	i = skip_whitespace(cmd, i);
+	while (cmd[i] && !ft_iswhitespace(cmd[i]))
+	{
+		if (cmd[i] == '"' || cmd[i] == '\'')
+			result = DOUBLE_ROUT_PARTICULAR;
+		i++;
+	}
+	return (result);
+}
+
+int	set_redirection_type(char *redirection, char *cmd)
+{
+	int		result;
 
 	result = 0;
 	if (!ft_memcmp(redirection, ">\0", 2))
@@ -72,7 +89,7 @@ int	set_redirection_type(char *redirection)
 	else if (!ft_memcmp(redirection, "<\0", 2))
 		result = SINGLE_ROUT;
 	else if (!ft_memcmp(redirection, "<<\0", 3))
-		result = DOUBLE_ROUT;
+		result = set_type_double_rout(cmd);
 	else
 		printf("minishell: parse error near '%c'\n", redirection[0]);
 	free(redirection);
@@ -95,6 +112,7 @@ int	type_setter(t_index var, t_list_char **cmd, t_list_char **start,
 		exit(0);
 	}
 	redirection = redirection_split(str);
-	result = set_redirection_type(redirection);
+	free(str);
+	result = set_redirection_type(redirection, (*cmd)->content);
 	return (result);
 }

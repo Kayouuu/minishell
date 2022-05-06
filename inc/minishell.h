@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/06 11:48:04 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:50:22 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,10 @@ int			is_cmd_special(char *cmd);
 
 char		*get_envvar(char **envp, char *var);
 char		*get_path(char **envp, char *cmd);
+
+/*	HERE_DOC.C	*/
+
+void		here_doc(t_data *data, int current);
 
 /*	SPECIAL_CASE.C	*/
 

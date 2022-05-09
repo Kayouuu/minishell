@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:36:03 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 11:21:53 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:04:39 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	**env_list_to_tab(t_env *env)
 		envp[++i] = env->addon_env->content;
 		env->addon_env = env->addon_env->next;
 	}
+	envp[i] = NULL;
 	return (envp);
 }
 

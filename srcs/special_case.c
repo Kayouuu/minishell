@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 11:23:19 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 11:31:17 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,9 @@ static void	go_to(char **list, t_env *env)
 			perror("minishell");
 			return ;
 		}
+		env_replace_line(env, "OLDPWD=", return_pwd());
 	}
+	return ;
 }
 
 static void	write_env(t_env *env)

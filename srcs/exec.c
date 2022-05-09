@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 11:25:41 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:04:55 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,11 @@ void	exec(char **cmd, t_env *env)
 	free(cmd[0]);
 	cmd[0] = tmp;
 	env->envp = env_list_to_tab(env);
+	int i = -1;
+	while 
 	if (execve(cmd[0], cmd, env->envp) < 0)
 	{
+		puts("here");
 		free_all(cmd);
 		error(0, "");
 	}

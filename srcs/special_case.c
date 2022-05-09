@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/05 15:04:26 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:14:52 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	write_loop(int i, char **list)
 	}
 }
 
-static int check_flag(char *flag)
+static int	check_flag(char *flag)
 {
 	int	i;
 
@@ -67,41 +67,66 @@ static void	echo(char **list)
 	}
 }
 
-//cd - a finir
+static char	*return_pwd(void)
+{
+	char	*cwd;
+
+	cwd = getcwd((char *) NULL, 1);
+	if (cwd == NULL)
+	{
+		ft_putendl_fd("minishell: Probleme with the path", 2);
+		return (NULL);
+	}
+	return (cwd);
+}
+
+static void	cd_minus(char **list, t_env *env)
+{
+	char	*oldpwd;
+
+	oldpwd = NULL;
+	if (ft_memcmp(list[1], "-\0", 2) == 0)
+	{
+		oldpwd = get_envvar(env, "OLDPWD=");
+		if (oldpwd != NULL)
+		{
+			if (chdir(oldpwd) == -1)
+				perror("minishell");
+			printf("%s\n", oldpwd);
+		}
+		else
+			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+		return ;
+	}
+	else if (access(list[1], X_OK) == -1)
+		perror("minishell");
+	env_replace_line(env, "OLDPWD=", return_pwd());
+	if (chdir(list[1]) == -1)
+		perror("minishell");
+	return ;
+}
+
 static void	go_to(char **list, t_env *env)
 {
 	if (list[1])
 	{
-		if (ft_memcmp(list[1], "-\0", 2) == 0)
-			;
-		if (access(list[1], X_OK) == -1)
-		{
-			perror("minishell");
-			return ;
-		}
-		if (chdir(list[1]) == -1)
-		{
-			perror("minishell");
-			return ;
-		}
+		cd_minus(list, env);
+		return ;
 	}
 	else
 	{
-		if (chdir(get_envvar(env->envp, "HOME=")) == -1)
+		if (chdir(get_envvar(env, "HOME=")) == -1)
 		{
 			perror("minishell");
 			return ;
 		}
+		env_replace_line(env, "OLDPWD=", return_pwd());
 	}
+	return ;
 }
 
 static void	write_env(t_env *env)
 {
-	int	i;
-
-	i = -1;
-	while (env->envp[++i])
-		printf("%s\n", env->envp[i]);
 	while (env->addon_env)
 	{
 		printf("%s\n", env->addon_env->content);
@@ -124,11 +149,13 @@ int	special_case(char **list, t_env *env)
 		go_to(list, env);
 	// else if (ft_memcmp(list->content, "export\0", 7) == 0)
 	// 	export();
-	// else if (ft_memcmp(list->content, "unset\0", 7) == 0)
-	// 	;
+	else if (ft_memcmp(list[0], "unset\0", 7) == 0)
+		env_remove_line(env, list[1]);
 	else
+	{
+		free_all(list);
 		return (0);
+	}
 	free_all(list);
-	// lstclear_char(start, free);
 	return (1);
 }

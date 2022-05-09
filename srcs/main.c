@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/06 12:05:54 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 11:28:28 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
+	env = env_tab_to_list(envp, &env);
 	env.error_code = 0;
-	env.envp = envp;
 	while (1)
 	{
 		signal(SIGINT, signalhandler);

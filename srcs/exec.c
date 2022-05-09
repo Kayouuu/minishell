@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/06 13:39:17 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:09:04 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,15 @@ void	exec(char **cmd, t_env *env)
 		free_all(cmd);
 		exit(0);
 	}
-	tmp = get_path(env->envp, cmd[0]);
+	tmp = get_path(env, cmd[0]);
 	if (tmp == NULL)
 		error(1, "minishell: Unable to find a path for the command");
 	free(cmd[0]);
 	cmd[0] = tmp;
+	env->envp = env_list_to_tab(env);
 	if (execve(cmd[0], cmd, env->envp) < 0)
 	{
+		puts("here");
 		free_all(cmd);
 		error(0, "");
 	}

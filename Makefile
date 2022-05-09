@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/09 12:24:26 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/05/09 14:25:10 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,9 @@ LST_SRCS	:=	main.c \
 				split_redirection_utils2.c \
 				check_and_clean_parsing.c \
 				execution.c \
-				exec_utils.c
+				exec_utils.c \
+				mod_envp.c \
+				mod_envp2.c \
 
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 

@@ -3,35 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:53:18 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/03 16:08:57 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:24:43 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*get_envvar(char **envp, char *var)
+char	*get_envvar(t_env *env, char *var)
 {
-	int		i;
-
-	i = 0;
-	while (envp[i])
+	while (env->addon_env->content != NULL)
 	{
-		if (ft_memcmp(envp[i], var, ft_strlen(var)) == 0)
-			return (&envp[i][ft_strlen(var)]);
-		i++;
+		if (ft_memcmp(env->addon_env->content, var, ft_strlen(var)) == 0)
+			return (&env->addon_env->content[ft_strlen(var)]);
+		if (env->addon_env->next)
+			env->addon_env = env->addon_env->next;
+		else
+			break ;
 	}
 	return (NULL);
 }
-
 /*
 	this function take envp and a char * with the name of the command(cat, ...)
 	In the end exe is a char * with the path + the command(/bin/cat, ...)
 */
 
-char	*get_path(char **envp, char *cmd)
+char	*get_path(t_env *env, char *cmd)
 {
 	char	*exe;
 	char	*path;
@@ -40,7 +39,7 @@ char	*get_path(char **envp, char *cmd)
 
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
-	path = get_envvar(envp, "PATH=");
+	path = get_envvar(env, "PATH=");
 	if (!path)
 		return (NULL);
 	i = 0;

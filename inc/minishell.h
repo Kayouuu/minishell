@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 12:15:32 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:25:15 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_env
 {
 	char		**envp;
 	t_list_char	*addon_env;
+	int			len_env;
 	int			error_code;
 	int			limiter_check;
 }				t_env;
@@ -78,6 +79,16 @@ typedef struct s_data
  * 				  PARSING                *
  * 										 *
  *****************************************/
+
+/*	MOD_ENVP	*/
+
+t_env		env_tab_to_list(char **envp, t_env *env);
+char		**env_list_to_tab(t_env *env);
+
+/*	MOD_ENVP2	*/
+
+void		env_replace_line(t_env *env, char *var, char *value);
+void		env_remove_line(t_env *env, char *line);
 
 /*	CHECK_AND_CLEAN_PARSING.C	*/
 
@@ -172,8 +183,8 @@ int			is_cmd_special(char *cmd);
 
 /*	GET_PATH.C	*/
 
-char		*get_envvar(char **envp, char *var);
-char		*get_path(char **envp, char *cmd);
+char		*get_envvar(t_env *env, char *var);
+char		*get_path(t_env *env, char *cmd);
 
 /*	HERE_DOC.C	*/
 

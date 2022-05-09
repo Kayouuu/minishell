@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 09:56:46 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:20:31 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_index	replace(t_index var, char *cmd, t_env env)
 		var.new_cmd = ft_strjoin_gnl(var.new_cmd, env_var);
 		if (env_var)
 			free(env_var);
-		free((var.var_name));
+		// free((var.var_name));
 		if (!var.new_cmd)
 			exit_error_msg("Malloc error");
 	}

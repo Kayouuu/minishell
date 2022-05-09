@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 14:14:52 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:27:10 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,8 @@ int	special_case(char **list, t_env *env)
 		go_to(list, env);
 	// else if (ft_memcmp(list->content, "export\0", 7) == 0)
 	// 	export();
-	else if (ft_memcmp(list[0], "unset\0", 7) == 0)
-		env_remove_line(env, list[1]);
+	// else if (ft_memcmp(list[0], "unset\0", 7) == 0)
+	// 	env_remove_line(env, list[1]);
 	else
 	{
 		free_all(list);

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 14:25:15 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:49:39 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ typedef struct s_data
 	t_list_char	*cmd;
 	t_list_char	*start;
 }				t_data;
+
+int	g_signal_flags;
 
 /*****************************************
  *										 *

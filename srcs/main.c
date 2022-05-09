@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 11:28:28 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:56:08 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,7 @@ t_list_char	*start_parsing(char *cmd, t_env env)
 
 static void	signalhandler(int status)
 {
-	if (status == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		return ;
-	}
+	(void)status;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -73,8 +67,11 @@ int	main(int argc, char *argv[], char *envp[])
 	env.error_code = 0;
 	while (1)
 	{
+		if (g_signal_flags)
+			signalhandler(1);
+		g_signal_flags = 0;
 		signal(SIGINT, signalhandler);
-		signal(SIGQUIT, signalhandler);
+		signal(SIGQUIT, SIG_IGN);
 		cmd = readline("minishell> ");
 		if (!cmd)
 			break ;

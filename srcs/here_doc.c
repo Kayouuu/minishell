@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/06 15:29:32 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 10:03:06 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	here_doc(t_data *data, int current)
 		if (!buffer)
 			return ;
 		buffer = write_buffer_in_file(data->cmd->type[current],
-			*data->env, tmp_file_fd, buffer);
+				*data->env, tmp_file_fd, buffer);
 	}
 	dupping_and_closing(tmp_file_fd);
 	free(buffer);

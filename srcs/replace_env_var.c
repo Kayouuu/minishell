@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 10:30:57 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 09:56:46 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ static t_index	skip_no_env_var(t_index var, char *cmd)
 	if (var.j > 0 && cmd[var.j - 1] == '$' && cmd[var.j] == '?')
 	{
 		var.j += 1;
-		if (cmd[var.j] != '$')
-			var.j += 1;
+		if (cmd[var.j] != '$' && cmd[var.j])
+			while (cmd[var.j])
+				var.j++;
 	}
 	return (var);
 }
@@ -50,8 +51,8 @@ static t_index	replace(t_index var, char *cmd, t_env env)
 	char	*env_var;
 
 	var.i = var.j;
-	if ((cmd[var.i] == '$' && cmd[var.i + 1] && cmd[var.i + 1] != '?')
-		&& var.can_replace)
+	if ((cmd[var.i] && cmd[var.i] == '$' && cmd[var.i + 1]
+			&& cmd[var.i + 1] != '?') && var.can_replace)
 	{
 		var.i++;
 		while (cmd[var.i] && ft_isalnum(cmd[var.i]))

@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 11:31:17 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:14:52 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,32 +80,37 @@ static char	*return_pwd(void)
 	return (cwd);
 }
 
-//cd - a finir
-static void	go_to(char **list, t_env *env)
+static void	cd_minus(char **list, t_env *env)
 {
 	char	*oldpwd;
 
 	oldpwd = NULL;
+	if (ft_memcmp(list[1], "-\0", 2) == 0)
+	{
+		oldpwd = get_envvar(env, "OLDPWD=");
+		if (oldpwd != NULL)
+		{
+			if (chdir(oldpwd) == -1)
+				perror("minishell");
+			printf("%s\n", oldpwd);
+		}
+		else
+			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+		return ;
+	}
+	else if (access(list[1], X_OK) == -1)
+		perror("minishell");
+	env_replace_line(env, "OLDPWD=", return_pwd());
+	if (chdir(list[1]) == -1)
+		perror("minishell");
+	return ;
+}
+
+static void	go_to(char **list, t_env *env)
+{
 	if (list[1])
 	{
-		if (ft_memcmp(list[1], "-\0", 2) == 0)
-		{
-			oldpwd = get_envvar(env, "OLDPWD=");
-			if (oldpwd != NULL)
-			{
-				if (chdir(oldpwd) == -1)
-					perror("minishell");
-				printf("%s\n", oldpwd);
-			}
-			else
-				ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
-			return ;
-		}
-		else if (access(list[1], X_OK) == -1)
-			perror("minishell");
-		env_replace_line(env, "OLDPWD=", return_pwd());
-		if (chdir(list[1]) == -1)
-			perror("minishell");
+		cd_minus(list, env);
 		return ;
 	}
 	else
@@ -144,14 +149,13 @@ int	special_case(char **list, t_env *env)
 		go_to(list, env);
 	// else if (ft_memcmp(list->content, "export\0", 7) == 0)
 	// 	export();
-	// else if (ft_memcmp(list->content, "unset\0", 7) == 0)
-	// 	;
+	else if (ft_memcmp(list[0], "unset\0", 7) == 0)
+		env_remove_line(env, list[1]);
 	else
 	{
 		free_all(list);
 		return (0);
 	}
 	free_all(list);
-	// lstclear_char(start, free);
 	return (1);
 }

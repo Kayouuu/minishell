@@ -6,7 +6,7 @@
 #    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/09 11:26:08 by lbattest         ###   ########.fr        #
+#    Updated: 2022/05/09 14:18:10 by lbattest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ LST_SRCS	:=	main.c \
 				execution.c \
 				exec_utils.c \
 				mod_envp.c \
+				mod_envp2.c \
 
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 

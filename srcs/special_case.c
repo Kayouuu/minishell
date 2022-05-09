@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 14:14:52 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:09:57 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ static char	*return_pwd(void)
 	return (cwd);
 }
 
-static void	cd_minus(char **list, t_env *env)
+static void	cd_param(char **list, t_env *env)
 {
 	char	*oldpwd;
 
 	oldpwd = NULL;
+	if (ft_memcmp(list[1], "--\0", 2) == 0)
+		return ;
 	if (ft_memcmp(list[1], "-\0", 2) == 0)
 	{
 		oldpwd = get_envvar(env, "OLDPWD=");
@@ -110,7 +112,16 @@ static void	go_to(char **list, t_env *env)
 {
 	if (list[1])
 	{
-		cd_minus(list, env);
+		cd_param(list, env);
+		if (ft_memcmp(list[1], "--\0", 2) == 0)
+		{
+			if (chdir(get_envvar(env, "HOME=")) == -1)
+			{
+				perror("minishell");
+				return ;
+			}
+			env_replace_line(env, "OLDPWD=", return_pwd());
+		}
 		return ;
 	}
 	else
@@ -127,11 +138,15 @@ static void	go_to(char **list, t_env *env)
 
 static void	write_env(t_env *env)
 {
+	t_env	*start;
+
+	start = env;
 	while (env->addon_env)
 	{
 		printf("%s\n", env->addon_env->content);
 		env->addon_env = env->addon_env->next;
 	}
+	env = start;
 	return ;
 }
 
@@ -149,8 +164,8 @@ int	special_case(char **list, t_env *env)
 		go_to(list, env);
 	// else if (ft_memcmp(list->content, "export\0", 7) == 0)
 	// 	export();
-	else if (ft_memcmp(list[0], "unset\0", 7) == 0)
-		env_remove_line(env, list[1]);
+	// else if (ft_memcmp(list[0], "unset\0", 7) == 0)
+	// 	env_remove_line(env, list[1]);
 	else
 	{
 		free_all(list);

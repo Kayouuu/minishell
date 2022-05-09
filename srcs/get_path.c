@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:53:18 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 12:24:43 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:57:32 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 char	*get_envvar(t_env *env, char *var)
 {
+	t_env	*start;
+
+	start = env;
 	while (env->addon_env->content != NULL)
 	{
 		if (ft_memcmp(env->addon_env->content, var, ft_strlen(var)) == 0)
@@ -23,6 +26,7 @@ char	*get_envvar(t_env *env, char *var)
 		else
 			break ;
 	}
+	env = start;
 	return (NULL);
 }
 /*

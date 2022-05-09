@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 16:16:48 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 11:25:35 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	t_data	data;
 
 	signal(SIGINT, signalhandler);
+	signal(SIGQUIT, signalhandler);
 	data.old_stdin = dup(1);
 	data.cmd = *cmd;
 	data.start = *cmd;
@@ -41,7 +42,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 			if (data.pid == 0)
 				exec(command_splitter(data.cmd->content, &data.start),
 					data.env);
-			wait(NULL);
+			wait(&data.env->error_code);
 		}
 		dup2(data.old_stdin, 1);
 	}
@@ -74,17 +75,7 @@ void	execution_pipe(t_data *data)
 			if (data->pid == -1)
 				error(0, "");
 			if (data->pid == 0)
-			{
-				if (data->cmd && !ft_memcmp(data->cmd->content, "|\0", 2))
-					data->cmd = data->cmd->next;
-				if (data->cmd != NULL && data->cmd->next != NULL
-					&& !ft_memcmp(data->cmd->next->content, ">\0", 2))
-				{
-					// dprintf(2, "{[%s]}\n", data->cmd->next->content);
-					redirection(data);
-				}
 				exec(command_splitter(data->cmd->content, &data->start), data->env);
-			}
 		}
 		dup2(data->old_stdin, 1);
 		// if (close(data->p[1]) < 0)
@@ -93,11 +84,8 @@ void	execution_pipe(t_data *data)
 		if (data->cmd->next)
 			data->cmd = data->cmd->next;
 		else
-		{
-			// lstclear_char(&data->start, free);
 			break ;
-		}
 	}
-	while (wait(NULL) != -1)
+	while (wait(&data->env->error_code) != -1)
 		;
 }

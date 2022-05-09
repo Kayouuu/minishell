@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 11:06:20 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 11:26:00 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 	DOUBLE_RIN : >>
 	SINGLE_ROUT : <
 	DOUBLE_ROUT : <<
+	DOUBLE_ROUT_PARTICULAR : << with a quoted filename
 */
 
 # define NONE 0
@@ -34,6 +35,7 @@
 # define DOUBLE_RIN 2
 # define SINGLE_ROUT 3
 # define DOUBLE_ROUT 4
+# define DOUBLE_ROUT_PARTICULAR 5
 
 typedef struct s_index
 {
@@ -142,7 +144,6 @@ void		split_redirection(t_list_char **cmd);
 
 char		*redirection_split(char *cmd);
 t_index		skipper(t_index var, char *cmd);
-int			set_redirection_type(char *redirection);
 int			type_setter(t_index var, t_list_char **cmd, t_list_char **start,
 				int current);
 
@@ -179,6 +180,10 @@ int			is_cmd_special(char *cmd);
 
 char		*get_envvar(t_env *env, char *var);
 char		*get_path(t_env *env, char *cmd);
+
+/*	HERE_DOC.C	*/
+
+void		here_doc(t_data *data, int current);
 
 /*	SPECIAL_CASE.C	*/
 

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:00:53 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 10:40:00 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 09:56:35 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*replace_env_var_exit_status(t_index var, char *cmd, t_env env)
 	var.can_replace = 1;
 	c[1] = '\0';
 	new_str = NULL;
-	while (cmd[var.i])
+	while (var.i <= (int)ft_strlen(cmd) && cmd[var.i])
 	{
 		c[0] = cmd[var.i];
 		if (cmd[var.i] == '\'')

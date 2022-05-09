@@ -6,7 +6,7 @@
 #    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/09 10:04:21 by lbattest         ###   ########.fr        #
+#    Updated: 2022/05/09 11:26:08 by lbattest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ LST_SRCS	:=	main.c \
 				command_splitter.c \
 				exec.c \
 				ft_getenv.c \
+				here_doc.c \
 				parsing.c \
 				parsing_utils.c \
 				quote_remover.c \

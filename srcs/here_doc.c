@@ -6,16 +6,20 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 14:23:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:00:01 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// static void	signalhandler(int status)
-// {
-// 	(void)status;
-// }
+static void	signalhandler(int status)
+{
+	(void)status;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	g_signal_flags = 1;
+}
 
 static void	dupping_and_closing(int tmp_file_fd)
 {
@@ -72,13 +76,16 @@ void	here_doc(t_data *data, int current)
 		data->env->limiter_check = 0;
 		if (buffer)
 			free(buffer);
-		// signal(SIGQUIT, utilise global var);
+		signal(SIGINT, signalhandler);
+		signal(SIGQUIT, SIG_IGN);
 		buffer = readline("heredoc> ");
-		if (!buffer)
+		if (!buffer || g_signal_flags)
 			break ;
-		buffer = write_buffer_in_file(data->cmd->type[current],
-				data->env, tmp_file_fd, buffer);
+		if ((ft_memcmp(buffer, limiter, ft_strlen(limiter) + 1)))
+			buffer = write_buffer_in_file(data->cmd->type[current],
+					data->env, tmp_file_fd, buffer);
 	}
 	dupping_and_closing(tmp_file_fd);
-	free(buffer);
+	if (buffer && g_signal_flags == 0)
+		free(buffer);
 }

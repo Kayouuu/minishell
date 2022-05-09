@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 12:00:49 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:47:48 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	t_data	data;
 
 	signal(SIGINT, signalhandler);
-	signal(SIGQUIT, signalhandler);
+	signal(SIGQUIT, SIG_IGN);
 	data.old_stdin = dup(1);
 	data.cmd = *cmd;
 	data.start = *cmd;
@@ -33,6 +33,8 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	if (lstsize_char(data.cmd) == 1)
 	{
 		redirection(&data);
+		if (g_signal_flags)
+			return ;
 		if (special_case(command_splitter(data.cmd->content, &data.start),
 				data.env) == 0)
 		{
@@ -68,6 +70,8 @@ void	execution_pipe(t_data *data)
 			}
 		}
 		redirection(data);
+		if (g_signal_flags)
+			return ;
 		if (special_case(command_splitter(data->cmd->content, &data->start),
 				data->env) == 0)
 		{

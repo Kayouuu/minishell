@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 12:24:30 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:23:56 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	here_doc(t_data *data, int current)
 		// signal(SIGQUIT, utilise global var);
 		buffer = readline("heredoc> ");
 		if (!buffer)
-			return ;
+			break ;
 		buffer = write_buffer_in_file(data->cmd->type[current],
 				data->env, tmp_file_fd, buffer);
 	}

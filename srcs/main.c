@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 15:05:40 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:51:16 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
+	env = env_tab_to_list(envp, &env);
 	env.error_code = 0;
-	env.envp = envp;
 	while (1)
 	{
 		signal(SIGINT, signalhandler);
@@ -61,6 +61,8 @@ int	main(int argc, char *argv[], char *envp[])
 		cmd = readline("minishell> ");
 		if (!cmd)
 			exit (0);
+		if (cmd[0] == '\0')
+			continue ;
 		add_history(cmd);
 		cmd = replace_env_var(cmd, env);
 		printf("---------\n%s\n", cmd);

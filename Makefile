@@ -6,7 +6,7 @@
 #    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/05 15:04:23 by lbattest         ###   ########.fr        #
+#    Updated: 2022/05/09 10:04:21 by lbattest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ DIR_INCS	:=	inc
 CC		:=	gcc
 LDFLAGS := -L/usr/include -lreadline -L $(HOME)/.brew/opt/readline/lib -Llibft -lft
 CFLAGS	:=	-I $(DIR_INCS) -I $(HOME)/.brew/opt/readline/include -Wall -Wextra -Werror
-# CFLAGS	+= -fsanitize=address -g3
+CFLAGS	+= -fsanitize=address -g3
+LDFLAGS += -fsanitize=address -g3
 
 DIR_LIBFT	:=	libft
 
@@ -43,7 +44,8 @@ LST_SRCS	:=	main.c \
 				split_redirection_utils2.c \
 				check_and_clean_parsing.c \
 				execution.c \
-				exec_utils.c
+				exec_utils.c \
+				mod_envp.c \
 
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 

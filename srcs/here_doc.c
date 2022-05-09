@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 10:03:06 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:24:30 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,20 @@ static void	dupping_and_closing(int tmp_file_fd)
 		error(0, "");
 }
 
-static char	*write_buffer_in_file(int type, t_env env, int fd, char *buffer)
+static char	*write_buffer_in_file(int type, t_env *env, int fd, char *buffer)
 {
+	char	*tmp;
+
 	if (type == 4)
-		buffer = replace_env_var(buffer, env);
+	{
+		tmp = ft_strdup(buffer);
+		if (!tmp)
+			exit(0);
+		buffer = replace_env_var(buffer, *env);
+		if (ft_memcmp(tmp, buffer, ft_strlen(tmp)))
+			env->limiter_check = 1;
+		free(tmp);
+	}
 	if (buffer)
 	{
 		write(fd, buffer, ft_strlen(buffer));
@@ -56,8 +66,10 @@ void	here_doc(t_data *data, int current)
 	| O_CREAT | O_TRUNC | O_CLOEXEC, 0644);
 	if (tmp_file_fd < 0)
 		error(0, "");
-	while (buffer == NULL || ft_memcmp(buffer, limiter, ft_strlen(limiter) + 1))
+	while (buffer == NULL || (ft_memcmp(buffer, limiter, ft_strlen(limiter) + 1)
+			|| data->env->limiter_check == 1))
 	{
+		data->env->limiter_check = 0;
 		if (buffer)
 			free(buffer);
 		// signal(SIGQUIT, utilise global var);
@@ -65,7 +77,7 @@ void	here_doc(t_data *data, int current)
 		if (!buffer)
 			return ;
 		buffer = write_buffer_in_file(data->cmd->type[current],
-				*data->env, tmp_file_fd, buffer);
+				data->env, tmp_file_fd, buffer);
 	}
 	dupping_and_closing(tmp_file_fd);
 	free(buffer);

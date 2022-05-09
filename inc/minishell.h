@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/06 13:50:22 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:15:32 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_env
 	char		**envp;
 	t_list_char	*addon_env;
 	int			error_code;
+	int			limiter_check;
 }				t_env;
 
 typedef struct s_data

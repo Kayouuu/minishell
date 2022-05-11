@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:04:51 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/06 12:05:00 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:45:11 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*redirection_split(char *cmd)
 
 t_index	skipper(t_index var, char *cmd)
 {
-	while (cmd != NULL && cmd[var.i])
+	while (cmd != NULL && (var.i < (int)ft_strlen(cmd) && cmd[var.i]))
 	{
 		if (cmd[var.i] == '\'' || cmd[var.i] == '"')
 		{
@@ -53,7 +53,7 @@ t_index	skipper(t_index var, char *cmd)
 		var.i++;
 	}
 	var.j = var.i;
-	while (cmd != NULL && cmd[var.j] && (!ft_iswhitespace(cmd[var.j])
+	while (cmd != NULL && var.j < (int)ft_strlen(cmd) && cmd[var.j] && (!ft_iswhitespace(cmd[var.j])
 			&& (cmd[var.j] != '<' && cmd[var.j] != '>')))
 		var.j++;
 	return (var);
@@ -82,6 +82,8 @@ int	set_redirection_type(char *redirection, char *cmd)
 	int		result;
 
 	result = 0;
+	if (redirection == NULL)
+		return (0);
 	if (!ft_memcmp(redirection, ">\0", 2))
 		result = SINGLE_RIN;
 	else if (!ft_memcmp(redirection, ">>\0", 3))

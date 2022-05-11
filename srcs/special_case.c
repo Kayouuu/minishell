@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 14:27:10 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:04:35 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,15 @@ static void	write_env(t_env *env)
 	}
 	return ;
 }
+static void	export(char **list, t_env *env)
+{
+	// t_index	var;
+
+	// var.i = 0;
+	// while (list)
+	(void)env;
+	printf("%s\n", list[1]);
+}
 
 int	special_case(char **list, t_env *env)
 {
@@ -147,8 +156,8 @@ int	special_case(char **list, t_env *env)
 		echo(list);
 	else if (ft_memcmp(list[0], "cd\0", 3) == 0)
 		go_to(list, env);
-	// else if (ft_memcmp(list->content, "export\0", 7) == 0)
-	// 	export();
+	else if (ft_memcmp(list[0], "export\0", 7) == 0)
+		export(list, env);
 	// else if (ft_memcmp(list[0], "unset\0", 7) == 0)
 	// 	env_remove_line(env, list[1]);
 	else

@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 12:13:43 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:18:37 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,15 @@ static void	write_env(t_env *env)
 	}
 	env->addon_env = start;
 	return ;
+}
+static void	export(char **list, t_env *env)
+{
+	// t_index	var;
+
+	// var.i = 0;
+	// while (list)
+	(void)env;
+	printf("%s\n", list[1]);
 }
 
 static void	export(char **list, t_env *env)

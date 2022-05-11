@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_splitter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/05 14:53:04 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:02:24 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,32 @@ static char	**put_in_char_array(t_list_char *cmd, t_list_char **start)
 	return (commands);
 }
 
-char	**command_splitter(char *cmd, t_list_char **start)
+static char	set_quote(char *cmd, t_index var)
 {
-	t_list_char	*command;
-	char		**new_cmd;
-	char		*str;
-	t_index		var;
+	if (cmd[var.j] == var.quote)
+		var.quote = '0';
+	if (cmd[var.j] == '\'' && var.quote == '0')
+		var.quote = '\'';
+	else if (cmd[var.j] == '"' && var.quote == '0')
+		var.quote = '"';
+	return (var.quote);
+}
 
-	var.i = 0;
-	command = NULL;
+static t_list_char	*command_splitter_loop(char *cmd, t_index var,
+	t_list_char *command)
+{
+	char	*str;
+
 	while (cmd[var.i])
 	{
 		var.j = var.i;
-		while (cmd[var.j] && ft_iswhitespace(cmd[var.j]) == 0)
+		while (cmd[var.j])
+		{
+			var.quote = set_quote(cmd, var);
+			if (ft_iswhitespace(cmd[var.j]) && var.quote == '0')
+				break ;
 			var.j++;
+		}
 		str = ft_stridup(cmd, var.i, var.j);
 		if (!str)
 			exit (0);
@@ -68,6 +80,19 @@ char	**command_splitter(char *cmd, t_list_char **start)
 		if (cmd[var.i])
 			var.i++;
 	}
+	return (command);
+}
+
+char	**command_splitter(char *cmd, t_list_char **start)
+{
+	t_list_char	*command;
+	char		**new_cmd;
+	t_index		var;
+
+	var.i = 0;
+	var.quote = '0';
+	command = NULL;
+	command = command_splitter_loop(cmd, var, command);
 	new_cmd = put_in_char_array(command, start);
 	lstclear_char(&command, NULL);
 	return (new_cmd);

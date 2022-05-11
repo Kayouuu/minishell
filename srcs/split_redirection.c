@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 14:23:33 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:34:30 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_index	splitter_process(t_list_char **cmd,
 			var.j++;
 		var.j++;
 	}
-	while ((*cmd)->content[var.j]
+	while ((*cmd)->content[var.j - 1] && (*cmd)->content[var.j]
 		&& !ft_iswhitespace((*cmd)->content[var.j])
 		&& (*cmd)->content[var.j] != '|' && (*cmd)->content[var.j] != '>'
 		&& (*cmd)->content[var.j] != '<')

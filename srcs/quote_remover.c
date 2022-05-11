@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:31:56 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/04 11:04:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 10:33:58 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static char	*remove_quote_loop(char *new_cmd, t_index index, char *cmd)
 			new_cmd[index.j] = cmd[index.i];
 			index.j++;
 		}
-		index.i++;
+		if (cmd[index.i])
+			index.i++;
 	}
 	new_cmd[index.j] = '\0';
 	return (new_cmd);

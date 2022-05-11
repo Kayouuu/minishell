@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 14:56:08 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:37:10 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	main(int argc, char *argv[], char *envp[])
 	env.error_code = 0;
 	while (1)
 	{
+		env.error_code /= 256;
 		if (g_signal_flags)
 			signalhandler(1);
 		g_signal_flags = 0;

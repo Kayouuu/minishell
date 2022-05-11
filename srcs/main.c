@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/11 15:37:10 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:49:34 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	clear_list(t_list_char **start)
 	}
 }
 
-t_list_char	*start_parsing(char *cmd, t_env env)
+t_list_char	*start_parsing(char *cmd, t_env *env)
 {
 	t_list_char	*command;
 
-	cmd = replace_env_var(cmd, env);
+	cmd = replace_env_var(cmd, *env);
 	command = parsing(cmd);
 	free(cmd);
 	split_redirection(&command);
@@ -63,7 +63,8 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
-	env = env_tab_to_list(envp, &env);
+	env.addon_env = NULL;
+	env_tab_to_list(envp, &env);
 	env.error_code = 0;
 	while (1)
 	{
@@ -79,7 +80,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (cmd[0] == '\0')
 			continue ;
 		add_history(cmd);
-		command = start_parsing(cmd, env);
+		command = start_parsing(cmd, &env);
 		if (check_and_clean_parsing(&command) == 0)
 			continue ;
 		start = &command;

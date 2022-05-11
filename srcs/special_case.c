@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 15:46:22 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:49:39 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void	cd_param(char **list, t_env *env)
 	}
 	else if (access(list[1], X_OK) == -1)
 		perror("minishell");
-	env_replace_line(env, "OLDPWD=", return_pwd());
+	env_replace_line(&env, "OLDPWD=", return_pwd());
 	if (chdir(list[1]) == -1)
 		perror("minishell");
 	return ;
@@ -115,12 +115,12 @@ static void	go_to(char **list, t_env *env)
 		cd_param(list, env);
 		if (ft_memcmp(list[1], "--\0", 2) == 0)
 		{
+			env_replace_line(&env, "OLDPWD=", return_pwd());
 			if (chdir(get_envvar(env, "HOME=")) == -1)
 			{
 				perror("minishell");
 				return ;
 			}
-			env_replace_line(env, "OLDPWD=", return_pwd());
 		}
 		return ;
 	}
@@ -131,32 +131,43 @@ static void	go_to(char **list, t_env *env)
 			perror("minishell");
 			return ;
 		}
-		env_replace_line(env, "OLDPWD=", return_pwd());
+		env_replace_line(&env, "OLDPWD=", return_pwd());
 	}
 	return ;
 }
 
 static void	write_env(t_env *env)
 {
-	t_env	*start;
+	t_list_char	*start;
 
-	start = env;
+	start = env->addon_env;
 	while (env->addon_env)
 	{
 		printf("%s\n", env->addon_env->content);
 		env->addon_env = env->addon_env->next;
 	}
-	env = start;
+	env->addon_env = start;
 	return ;
 }
+
 static void	export(char **list, t_env *env)
 {
-	// t_index	var;
+	int		i;
+	char	*var;
 
-	// var.i = 0;
-	// while (list)
 	(void)env;
-	printf("%s\n", list[1]);
+	i = 0;
+	if (!list[1])
+		return ;
+	while (list[1][i] && list[1][i] != '=')
+		i++;
+	var = ft_substr(list[1], 0, ++i);
+	if (!var)
+		return ;
+	printf("var: %s\nvalue: %s\n", var, &list[1][i]);
+	env_replace_line(&env, var, &list[1][i]);
+	free(var);
+	return ;
 }
 
 int	special_case(char **list, t_env *env)

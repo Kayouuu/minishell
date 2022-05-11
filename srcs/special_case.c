@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 11:04:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:14:28 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ static char	*return_pwd(void)
 	return (cwd);
 }
 
-static void	cd_minus(char **list, t_env *env)
+static void	cd_param(char **list, t_env *env)
 {
 	char	*oldpwd;
 
 	oldpwd = NULL;
+	if (ft_memcmp(list[1], "--\0", 2) == 0)
+		return ;
 	if (ft_memcmp(list[1], "-\0", 2) == 0)
 	{
 		oldpwd = get_envvar(env, "OLDPWD=");
@@ -110,7 +112,16 @@ static void	go_to(char **list, t_env *env)
 {
 	if (list[1])
 	{
-		cd_minus(list, env);
+		cd_param(list, env);
+		if (ft_memcmp(list[1], "--\0", 2) == 0)
+		{
+			if (chdir(get_envvar(env, "HOME=")) == -1)
+			{
+				perror("minishell");
+				return ;
+			}
+			env_replace_line(env, "OLDPWD=", return_pwd());
+		}
 		return ;
 	}
 	else
@@ -127,11 +138,15 @@ static void	go_to(char **list, t_env *env)
 
 static void	write_env(t_env *env)
 {
+	t_env	*start;
+
+	start = env;
 	while (env->addon_env)
 	{
 		printf("%s\n", env->addon_env->content);
 		env->addon_env = env->addon_env->next;
 	}
+	env = start;
 	return ;
 }
 static void	export(char **list, t_env *env)

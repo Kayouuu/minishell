@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 16:19:13 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:13:43 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,16 +138,21 @@ static void	go_to(char **list, t_env *env)
 
 static void	write_env(t_env *env)
 {
-	t_env	*start;
+	t_list_char	*start;
 
-	start = env;
+	start = env->addon_env;
 	while (env->addon_env)
 	{
 		printf("%s\n", env->addon_env->content);
 		env->addon_env = env->addon_env->next;
 	}
-	env = start;
+	env->addon_env = start;
 	return ;
+}
+
+static void	export(char **list, t_env *env)
+{
+	;
 }
 
 int	special_case(char **list, t_env *env)
@@ -162,8 +167,8 @@ int	special_case(char **list, t_env *env)
 		echo(list);
 	else if (ft_memcmp(list[0], "cd\0", 3) == 0)
 		go_to(list, env);
-	// else if (ft_memcmp(list->content, "export\0", 7) == 0)
-	// 	export();
+	else if (ft_memcmp(list[0], "export\0", 7) == 0)
+		export(list, env);
 	// else if (ft_memcmp(list[0], "unset\0", 7) == 0)
 	// 	env_remove_line(env, list[1]);
 	else

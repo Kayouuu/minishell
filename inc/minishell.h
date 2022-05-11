@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 14:49:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:33:45 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	g_signal_flags;
 
 /*	MOD_ENVP	*/
 
-t_env		env_tab_to_list(char **envp, t_env *env);
+void		env_tab_to_list(char **envp, t_env *env);
 char		**env_list_to_tab(t_env *env);
 
 /*	MOD_ENVP2	*/

@@ -6,19 +6,18 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:36:03 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/09 14:17:19 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:47:40 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_env	env_tab_to_list(char **envp, t_env *env)
+void	env_tab_to_list(char **envp, t_env *env)
 {
-	int		i;
-	int		total;
-	t_env	*start;
+	int			i;
+	int			total;
+	t_list_char	*start;
 
-	start = env;
 	i = -1;
 	total = 0;
 	while (envp[++i])
@@ -27,14 +26,14 @@ t_env	env_tab_to_list(char **envp, t_env *env)
 		{
 			if (!lstadd_back_char(&env->addon_env, lstnew_char(envp[i])))
 			{
-				lstclear_char(&start->addon_env, free);
+				lstclear_char(&start, free);
 				error(1, "Malloc error");
 			}
 			total++;
 		}
 	}
 	env->len_env = total;
-	return (*env);
+	return ;
 }
 
 char	**env_list_to_tab(t_env *env)

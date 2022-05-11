@@ -6,11 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/11 11:33:45 by lbattest         ###   ########.fr       */
-=======
-/*   Updated: 2022/05/11 11:04:44 by psaulnie         ###   ########.fr       */
->>>>>>> 88294704cdeb676cf228f8e0f250922fb6ae2308
+/*   Updated: 2022/05/11 15:19:56 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +89,7 @@ char		**env_list_to_tab(t_env *env);
 
 /*	MOD_ENVP2	*/
 
-void		env_replace_line(t_env *env, char *var, char *value);
+void		env_replace_line(t_env **env, char *var, char *value);
 void		env_remove_line(t_env *env, char *line);
 
 /*	CHECK_AND_CLEAN_PARSING.C	*/

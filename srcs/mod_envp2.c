@@ -6,52 +6,61 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 12:09:00 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:55:55 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 //tout mon probleme est ici je n'arrive a remplacer un maiont 
-void	env_replace_line(t_env *env, char *var, char *value)
+void	env_replace_line(t_env **env, char *var, char *value)
 {
 	char		*line;
 	t_list_char	*start;
 	t_list_char	*tmp;
 	t_list_char	*new_link;
+	t_list_char	*freeable;
 
-	start = env->addon_env;
+	start = (*env)->addon_env;
 	line = ft_strjoin(var, value);
-	while (ft_memcmp(env->addon_env->content, var, ft_strlen(var)) != 0)
+	if (ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) == 0)
 	{
-		if (env->addon_env->next)
+		new_link = lstnew_char(line);
+		new_link->next = (*env)->addon_env->next;
+		(*env)->addon_env = new_link;
+		return ;
+	}
+	while (ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) != 0)
+	{
+		if ((*env)->addon_env->next)
 		{
-			tmp = env->addon_env;
-			env->addon_env = env->addon_env->next;
+			tmp = (*env)->addon_env;
+			(*env)->addon_env = (*env)->addon_env->next;
 		}
 		else
 			break ;
 	}
-	if (ft_memcmp(env->addon_env->content, var, ft_strlen(var)) == 0)
+	if (ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) == 0)
 	{
+		freeable = (*env)->addon_env;
 		new_link = lstnew_char(line);
 		tmp->next = new_link;
-		new_link->next = env->addon_env->next;
-		free(env->addon_env->content);
-		free(env->addon_env);
+		new_link->next = (*env)->addon_env->next;
+		(*env)->addon_env = tmp;
+		free(freeable);
 	}
 	else
 	{
-		if (!lstadd_back_char(&env->addon_env, lstnew_char(line)))
+		if (!lstadd_back_char(&(*env)->addon_env, lstnew_char(line)))
 		{
 			lstclear_char(&start, free);
 			ft_putendl_fd("Malloc error", 2);
 			free(line);
 			return ;
 		}
+		(*env)->len_env++;
 	}
-	env->addon_env = start;
-	free(line);
+	(*env)->addon_env = start;
 	return ;
 }
 

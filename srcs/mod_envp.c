@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:36:03 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 11:47:40 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:37:53 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	env_tab_to_list(char **envp, t_env *env)
 
 	i = -1;
 	total = 0;
+	start = env->addon_env;
 	while (envp[++i])
 	{
 		if (ft_memcmp(envp[i], "OLDPWD=", 7) != 0)

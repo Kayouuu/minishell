@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 11:55:55 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:15:44 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,24 @@ static char	*write_buffer_in_file(int type, t_env *env, int fd, char *buffer)
 	return (buffer);
 }
 
+static int	open_file(void)
+{
+	int	fd;
+
+	fd = open("/tmp/.minishell_heredoc", O_WRONLY \
+	| O_CREAT | O_TRUNC | O_CLOEXEC, 0644);
+	if (fd < 0)
+		error(0, "");
+	return (fd);
+}
+
 void	here_doc(t_data *data, int current, char *buffer)
 {
 	char	*limiter;
 	int		tmp_file_fd;
 
 	limiter = data->cmd->redirection_file[current];
-	tmp_file_fd = open("/tmp/.minishell_heredoc", O_WRONLY \
-	| O_CREAT | O_TRUNC | O_CLOEXEC, 0644);
-	if (tmp_file_fd < 0)
-		error(0, "");
+	tmp_file_fd = open_file();
 	while (buffer == NULL || (ft_memcmp(buffer, limiter, ft_strlen(limiter) + 1)
 			|| data->env->limiter_check == 1))
 	{

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 14:15:44 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:20:35 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	signalhandler(int status)
 {
 	(void)status;
 	g_signal_flags = 1;
-	close(0);
 }
 
 static void	dupping_and_closing(int tmp_file_fd)

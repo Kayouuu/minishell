@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/12 14:14:59 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:17:19 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	redirection(t_data *data)
 		else if (data->cmd->type[i] == SINGLE_ROUT)
 			single_rout(data, i);
 		else if (data->cmd->type[i] >= DOUBLE_ROUT)
-			here_doc(data, i);
+			here_doc(data, i, NULL);
 		if (ft_memcmp(data->cmd->content, "|\0", 2) == 0)
 			this_is_pipe(data);
 	}

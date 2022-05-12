@@ -6,7 +6,7 @@
 #    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/12 11:26:32 by lbattest         ###   ########.fr        #
+#    Updated: 2022/05/12 13:41:45 by lbattest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,11 @@ DIR_LIBFT	:=	libft
 LST_SRCS	:=	main.c \
 				get_path.c \
 				special_case.c \
+				special_case_utils1.c \
+				special_case_utils2.c \
 				utils.c \
-				add_to_envp.c \
 				command_size_counter.c \
 				command_splitter.c \
-				exec.c \
 				ft_getenv.c \
 				here_doc.c \
 				parsing.c \
@@ -45,9 +45,10 @@ LST_SRCS	:=	main.c \
 				split_redirection_utils2.c \
 				check_and_clean_parsing.c \
 				execution.c \
-				exec_utils.c \
+				exec_pipe.c \
 				mod_envp.c \
 				mod_envp2.c \
+				redirection.c \
 
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 

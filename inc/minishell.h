@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 11:18:57 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:04:13 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,17 @@ typedef struct s_data
 	t_list_char	*cmd;
 	t_list_char	*start;
 }				t_data;
+
+//miltn -> man i love the norme :D jk
+
+typedef struct s_miltn
+{
+	char		*line;
+	t_list_char	*start;
+	t_list_char	*tmp;
+	t_list_char	*new_link;
+	t_list_char	*freeable;
+}				t_miltn;
 
 int	g_signal_flags;
 
@@ -165,23 +176,18 @@ t_index		var_skipper(t_index var, t_list_char **cmd);
  * 										 *
  *****************************************/
 
-/*	ADD_TO_ENVP.C	*/
-
-void		add_env(t_env *env, char *str);
-
 /*	EXECUTION.C	*/
 
-void		execution_pipe(t_data *data);
 void		start_execution(t_list_char **cmd, t_env *env);
-
-/*	EXEC.C	*/
-
-void		redirection(t_data *data);
 void		exec(char **cmd, t_env *env);
 
-/*	EXEC_UTILS.C	*/
+/*	EXEC_PIPE.C	*/
 
-int			is_cmd_special(char *cmd);
+void		execution_pipe(t_data *data);
+
+/*	REDIRECTION.C	*/
+
+void		redirection(t_data *data);
 
 /*	GET_PATH.C	*/
 
@@ -195,6 +201,16 @@ void		here_doc(t_data *data, int current);
 /*	SPECIAL_CASE.C	*/
 
 int			special_case(char **list, t_env *env);
+
+/*	SPECIAL_CASE_UTILS1.C	*/
+
+void		go_to(char **list, t_env *env);
+char		*return_pwd(void);
+
+/*	SPECIAL_CASE_UTILS2.C	*/
+
+void		write_env(t_env *env);
+void		export(char **list, t_env *env);
 
 /*****************************************
  *										 *

@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/12 13:48:23 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:14:59 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,18 @@ static void	single_rout(t_data *data, int i)
 	return ;
 }
 
+static void	this_is_pipe(t_data *data)
+{
+	if (dup2(data->p[1], 1) < 0)
+		error(0, "");
+	if (dup2(data->fdd, 0) < 0)
+		error(0, "");
+	if (close(data->p[0]) < 0)
+		error(0, "");
+	if (close(data->p[1]) < 0)
+		error(0, "");
+}
+
 void	redirection(t_data *data)
 {
 	int	i;
@@ -86,15 +98,6 @@ void	redirection(t_data *data)
 		else if (data->cmd->type[i] >= DOUBLE_ROUT)
 			here_doc(data, i);
 		if (ft_memcmp(data->cmd->content, "|\0", 2) == 0)
-		{
-			if (dup2(data->p[1], 1) < 0)
-				error(0, "");
-			if (dup2(data->fdd, 0) < 0)
-				error(0, "");
-			if (close(data->p[0]) < 0)
-				error(0, "");
-			if (close(data->p[1]) < 0)
-				error(0, "");
-		}
+			this_is_pipe(data);
 	}
 }

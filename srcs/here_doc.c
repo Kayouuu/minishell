@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 15:00:01 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:55:55 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 static void	signalhandler(int status)
 {
 	(void)status;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
 	g_signal_flags = 1;
+	close(0);
 }
 
 static void	dupping_and_closing(int tmp_file_fd)
@@ -58,14 +56,12 @@ static char	*write_buffer_in_file(int type, t_env *env, int fd, char *buffer)
 	return (buffer);
 }
 
-void	here_doc(t_data *data, int current)
+void	here_doc(t_data *data, int current, char *buffer)
 {
-	char	*buffer;
 	char	*limiter;
 	int		tmp_file_fd;
 
 	limiter = data->cmd->redirection_file[current];
-	buffer = NULL;
 	tmp_file_fd = open("/tmp/.minishell_heredoc", O_WRONLY \
 	| O_CREAT | O_TRUNC | O_CLOEXEC, 0644);
 	if (tmp_file_fd < 0)

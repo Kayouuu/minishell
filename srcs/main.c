@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 11:54:04 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:12:01 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ static void	while_main(t_env env, char *cmd, t_list_char *command,
 	t_list_char **start)
 {
 	env.error_code /= 256;
-	if (g_signal_flags)
-		signalhandler(1);
 	g_signal_flags = 0;
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);

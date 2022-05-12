@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 13:40:24 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:12:50 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	data.cmd = *cmd;
 	data.start = *cmd;
 	data.env = env;
+	data.old_stdout = dup(0);
 	if (lstsize_char(data.cmd) == 1)
 		one_cmd(data);
 	else
 		execution_pipe(&data);
+	dup2(data.old_stdout, 0);
 	return ;
 }
 

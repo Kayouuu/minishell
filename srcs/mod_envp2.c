@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 17:49:42 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 10:00:04 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	env_remove_line(t_env *env, char *var)
 {
 	t_list_char		*start;
 	char			*line;
-	// t_list_char	tmp;
+	t_list_char		*previous;
 
 	if (check_var(var) == 1)
 	{
@@ -87,26 +87,30 @@ void	env_remove_line(t_env *env, char *var)
 		return ;
 	}
 	line = ft_strjoin(var, "=");
-<<<<<<< HEAD
-	if (!line)
-		exit_error_msg("Malloc error");
-	start = env;
-=======
 	start = env->addon_env;
->>>>>>> d453af1bf2021e490bbbd4cac779d9d544ad5333
+	previous = NULL;
 	if (ft_memcmp(env->addon_env->content, line, ft_strlen(line)) == 0)
 		;
 	else
 	{
 		while (ft_memcmp(env->addon_env->next->content, line, ft_strlen(line)) != 0)
 		{
+			previous = env->addon_env;
 			if (env->addon_env->next)
 				env->addon_env = env->addon_env->next;
 			else
 				break ;
 		}
+		if (env->addon_env != NULL)
+		{
+			printf("%s\n", env->addon_env->content);
+			previous->next = env->addon_env->next;
+			// free(env->addon_env->content);
+			free(env->addon_env);
+			env->len_env -= 1;
+		}
 	}
 	free(line);
 	env->addon_env = start;
-	return ;
+	return ();
 }

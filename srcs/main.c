@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/11 17:49:34 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:08:45 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(int argc, char *argv[], char *envp[])
 		signal(SIGQUIT, SIG_IGN);
 		cmd = readline("minishell> ");
 		if (!cmd)
-			break ;
+			exit(1);
 		if (cmd[0] == '\0')
 			continue ;
 		add_history(cmd);
@@ -87,6 +87,4 @@ int	main(int argc, char *argv[], char *envp[])
 		start_execution(&command, &env);
 		clear_list(start);
 	}
-	rl_clear_history();
-	return (1);
 }

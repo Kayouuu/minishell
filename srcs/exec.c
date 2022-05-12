@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:04:40 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 11:48:57 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:56:23 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	redirection(t_data *data)
 				error(0, "");
 		}
 		else if (data->cmd->type[i] >= DOUBLE_ROUT)
-			here_doc(data, i);
+			here_doc(data, i, NULL);
 		if (ft_memcmp(data->cmd->content, "|\0", 2) == 0)
 		{
 			if (dup2(data->p[1], 1) < 0)

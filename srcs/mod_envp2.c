@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mod_envp2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 17:49:42 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 09:54:47 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,7 @@ void	env_remove_line(t_env *env, char *var)
 		return ;
 	}
 	line = ft_strjoin(var, "=");
-<<<<<<< HEAD
-	if (!line)
-		exit_error_msg("Malloc error");
-	start = env;
-=======
 	start = env->addon_env;
->>>>>>> d453af1bf2021e490bbbd4cac779d9d544ad5333
 	if (ft_memcmp(env->addon_env->content, line, ft_strlen(line)) == 0)
 		;
 	else

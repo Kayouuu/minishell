@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mod_envp2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/12 10:54:13 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:26:42 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	env_replace_line(t_env **env, char *var, char *value)
 		tmp->next = new_link;
 		new_link->next = (*env)->addon_env->next;
 		(*env)->addon_env = tmp;
+		free(freeable->content);
 		free(freeable);
 	}
 	else

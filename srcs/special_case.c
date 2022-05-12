@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 17:49:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:01:33 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,6 @@ int	special_case(char **list, t_env *env)
 		get_pwd();
 	else if (ft_memcmp(list[0], "env\0", 4) == 0)
 		write_env(env);
-	else if (ft_memcmp(list[0], "exit\0", 5) == 0)
-		exit(0);
 	else if (ft_memcmp(list[0], "echo\0", 5) == 0)
 		echo(list);
 	else if (ft_memcmp(list[0], "cd\0", 3) == 0)
@@ -186,6 +184,11 @@ int	special_case(char **list, t_env *env)
 		export(list, env);
 	else if (ft_memcmp(list[0], "unset\0", 7) == 0)
 		env_remove_line(env, list[1]);
+	else if (ft_memcmp(list[0], "exit\0", 7) == 0)
+	{
+		free_all(list);
+		exit (0);
+	}
 	else
 	{
 		free_all(list);

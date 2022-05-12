@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/12 10:19:49 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:26:42 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,31 @@ void	env_replace_line(t_env **env, char *var, char *value)
 	return ;
 }
 
-static int	check_var(char *var)
+static t_list_char	*unset_case_first_env_var(t_env *env)
 {
-	int	i;
+	t_list_char	*previous;
+	t_list_char	*start;
 
-	i = -1;
-	while (var[++i])
-		if (ft_isalnum((int)var[i]) == 0)
-			return (1);
-	return (0);
+	previous = env->addon_env;
+	env->addon_env = env->addon_env->next;
+	start = env->addon_env;
+	free(previous->content);
+	free(previous);
+	env->len_env -= 1;
+	return (start);
+}
+
+static t_list_char	*find_env_var(t_env *env, char *line)
+{
+	while (ft_memcmp(env->addon_env->next->content, line,
+			ft_strlen(line)) != 0)
+	{
+		if (env->addon_env->next->next)
+			env->addon_env = env->addon_env->next;
+		else
+			break ;
+	}
+	return (env->addon_env);
 }
 
 void	env_remove_line(t_env *env, char *var)
@@ -82,32 +98,21 @@ void	env_remove_line(t_env *env, char *var)
 	char			*line;
 	t_list_char		*previous;
 
-	if (check_var(var) == 1)
-	{
-		ft_putendl_fd("minishell: unset: not a valid identifier", 2);
-		return ;
-	}
 	line = ft_strjoin(var, "=");
+	if (!line)
+		exit_error_msg("Malloc error");
 	start = env->addon_env;
-	previous = NULL;
 	if (ft_memcmp(env->addon_env->content, line, ft_strlen(line)) == 0)
-		;
+		start = unset_case_first_env_var(env);
 	else
 	{
-		while (ft_memcmp(env->addon_env->next->content, line, ft_strlen(line)) != 0)
+		env->addon_env = find_env_var(env, line);
+		if (ft_memcmp(env->addon_env->next->content, line,
+				ft_strlen(line)) == 0)
 		{
-			previous = env->addon_env;
-			if (env->addon_env->next)
-				env->addon_env = env->addon_env->next;
-			else
-				break ;
-		}
-		if (env->addon_env != NULL)
-		{
-			printf("%s\n", env->addon_env->content);
-			previous->next = env->addon_env->next;
-			// free(env->addon_env->content);
-			free(env->addon_env);
+			previous = env->addon_env->next;
+			env->addon_env->next = env->addon_env->next->next;
+			lstdelone_char(previous, free);
 			env->len_env -= 1;
 		}
 	}

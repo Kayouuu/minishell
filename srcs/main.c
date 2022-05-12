@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/11 18:08:45 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 10:45:53 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!cmd)
 			exit(1);
 		if (cmd[0] == '\0')
+		{
+			free(cmd);
 			continue ;
+		}
 		add_history(cmd);
 		command = start_parsing(cmd, &env);
 		if (check_and_clean_parsing(&command) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/11 17:49:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:25:11 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,15 @@ static char	*return_pwd(void)
 
 static void	cd_param(char **list, t_env *env)
 {
-	char	*oldpwd;
+	char		*oldpwd;
+	char		*pwd;
+	t_list_char	*start;
 
-	oldpwd = NULL;
 	if (ft_memcmp(list[1], "--\0", 2) == 0)
 		return ;
-	if (ft_memcmp(list[1], "-\0", 2) == 0)
+	else if (ft_memcmp(list[1], "-\0", 2) == 0)
 	{
+		start = env->addon_env;
 		oldpwd = get_envvar(env, "OLDPWD=");
 		if (oldpwd != NULL)
 		{
@@ -98,11 +100,14 @@ static void	cd_param(char **list, t_env *env)
 		}
 		else
 			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+		env->addon_env = start;
 		return ;
 	}
 	else if (access(list[1], X_OK) == -1)
 		perror("minishell");
-	env_replace_line(&env, "OLDPWD=", return_pwd());
+	pwd = return_pwd();
+	env_replace_line(&env, "OLDPWD=", pwd);
+	free(pwd);
 	if (chdir(list[1]) == -1)
 		perror("minishell");
 	return ;
@@ -110,29 +115,40 @@ static void	cd_param(char **list, t_env *env)
 
 static void	go_to(char **list, t_env *env)
 {
+	char		*pwd;
+	t_list_char	*start;
+
+	start = env->addon_env;
 	if (list[1])
 	{
 		cd_param(list, env);
 		if (ft_memcmp(list[1], "--\0", 2) == 0)
 		{
-			env_replace_line(&env, "OLDPWD=", return_pwd());
+			pwd = return_pwd();
+			env_replace_line(&env, "OLDPWD=", pwd);
+			free(pwd);
 			if (chdir(get_envvar(env, "HOME=")) == -1)
 			{
 				perror("minishell");
 				return ;
 			}
 		}
+		env->addon_env = start;
 		return ;
 	}
 	else
 	{
+		//test de unset HOME= pour voir si ca leak
 		if (chdir(get_envvar(env, "HOME=")) == -1)
 		{
 			perror("minishell");
 			return ;
 		}
-		env_replace_line(&env, "OLDPWD=", return_pwd());
+		pwd = return_pwd();
+		env_replace_line(&env, "OLDPWD=", pwd);
+		free(pwd);
 	}
+	env->addon_env = start;
 	return ;
 }
 

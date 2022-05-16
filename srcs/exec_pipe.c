@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/16 14:10:10 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:54:47 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	create_pipe(t_data *data)
 	return (0);
 }
 
-static void	not_special(t_data *data)
+static void	forking(t_data *data)
 {
 	data->pid = fork();
 	if (data->pid == -1)
@@ -38,6 +38,9 @@ static void	not_special(t_data *data)
 		if (data->cmd != NULL && data->cmd->next != NULL
 			&& !ft_memcmp(data->cmd->next->content, ">\0", 2))
 			redirection(data);
+		if (special_case(command_splitter(data->cmd->content, &data->start),
+				data->env) == 1)
+			return ;
 		exec(command_splitter(data->cmd->content, &data->start),
 			data->env, data);
 	}
@@ -54,9 +57,7 @@ void	execution_pipe(t_data *data)
 		redirection(data);
 		if (g_signal_flags)
 			return ;
-		if (special_case(command_splitter(data->cmd->content, &data->start),
-				data->env) == 0)
-			not_special(data);
+		forking(data);
 		dup2(data->old_stdin, 1);
 		data->fdd = data->p[0];
 		if (data->cmd->next)

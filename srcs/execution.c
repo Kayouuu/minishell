@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/16 14:53:41 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:10:58 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 static void	check_pipe(t_data *data)
 {
 	fstat(data->p[1], &data->stat);
-	if ((int)&data->stat.st_size >= 65536)
+	if ((unsigned int)data->stat.st_size >= 65536)
+	{
+	dprintf(2, "SALUT %lld\n", data->stat.st_size);
 		close(data->p[1]);
+	}
 }
 
 static void	signalhandler(int status)
@@ -83,8 +86,12 @@ void	exec(char **cmd, t_env *env, t_data *data)
 	free(cmd[0]);
 	cmd[0] = tmp;
 	env->envp = env_list_to_tab(env);
-	// close(data->p[0]);
-	// close(data->p[1]);
+	close(data->p[0]);
+	if (data->cmd->next == NULL)
+	{
+		dprintf(2, "je suis le last\n");
+		dup2(data->old_stdin, 1);
+	}
 	if (execve(cmd[0], cmd, env->envp) < 0)
 	{
 		free_all(cmd);

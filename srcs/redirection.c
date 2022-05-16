@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/12 14:17:19 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:10:13 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	single_rin(t_data *data, int i)
 		lstclear_char(&data->cmd, free);
 		error(1, "minishell: syntax error near unexpected token `newline'");
 	}
-	fd = open(data->cmd->redirection_file[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	fd = open(data->cmd->redirection_file[i],
+			O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd < 0)
 		error(0, "");
 	if (dup2(fd, 1) < 0)
@@ -40,7 +41,8 @@ static void	double_rin(t_data *data, int i)
 		lstclear_char(&data->cmd, free);
 		error(1, "minishell: syntax error near unexpected token `newline'");
 	}
-	fd = open(data->cmd->redirection_file[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
+	fd = open(data->cmd->redirection_file[i],
+			O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (fd < 0)
 		error(0, "");
 	if (dup2(fd, 1) < 0)

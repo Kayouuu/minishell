@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 14:12:50 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:02:29 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+static void	check_pipe(t_data *data)
+{
+	fstat(data->p[1], &data->stat);
+	if ((int)&data->stat.st_size >= 65536)
+		close(data->p[1]);
+}
 
 static void	signalhandler(int status)
 {
@@ -33,7 +40,7 @@ static void	one_cmd(t_data data)
 			error(0, "");
 		if (data.pid == 0)
 			exec(command_splitter(data.cmd->content, &data.start),
-				data.env);
+				data.env, &data);
 		wait(&data.env->error_code);
 	}
 	dup2(data.old_stdin, 1);
@@ -58,7 +65,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	return ;
 }
 
-void	exec(char **cmd, t_env *env)
+void	exec(char **cmd, t_env *env, t_data *data)
 {
 	char	*tmp;
 
@@ -69,12 +76,15 @@ void	exec(char **cmd, t_env *env)
 		free_all(cmd);
 		exit(0);
 	}
+	check_pipe(data);
 	tmp = get_path(env, cmd[0]);
 	if (tmp == NULL)
 		error(1, "minishell: Unable to find a path for the command");
 	free(cmd[0]);
 	cmd[0] = tmp;
 	env->envp = env_list_to_tab(env);
+	close(data->p[0]);
+	close(data->p[1]);
 	if (execve(cmd[0], cmd, env->envp) < 0)
 	{
 		free_all(cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 14:13:06 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:36:15 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/stat.h>
 
 /*
 	SINGLE_RIN : >
@@ -73,6 +74,8 @@ typedef struct s_data
 	t_env		*env;
 	t_list_char	*cmd;
 	t_list_char	*start;
+	struct stat	stat;
+	
 }				t_data;
 
 //miltn -> man i love the norme :D jk
@@ -180,7 +183,7 @@ t_index		var_skipper(t_index var, t_list_char **cmd);
 /*	EXECUTION.C	*/
 
 void		start_execution(t_list_char **cmd, t_env *env);
-void		exec(char **cmd, t_env *env);
+void		exec(char **cmd, t_env *env, t_data *data);
 
 /*	EXEC_PIPE.C	*/
 

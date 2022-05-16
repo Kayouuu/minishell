@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/12 14:08:05 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:10:10 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static void	not_special(t_data *data)
 		if (data->cmd != NULL && data->cmd->next != NULL
 			&& !ft_memcmp(data->cmd->next->content, ">\0", 2))
 			redirection(data);
-		exec(command_splitter(data->cmd->content, &data->start), data->env);
+		exec(command_splitter(data->cmd->content, &data->start),
+			data->env, data);
 	}
 }
 

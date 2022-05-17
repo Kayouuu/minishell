@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/17 15:25:51 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:34:51 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	redirection(t_data *data, int j)
 		this_is_pipe(data);
 	while (data->cmd->type[++i] != -1)
 	{
+		dprintf(2, "[%d] - [%s]\n", data->cmd->type[i], data->cmd->redirection_file[i]);
 		if (data->cmd->type[i] == SINGLE_RIN)
 			single_rin(data, i);
 		else if (data->cmd->type[i] == DOUBLE_RIN)

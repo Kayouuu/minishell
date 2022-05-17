@@ -6,11 +6,17 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/17 15:25:21 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:31:57 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+static void	wait_loop(t_data *data)
+{
+	while (wait(&data->env->error_code) != -1)
+		;
+}
 
 static int	create_pipe(t_data *data)
 {
@@ -65,6 +71,5 @@ void	execution_pipe(t_data *data)
 			break ;
 		i++;
 	}
-	while (wait(&data->env->error_code) != -1)
-		;
+	wait_loop(data);
 }

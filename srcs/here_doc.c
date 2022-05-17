@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 16:09:07 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:19:38 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,17 @@ void	here_doc(t_data *data, int current, char *buffer)
 	close(tmp_file_fd);
 	if (buffer && g_signal_flags == 0)
 		free(buffer);
+}
+
+void	double_rout(void)
+{
+	int	fd;
+
+	fd = open("/tmp/.minishell_heredoc", O_RDONLY);
+	if (fd < 0)
+		error(0, "");
+	if (dup2(fd, 0) < 0)
+		error(0, "");
+	if (close(fd) < 0)
+		error(0, "");
 }

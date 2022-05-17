@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/17 16:05:49 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:19:48 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	redirection(t_data *data, int j)
 		this_is_pipe(data);
 	while (data->cmd->type[++i] != -1)
 	{
-		dprintf(2, "[%d] - [%s]\n", data->cmd->type[i], data->cmd->redirection_file[i]);
 		if (data->cmd->type[i] == SINGLE_RIN)
 			single_rin(data, i);
 		else if (data->cmd->type[i] == DOUBLE_RIN)
@@ -105,17 +104,6 @@ void	redirection(t_data *data, int j)
 		else if (data->cmd->type[i] == SINGLE_ROUT)
 			single_rout(data, i);
 		else if (data->cmd->type[i] >= DOUBLE_ROUT)
-		{
-			int	fd;
-
-			fd = open("/tmp/.minishell_heredoc", O_RDONLY);
-			if (fd < 0)
-				error(0, "");
-			if (dup2(fd, 0) < 0)
-				error(0, "");
-			if (close(fd) < 0)
-				error(0, "");
-		}
-			// here_doc(data, i, NULL);
+			double_rout();
 	}
 }

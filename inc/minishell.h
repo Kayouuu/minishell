@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 16:00:47 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:29:54 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ void		exec(char **cmd, t_env *env, t_data *data);
 
 /*	EXEC_PIPE.C	*/
 
+void		wait_loop(t_data *data);
 void		execution_pipe(t_data *data);
 
 /*	REDIRECTION.C	*/
@@ -201,6 +202,7 @@ char		*get_path(t_env *env, char *cmd);
 /*	HERE_DOC.C	*/
 
 void		here_doc(t_data *data, int current, char *buffer);
+void		double_rout(void);
 
 /*	SPECIAL_CASE.C	*/
 

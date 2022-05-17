@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 15:24:03 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:34:36 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void	signalhandler(int status)
 	rl_replace_line("", 0);
 }
 
-static void	one_cmd(t_data data)
+static t_data	one_cmd(t_data data)
 {
 	redirection(&data, 0);
 	if (g_signal_flags)
-		return ;
+		return (data);
 	if (special_case(command_splitter(data.cmd->content, &data.start),
 			data.env) == 0)
 	{
@@ -41,9 +41,10 @@ static void	one_cmd(t_data data)
 		if (data.pid == 0)
 			exec(command_splitter(data.cmd->content, &data.start),
 				data.env, &data);
-		wait(&data.env->error_code);
+		wait_loop(&data);
 	}
 	dup2(data.old_stdin, 1);
+	return (data);
 }
 
 void	start_execution(t_list_char **cmd, t_env *env)
@@ -58,7 +59,7 @@ void	start_execution(t_list_char **cmd, t_env *env)
 	data.env = env;
 	data.old_stdout = dup(0);
 	if (lstsize_char(data.cmd) == 1)
-		one_cmd(data);
+		data = one_cmd(data);
 	else
 		execution_pipe(&data);
 	dup2(data.old_stdout, 0);

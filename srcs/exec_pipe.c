@@ -6,16 +6,32 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/17 16:06:04 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:33:13 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	wait_loop(t_data *data)
+void	wait_loop(t_data *data)
 {
-	while (wait(&data->env->error_code) != -1)
-		;
+	int	code;
+	int	output;
+
+	printf("%d\n", data->env->error_code);
+	output = wait(&data->env->error_code);
+	while (output != -1)
+	{
+		if (WIFEXITED(data->env->error_code))
+		{
+			code = WEXITSTATUS(data->env->error_code);
+		}
+		else if (WIFSIGNALED(data->env->error_code))
+		{
+			code = WTERMSIG(data->env->error_code) + 128;
+		}
+		output = wait(&data->env->error_code);
+	}
+	data->env->error_code = code;
 }
 
 static int	create_pipe(t_data *data)
@@ -71,6 +87,7 @@ void	execution_pipe(t_data *data)
 			break ;
 		i++;
 	}
+	dprintf(2, "d\n");
 	wait_loop(data);
 	if (unlink("/tmp/.minishell_heredoc") < 0)
 		error(0, "");

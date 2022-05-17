@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/16 18:10:58 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:24:03 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ static void	check_pipe(t_data *data)
 {
 	fstat(data->p[1], &data->stat);
 	if ((unsigned int)data->stat.st_size >= 65536)
-	{
-	dprintf(2, "SALUT %lld\n", data->stat.st_size);
 		close(data->p[1]);
-	}
 }
 
 static void	signalhandler(int status)
@@ -32,7 +29,7 @@ static void	signalhandler(int status)
 
 static void	one_cmd(t_data data)
 {
-	redirection(&data);
+	redirection(&data, 0);
 	if (g_signal_flags)
 		return ;
 	if (special_case(command_splitter(data.cmd->content, &data.start),
@@ -86,12 +83,8 @@ void	exec(char **cmd, t_env *env, t_data *data)
 	free(cmd[0]);
 	cmd[0] = tmp;
 	env->envp = env_list_to_tab(env);
-	close(data->p[0]);
 	if (data->cmd->next == NULL)
-	{
-		dprintf(2, "je suis le last\n");
 		dup2(data->old_stdin, 1);
-	}
 	if (execve(cmd[0], cmd, env->envp) < 0)
 	{
 		free_all(cmd);

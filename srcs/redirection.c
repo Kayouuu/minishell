@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/16 18:10:15 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:25:51 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,30 @@ static void	single_rout(t_data *data, int i)
 
 static void	this_is_pipe(t_data *data)
 {
-	dprintf(2, "oui\n");
 	if (dup2(data->p[1], 1) < 0)
 		error(0, "");
-	if (dup2(data->fdd, 0) < 0)
+	if (close(data->p[1]) < 0)
 		error(0, "");
-	// if (close(data->p[0]) < 0)
-	// 	error(0, "");
-	// if (close(data->p[1]) < 0)
-	// 	error(0, "");
+	if (close(data->p[0]) < 0)
+		error(0, "");
 }
 
-void	redirection(t_data *data)
+void	redirection(t_data *data, int j)
 {
 	int	i;
 
 	i = -1;
-	dup2(data->fdd, 0);
+	if (j > 0)
+	{
+		if (dup2(data->fdd[0], 0) < 0)
+			error(0, "");
+		close(data->fdd[0]);
+		close(data->fdd[1]);
+	}
+	if (data->cmd->next && ft_memcmp(data->cmd->next->content, "|\0", 2) == 0)
+		this_is_pipe(data);
 	while (data->cmd->type[++i] != -1)
 	{
-		dprintf(2, "[%d] - [%s]\n", data->cmd->type[i], data->cmd->redirection_file[i]);
 		if (data->cmd->type[i] == SINGLE_RIN)
 			single_rin(data, i);
 		else if (data->cmd->type[i] == DOUBLE_RIN)
@@ -102,6 +106,4 @@ void	redirection(t_data *data)
 		else if (data->cmd->type[i] >= DOUBLE_ROUT)
 			here_doc(data, i, NULL);
 	}
-	if (data->cmd->next && ft_memcmp(data->cmd->next->content, "|\0", 2) == 0)
-		this_is_pipe(data);
 }

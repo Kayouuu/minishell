@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/16 17:38:46 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:26:36 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,13 @@ typedef struct s_data
 	int			old_stdin;
 	int			old_stdout;
 	int			p[2];
-	int			fdd;
+	int			fdd[2];
 	int			old_fd;
 	pid_t		pid;
 	t_env		*env;
 	t_list_char	*cmd;
 	t_list_char	*start;
 	struct stat	stat;
-	
 }				t_data;
 
 //miltn -> man i love the norme :D jk
@@ -192,7 +191,7 @@ void		execution_pipe(t_data *data);
 
 /*	REDIRECTION.C	*/
 
-void		redirection(t_data *data);
+void		redirection(t_data *data, int i);
 
 /*	GET_PATH.C	*/
 

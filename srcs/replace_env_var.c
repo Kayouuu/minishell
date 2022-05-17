@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_env_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/11 12:22:43 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/17 14:26:58 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static t_index	replace(t_index var, char *cmd, t_env env)
 		var.new_cmd = ft_strjoin_gnl(var.new_cmd, env_var);
 		if (env_var)
 			free(env_var);
-		// free((var.var_name));
 		if (!var.new_cmd)
 			exit_error_msg("Malloc error");
 	}

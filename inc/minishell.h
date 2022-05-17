@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 15:26:36 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:00:47 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ char		*replace_env_var_exit_status(t_index var, char *cmd, t_env env);
 
 /*	SPLIT_REDIRECTION.C	*/
 
-void		split_redirection(t_list_char **cmd);
+void		split_redirection(t_list_char **cmd, t_env *env);
 
 /*	SPLIT_REDIRECTION_UTILS.C	*/
 

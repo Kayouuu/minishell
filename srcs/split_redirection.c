@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 15:37:28 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:01:25 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,19 @@ static void	splitter(t_list_char **start, t_list_char **cmd)
 	splitter_loop(start, cmd, iteration, current);
 }
 
-void	split_redirection(t_list_char **cmd)
+void	split_redirection(t_list_char **cmd, t_env *env)
 {
+	t_data		data;
 	t_list_char	*start;
 	char		*tmp;
 	int			i;
+
+	data.old_stdin = dup(1);
+	data.cmd = *cmd;
+	data.start = *cmd;
+	data.env = env;
+	data.old_stdout = dup(0);
+	dup2(data.old_stdout, 0);
 
 	start = *cmd;
 	while (*cmd != NULL)
@@ -111,6 +119,8 @@ void	split_redirection(t_list_char **cmd)
 		{
 			(*cmd)->redirection_file[i] = remove_quote(&start,
 					(*cmd)->redirection_file[i]);
+			if ((*cmd)->type[i] == 4 || (*cmd)->type[i] == 5)
+				here_doc(&data, i, NULL);
 			i++;
 		}
 		(*cmd) = (*cmd)->next;

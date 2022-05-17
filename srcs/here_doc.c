@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 13:29:38 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:09:07 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,6 @@ static void	signalhandler(int status)
 	(void)status;
 	g_signal_flags = 1;
 	close(0);
-}
-
-static void	dupping_and_closing(int tmp_file_fd)
-{
-	if (close(tmp_file_fd) < 0)
-		error(0, "");
-	tmp_file_fd = open("/tmp/.minishell_heredoc", O_RDONLY);
-	if (tmp_file_fd < 0)
-		error(0, "");
-	if (dup2(tmp_file_fd, 0) < 0)
-		error(0, "");
-	if (close(tmp_file_fd) < 0)
-		error(0, "");
-	if (unlink("/tmp/.minishell_heredoc") < 0)
-		error(0, "");
 }
 
 static char	*write_buffer_in_file(int type, t_env *env, int fd, char *buffer)
@@ -89,7 +74,7 @@ void	here_doc(t_data *data, int current, char *buffer)
 			buffer = write_buffer_in_file(data->cmd->type[current],
 					data->env, tmp_file_fd, buffer);
 	}
-	dupping_and_closing(tmp_file_fd);
+	close(tmp_file_fd);
 	if (buffer && g_signal_flags == 0)
 		free(buffer);
 }

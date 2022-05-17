@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/17 15:31:57 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:06:04 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,6 @@ void	execution_pipe(t_data *data)
 		i++;
 	}
 	wait_loop(data);
+	if (unlink("/tmp/.minishell_heredoc") < 0)
+		error(0, "");
 }

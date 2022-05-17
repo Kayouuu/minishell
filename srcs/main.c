@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 14:19:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:01:05 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_list_char	*start_parsing(char *cmd, t_env *env)
 	cmd = replace_env_var(cmd, *env);
 	command = parsing(cmd);
 	free(cmd);
-	split_redirection(&command);
+	split_redirection(&command, env);
 	return (command);
 }
 

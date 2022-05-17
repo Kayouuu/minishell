@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/17 15:34:51 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:05:49 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,17 @@ void	redirection(t_data *data, int j)
 		else if (data->cmd->type[i] == SINGLE_ROUT)
 			single_rout(data, i);
 		else if (data->cmd->type[i] >= DOUBLE_ROUT)
-			here_doc(data, i, NULL);
+		{
+			int	fd;
+
+			fd = open("/tmp/.minishell_heredoc", O_RDONLY);
+			if (fd < 0)
+				error(0, "");
+			if (dup2(fd, 0) < 0)
+				error(0, "");
+			if (close(fd) < 0)
+				error(0, "");
+		}
+			// here_doc(data, i, NULL);
 	}
 }

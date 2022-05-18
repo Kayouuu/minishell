@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/16 18:11:25 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:38:37 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	forking(t_data *data)
 		if (special_case(command_splitter(data->cmd->content, &data->start),
 				data->env) == 1)
 			exit(1);
-		// close(data->p[1]);
 		exec(command_splitter(data->cmd->content, &data->start),
 			data->env, data);
 	}

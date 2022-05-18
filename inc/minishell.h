@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/16 17:38:46 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:58:52 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,15 @@ typedef struct s_data
 	t_env		*env;
 	t_list_char	*cmd;
 	t_list_char	*start;
+	t_pipe		pipes[2];
 	struct stat	stat;
-	
 }				t_data;
+
+typedef struct s_pipe
+{
+	int	in;
+	int	out;
+}				t_pipe;
 
 //miltn -> man i love the norme :D jk
 

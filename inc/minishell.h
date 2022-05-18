@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 12:27:30 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 14:10:26 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void		here_doc(t_data *data, int current, char *buffer);
 /*	HERE_DOC_UTILS.c	*/
 
 void		double_rout(void);
-int			while_here_doc(t_data *data, char *buffer, t_here_doc *here_doc,
+char		*while_here_doc(t_data *data, char *buffer, t_here_doc *here_doc,
 				int current);
 
 /*	SPECIAL_CASE.C	*/

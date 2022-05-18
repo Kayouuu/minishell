@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 12:26:23 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 14:11:33 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,20 @@ static int	open_file(void)
 
 void	here_doc(t_data *data, int current, char *buffer)
 {
-	t_here_doc	*here_doc;
+	t_here_doc	here_doc;
 
-	here_doc = NULL;
-	here_doc->limiter = data->cmd->redirection_file[current];
-	if (here_doc->limiter == NULL)
-		return ;
-	else
-		return ;
-	here_doc->tmp_file_fd = open_file();
-	while (buffer == NULL || (ft_memcmp(buffer, here_doc->limiter,
-				ft_strlen(here_doc->limiter) + 1)
+	here_doc.limiter = ft_strdup(data->cmd->redirection_file[current]);
+	here_doc.tmp_file_fd = open_file();
+	while (buffer == NULL || (ft_memcmp(buffer, here_doc.limiter,
+				ft_strlen(here_doc.limiter) + 1)
 			|| data->env->limiter_check == 1))
-		if (while_here_doc(data, buffer, here_doc, current) == 1)
+	{
+		buffer = while_here_doc(data, buffer, &here_doc, current);
+		if (buffer == NULL || g_signal_flags)
 			break ;
-	close(here_doc->tmp_file_fd);
+	}
+	close(here_doc.tmp_file_fd);
 	if (buffer && g_signal_flags == 0)
 		free(buffer);
+	free(here_doc.limiter);
 }

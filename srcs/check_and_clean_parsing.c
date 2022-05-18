@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 09:38:20 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 09:57:46 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:23:28 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ int	check_parsing(t_list_char **start, t_list_char **cmd)
 	while ((*cmd)->type[i] != -1)
 	{
 		if ((*cmd)->type[i] == 0)
-		{
-			clear_list(start);
-			ft_putendl_fd("minishell: parse error", 2);
-			return (1);
-		}
-		if ((*cmd)->redirection_file[i] == NULL
-			|| (*cmd)->redirection_file[i][0] == '\0')
 		{
 			clear_list(start);
 			ft_putendl_fd("minishell: parse error", 2);

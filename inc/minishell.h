@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 09:48:25 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:27:30 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,12 @@ typedef struct s_miltn
 	t_list_char	*new_link;
 	t_list_char	*freeable;
 }				t_miltn;
+
+typedef struct s_here_doc
+{
+	char	*limiter;
+	int		tmp_file_fd;	
+}				t_here_doc;
 
 int	g_signal_flags;
 
@@ -201,8 +207,14 @@ char		*get_path(t_env *env, char *cmd);
 
 /*	HERE_DOC.C	*/
 
+char		*write_buffer_in_file(int type, t_env *env, int fd, char *buffer);
 void		here_doc(t_data *data, int current, char *buffer);
+
+/*	HERE_DOC_UTILS.c	*/
+
 void		double_rout(void);
+int			while_here_doc(t_data *data, char *buffer, t_here_doc *here_doc,
+				int current);
 
 /*	SPECIAL_CASE.C	*/
 

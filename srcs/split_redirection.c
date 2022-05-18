@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 11:38:53 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:29:52 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 */
 
 static t_index	splitter_process(t_list_char **cmd,
-		t_index var, int current)
+		t_index var, int c)
 {
 	var.k = var.i;
 	while (var.k < (int)ft_strlen((*cmd)->content) && (*cmd)->content[var.k]
@@ -40,8 +40,7 @@ static t_index	splitter_process(t_list_char **cmd,
 		&& (*cmd)->content[var.j] != '|' && (*cmd)->content[var.j] != '>'
 		&& (*cmd)->content[var.j] != '<')
 		var.j++;
-	(*cmd)->redirection_file[current] = ft_stridup((*cmd)->content,
-			var.k, var.j);
+	(*cmd)->redirection_file[c] = ft_stridup((*cmd)->content, var.k, var.j);
 	if (var.j < (int)ft_strlen((*cmd)->content)
 		&& ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>'))
 		var.j--;

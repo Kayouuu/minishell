@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 09:57:50 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:05:50 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	signalhandler(int status)
 static t_data	one_cmd(t_data data)
 {
 	redirection(&data, 0);
-	if (g_signal_flags)
+	if (g_signal_flags || data.cmd->content == NULL)
 		return (data);
 	if (special_case(command_splitter(data.cmd->content, &data.start),
 			data.env) == 0)
@@ -63,6 +63,7 @@ t_env	start_execution(t_list_char **cmd, t_env *env)
 	else
 		execution_pipe(&data);
 	dup2(data.old_stdout, 0);
+	dup2(data.old_stdout, 1);
 	return (*data.env);
 }
 
@@ -70,9 +71,9 @@ void	exec(char **cmd, t_env *env, t_data *data)
 {
 	char	*tmp;
 
-	if (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3)
-		|| !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3)
-		|| !ft_memcmp(cmd[0], "|\0", 2))
+	if (cmd[0] && (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3)
+			|| !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3)
+			|| !ft_memcmp(cmd[0], "|\0", 2)))
 	{
 		free_all(cmd);
 		exit(0);

@@ -6,20 +6,13 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 10:27:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:26:23 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	signalhandler(int status)
-{
-	(void)status;
-	g_signal_flags = 1;
-	close(0);
-}
-
-static char	*write_buffer_in_file(int type, t_env *env, int fd, char *buffer)
+char	*write_buffer_in_file(int type, t_env *env, int fd, char *buffer)
 {
 	char	*tmp;
 
@@ -54,44 +47,21 @@ static int	open_file(void)
 
 void	here_doc(t_data *data, int current, char *buffer)
 {
-	char	*limiter;
-	int		tmp_file_fd;
+	t_here_doc	*here_doc;
 
-	limiter = data->cmd->redirection_file[current];
-	if (limiter == NULL)
+	here_doc = NULL;
+	here_doc->limiter = data->cmd->redirection_file[current];
+	if (here_doc->limiter == NULL)
 		return ;
 	else
 		return ;
-	tmp_file_fd = open_file();
-	while (buffer == NULL || (ft_memcmp(buffer, limiter, ft_strlen(limiter) + 1)
+	here_doc->tmp_file_fd = open_file();
+	while (buffer == NULL || (ft_memcmp(buffer, here_doc->limiter,
+				ft_strlen(here_doc->limiter) + 1)
 			|| data->env->limiter_check == 1))
-	{
-		data->env->limiter_check = 0;
-		if (buffer)
-			free(buffer);
-		signal(SIGINT, signalhandler);
-		signal(SIGQUIT, SIG_IGN);
-		buffer = readline("heredoc> ");
-		if (!buffer || g_signal_flags)
+		if (while_here_doc(data, buffer, here_doc, current) == 1)
 			break ;
-		if ((ft_memcmp(buffer, limiter, ft_strlen(limiter) + 1)))
-			buffer = write_buffer_in_file(data->cmd->type[current],
-					data->env, tmp_file_fd, buffer);
-	}
-	close(tmp_file_fd);
+	close(here_doc->tmp_file_fd);
 	if (buffer && g_signal_flags == 0)
 		free(buffer);
-}
-
-void	double_rout(void)
-{
-	int	fd;
-
-	fd = open("/tmp/.minishell_heredoc", O_RDONLY);
-	if (fd < 0)
-		error(0, "");
-	if (dup2(fd, 0) < 0)
-		error(0, "");
-	if (close(fd) < 0)
-		error(0, "");
 }

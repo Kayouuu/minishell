@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/18 09:48:48 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:06:17 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ int	execution_pipe(t_data *data)
 	i = 0;
 	while (data->cmd != NULL)
 	{
-		if (!ft_memcmp(data->cmd->content, "|\0", 2))
+		if (data->cmd->content && !ft_memcmp(data->cmd->content, "|\0", 2))
 			data->cmd = data->cmd->next;
 		if (data->cmd->next && !ft_memcmp(data->cmd->next->content, "|\0", 2))
 			if (create_pipe(data) == 1)
 				return (data->env->error_code);
-		if (g_signal_flags)
+		if (g_signal_flags || data->cmd->content == NULL)
 			return (data->env->error_code);
 		forking(data, i);
 		if (i > 0)

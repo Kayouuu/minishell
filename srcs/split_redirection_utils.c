@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:04:51 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 10:30:37 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:28:50 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_index	skipper(t_index var, char *cmd)
 				var.i++;
 			var.quote = '0';
 		}
-		if (var.i < (int)ft_strlen(cmd) && (cmd[var.i] == '>' || cmd[var.i] == '<'))
+		if (var.i < (int)ft_strlen(cmd) && (cmd[var.i] == '>'
+				|| cmd[var.i] == '<'))
 			break ;
 		var.i++;
 	}
@@ -93,8 +94,6 @@ int	set_redirection_type(char *redirection, char *cmd)
 		result = SINGLE_ROUT;
 	else if (!ft_memcmp(redirection, "<<\0", 3))
 		result = set_type_double_rout(cmd);
-	else
-		printf("minishell: parse error near '%c'\n", redirection[0]);
 	free(redirection);
 	return (result);
 }

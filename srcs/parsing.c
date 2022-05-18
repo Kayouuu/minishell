@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:04:02 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 15:49:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 10:05:24 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_index	add_to_list(char *cmd, t_index index, t_list_char **list)
 {
 	char	*command;
 
-	if (cmd[index.j + 1] && cmd[index.j] == cmd[index.j + 1])
+	if (cmd[index.j] && cmd[index.j + 1] && cmd[index.j] == cmd[index.j + 1])
 		index.j += 2;
 	command = ft_stridup(cmd, index.i, index.j);
 	if (!command)

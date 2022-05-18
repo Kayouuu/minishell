@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 16:29:54 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 09:48:25 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,13 +182,13 @@ t_index		var_skipper(t_index var, t_list_char **cmd);
 
 /*	EXECUTION.C	*/
 
-void		start_execution(t_list_char **cmd, t_env *env);
+t_env		start_execution(t_list_char **cmd, t_env *env);
 void		exec(char **cmd, t_env *env, t_data *data);
 
 /*	EXEC_PIPE.C	*/
 
-void		wait_loop(t_data *data);
-void		execution_pipe(t_data *data);
+int			wait_loop(t_data *data);
+int			execution_pipe(t_data *data);
 
 /*	REDIRECTION.C	*/
 

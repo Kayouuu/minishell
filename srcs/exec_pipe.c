@@ -6,18 +6,17 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/17 16:33:13 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 09:48:48 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	wait_loop(t_data *data)
+int	wait_loop(t_data *data)
 {
 	int	code;
 	int	output;
 
-	printf("%d\n", data->env->error_code);
 	output = wait(&data->env->error_code);
 	while (output != -1)
 	{
@@ -32,6 +31,7 @@ void	wait_loop(t_data *data)
 		output = wait(&data->env->error_code);
 	}
 	data->env->error_code = code;
+	return (data->env->error_code);
 }
 
 static int	create_pipe(t_data *data)
@@ -63,7 +63,7 @@ static void	close_two(int *fd)
 	close(fd[1]);
 }
 
-void	execution_pipe(t_data *data)
+int	execution_pipe(t_data *data)
 {
 	int	i;
 
@@ -74,9 +74,9 @@ void	execution_pipe(t_data *data)
 			data->cmd = data->cmd->next;
 		if (data->cmd->next && !ft_memcmp(data->cmd->next->content, "|\0", 2))
 			if (create_pipe(data) == 1)
-				return ;
+				return (data->env->error_code);
 		if (g_signal_flags)
-			return ;
+			return (data->env->error_code);
 		forking(data, i);
 		if (i > 0)
 			close_two(data->fdd);
@@ -87,8 +87,7 @@ void	execution_pipe(t_data *data)
 			break ;
 		i++;
 	}
-	dprintf(2, "d\n");
-	wait_loop(data);
-	if (unlink("/tmp/.minishell_heredoc") < 0)
-		error(0, "");
+	data->env->error_code = wait_loop(data);
+	unlink("/tmp/.minishell_heredoc");
+	return (data->env->error_code);
 }

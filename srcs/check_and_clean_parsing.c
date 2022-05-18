@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 09:38:20 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 15:38:20 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 09:57:46 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	check_and_clean_parsing(t_list_char **cmd)
 		free(tmp);
 		if (check_parsing(&start, cmd) == 1)
 			return (0);
-		dprintf(2, "%s\n", (*cmd)->content);
 		(*cmd) = (*cmd)->next;
 	}
 	remove_useless_command(&start);

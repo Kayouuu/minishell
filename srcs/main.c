@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 16:21:57 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 11:24:26 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ static void	signalhandler(int status)
 	rl_redisplay();
 }
 
-static void	while_main(t_env env, char *cmd, t_list_char *command,
+static t_env	while_main(t_env *env, char *cmd, t_list_char *command,
 	t_list_char **start)
 {
-	env.error_code /= 256;
 	g_signal_flags = 0;
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);
@@ -67,16 +66,16 @@ static void	while_main(t_env env, char *cmd, t_list_char *command,
 	if (cmd[0] == '\0')
 	{
 		free(cmd);
-		return ;
+		return (*env);
 	}
 	add_history(cmd);
-	command = start_parsing(cmd, &env);
+	command = start_parsing(cmd, env);
 	if (check_and_clean_parsing(&command) == 0)
-		return ;
+		return (*env);
 	start = &command;
-	start_execution(&command, &env);
+	*env = start_execution(&command, env);
 	clear_list(start);
-	return ;
+	return (*env);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -95,5 +94,5 @@ int	main(int argc, char *argv[], char *envp[])
 	command = NULL;
 	start = NULL;
 	while (1)
-		while_main(env, cmd, command, start);
+		env = while_main(&env, cmd, command, start);
 }

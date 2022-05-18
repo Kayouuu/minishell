@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 16:19:38 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 10:27:56 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ void	here_doc(t_data *data, int current, char *buffer)
 	int		tmp_file_fd;
 
 	limiter = data->cmd->redirection_file[current];
+	if (limiter == NULL)
+		return ;
+	else
+		return ;
 	tmp_file_fd = open_file();
 	while (buffer == NULL || (ft_memcmp(buffer, limiter, ft_strlen(limiter) + 1)
 			|| data->env->limiter_check == 1))

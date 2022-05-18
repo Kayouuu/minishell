@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+         #
+#    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/16 15:39:49 by lbattest         ###   ########.fr        #
+#    Updated: 2022/05/18 12:24:26 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ LST_SRCS	:=	main.c \
 				command_splitter.c \
 				ft_getenv.c \
 				here_doc.c \
+				here_doc_utils.c \
 				parsing.c \
 				parsing_utils.c \
 				quote_remover.c \

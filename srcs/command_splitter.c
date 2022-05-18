@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/11 11:02:24 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 11:55:04 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_list_char	*command_splitter_loop(char *cmd, t_index var,
 {
 	char	*str;
 
-	while (cmd[var.i])
+	while (cmd && cmd[var.i])
 	{
 		var.j = var.i;
 		while (cmd[var.j])

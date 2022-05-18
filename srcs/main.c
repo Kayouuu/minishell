@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/12 14:19:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 11:24:26 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_list_char	*start_parsing(char *cmd, t_env *env)
 	cmd = replace_env_var(cmd, *env);
 	command = parsing(cmd);
 	free(cmd);
-	split_redirection(&command);
+	split_redirection(&command, env);
 	return (command);
 }
 
@@ -54,10 +54,9 @@ static void	signalhandler(int status)
 	rl_redisplay();
 }
 
-static void	while_main(t_env env, char *cmd, t_list_char *command,
+static t_env	while_main(t_env *env, char *cmd, t_list_char *command,
 	t_list_char **start)
 {
-	env.error_code /= 256;
 	g_signal_flags = 0;
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);
@@ -67,16 +66,16 @@ static void	while_main(t_env env, char *cmd, t_list_char *command,
 	if (cmd[0] == '\0')
 	{
 		free(cmd);
-		return ;
+		return (*env);
 	}
 	add_history(cmd);
-	command = start_parsing(cmd, &env);
+	command = start_parsing(cmd, env);
 	if (check_and_clean_parsing(&command) == 0)
-		return ;
+		return (*env);
 	start = &command;
-	start_execution(&command, &env);
+	*env = start_execution(&command, env);
 	clear_list(start);
-	return ;
+	return (*env);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -95,5 +94,5 @@ int	main(int argc, char *argv[], char *envp[])
 	command = NULL;
 	start = NULL;
 	while (1)
-		while_main(env, cmd, command, start);
+		env = while_main(&env, cmd, command, start);
 }

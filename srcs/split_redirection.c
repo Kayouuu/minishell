@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/11 11:34:30 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:51:27 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 */
 
 static t_index	splitter_process(t_list_char **cmd,
-		t_index var, int current)
+		t_index var, int c)
 {
 	var.k = var.i;
-	while ((*cmd)->content[var.k]
+	while (var.k < (int)ft_strlen((*cmd)->content) && (*cmd)->content[var.k]
 		&& ((*cmd)->content[var.k] == '<' || (*cmd)->content[var.k] == '>'))
 		var.k++;
 	var.k = skip_whitespace((*cmd)->content, var.k);
 	var.j = var.k;
-	if ((*cmd)->content[var.j] == '"' || (*cmd)->content[var.j] == '\'')
+	if (var.j < (int)ft_strlen((*cmd)->content)
+		&& ((*cmd)->content[var.j] == '"' || (*cmd)->content[var.j] == '\''))
 	{
 		var.quote = (*cmd)->content[var.j];
 		var.j++;
@@ -34,14 +35,14 @@ static t_index	splitter_process(t_list_char **cmd,
 			var.j++;
 		var.j++;
 	}
-	while ((*cmd)->content[var.j - 1] && (*cmd)->content[var.j]
-		&& !ft_iswhitespace((*cmd)->content[var.j])
+	while (var.j < (int)ft_strlen((*cmd)->content) && (*cmd)->content[var.j - 1]
+		&& (*cmd)->content[var.j] && !ft_iswhitespace((*cmd)->content[var.j])
 		&& (*cmd)->content[var.j] != '|' && (*cmd)->content[var.j] != '>'
 		&& (*cmd)->content[var.j] != '<')
 		var.j++;
-	(*cmd)->redirection_file[current] = ft_stridup((*cmd)->content,
-			var.k, var.j);
-	if ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>')
+	(*cmd)->redirection_file[c] = ft_stridup((*cmd)->content, var.k, var.j);
+	if (var.j < (int)ft_strlen((*cmd)->content)
+		&& ((*cmd)->content[var.j] == '<' || (*cmd)->content[var.j] == '>'))
 		var.j--;
 	return (var);
 }
@@ -92,8 +93,22 @@ static void	splitter(t_list_char **start, t_list_char **cmd)
 	splitter_loop(start, cmd, iteration, current);
 }
 
-void	split_redirection(t_list_char **cmd)
+static t_data	init_data(t_env *env, t_list_char **cmd)
 {
+	t_data	data;
+
+	data.old_stdin = dup(1);
+	data.cmd = *cmd;
+	data.start = *cmd;
+	data.env = env;
+	data.old_stdout = dup(0);
+	dup2(data.old_stdout, 0);
+	return (data);
+}
+
+void	split_redirection(t_list_char **cmd, t_env *env)
+{
+	t_data		data;
 	t_list_char	*start;
 	char		*tmp;
 	int			i;
@@ -104,14 +119,15 @@ void	split_redirection(t_list_char **cmd)
 		tmp = (*cmd)->content;
 		(*cmd)->content = ft_strtrim((*cmd)->content, " \t\n\b\f");
 		free(tmp);
-		printf("[%s]\n", (*cmd)->content);
 		splitter(&start, cmd);
-		i = 0;
-		while ((*cmd)->redirection_file[i])
+		i = -1;
+		while ((*cmd)->redirection_file[++i])
 		{
 			(*cmd)->redirection_file[i] = remove_quote(&start,
 					(*cmd)->redirection_file[i]);
-			i++;
+			data = init_data(env, cmd);
+			if ((*cmd)->type[i] == 4 || (*cmd)->type[i] == 5)
+				here_doc(&data, i, NULL);
 		}
 		(*cmd) = (*cmd)->next;
 	}

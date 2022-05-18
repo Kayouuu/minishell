@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:56:14 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/11 11:43:47 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 10:06:12 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_index	var_skipper(t_index var, t_list_char **cmd)
 	while (var.i < (int)ft_strlen((*cmd)->content) && (*cmd)->content[var.j]
 		&& (*cmd)->content[var.j + 1] == (*cmd)->content[var.j])
 		var.j++;
-	if ((*cmd)->content[var.j])
+	if (var.j < (int)ft_strlen((*cmd)->content) && (*cmd)->content[var.j])
 		var.j++;
 	if (var.j < (int)ft_strlen((*cmd)->content) && (*cmd)->content[var.j])
 			var = loop_var_skipper(var, cmd);

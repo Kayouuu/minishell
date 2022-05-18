@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/16 17:03:59 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/18 11:56:38 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,19 @@ static void	echo(char **list)
 
 int	special_case(char **list, t_env *env)
 {
-	if (ft_memcmp(list[0], "pwd\0", 4) == 0)
+	if (list[0] && ft_memcmp(list[0], "pwd\0", 4) == 0)
 		get_pwd();
-	else if (ft_memcmp(list[0], "env\0", 4) == 0)
+	else if (list[0] && ft_memcmp(list[0], "env\0", 4) == 0)
 		write_env(env);
-	else if (ft_memcmp(list[0], "echo\0", 5) == 0)
+	else if (list[0] && ft_memcmp(list[0], "echo\0", 5) == 0)
 		echo(list);
-	else if (ft_memcmp(list[0], "cd\0", 3) == 0)
+	else if (list[0] && ft_memcmp(list[0], "cd\0", 3) == 0)
 		go_to(list, env);
-	else if (ft_memcmp(list[0], "export\0", 7) == 0)
+	else if (list[0] && ft_memcmp(list[0], "export\0", 7) == 0)
 		export(list, env);
-	else if (ft_memcmp(list[0], "unset\0", 7) == 0)
+	else if (list[0] && ft_memcmp(list[0], "unset\0", 7) == 0)
 		env_remove_line(env, list[1]);
-	else if (ft_memcmp(list[0], "exit\0", 7) == 0)
+	else if (list[0] && ft_memcmp(list[0], "exit\0", 7) == 0)
 	{
 		free_all(list);
 		exit (0);

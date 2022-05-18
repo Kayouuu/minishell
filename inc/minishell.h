@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 11:58:52 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:10:07 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_data
 	int			old_stdin;
 	int			old_stdout;
 	int			p[2];
-	int			fdd;
+	int			fdd[2];
 	int			old_fd;
 	pid_t		pid;
 	t_env		*env;
@@ -95,6 +95,12 @@ typedef struct s_miltn
 	t_list_char	*new_link;
 	t_list_char	*freeable;
 }				t_miltn;
+
+typedef struct s_here_doc
+{
+	char	*limiter;
+	int		tmp_file_fd;	
+}				t_here_doc;
 
 int	g_signal_flags;
 
@@ -167,7 +173,7 @@ char		*replace_env_var_exit_status(t_index var, char *cmd, t_env env);
 
 /*	SPLIT_REDIRECTION.C	*/
 
-void		split_redirection(t_list_char **cmd);
+void		split_redirection(t_list_char **cmd, t_env *env);
 
 /*	SPLIT_REDIRECTION_UTILS.C	*/
 
@@ -189,16 +195,17 @@ t_index		var_skipper(t_index var, t_list_char **cmd);
 
 /*	EXECUTION.C	*/
 
-void		start_execution(t_list_char **cmd, t_env *env);
+t_env		start_execution(t_list_char **cmd, t_env *env);
 void		exec(char **cmd, t_env *env, t_data *data);
 
 /*	EXEC_PIPE.C	*/
 
-void		execution_pipe(t_data *data);
+int			wait_loop(t_data *data);
+int			execution_pipe(t_data *data);
 
 /*	REDIRECTION.C	*/
 
-void		redirection(t_data *data);
+void		redirection(t_data *data, int i);
 
 /*	GET_PATH.C	*/
 
@@ -207,7 +214,14 @@ char		*get_path(t_env *env, char *cmd);
 
 /*	HERE_DOC.C	*/
 
+char		*write_buffer_in_file(int type, t_env *env, int fd, char *buffer);
 void		here_doc(t_data *data, int current, char *buffer);
+
+/*	HERE_DOC_UTILS.c	*/
+
+void		double_rout(void);
+char		*while_here_doc(t_data *data, char *buffer, t_here_doc *here_doc,
+				int current);
 
 /*	SPECIAL_CASE.C	*/
 

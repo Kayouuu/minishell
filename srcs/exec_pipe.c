@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 14:47:48 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:40:23 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	forking(t_data *data, int i)
 		redirection(data, i);
 		data->env->error_code = special_case(
 				command_splitter(data->cmd->content, &data->start), data->env);
-		if (data->env->error_code > 0)
+		if (data->env->error_code >= 0)
 			exit(data->env->error_code);
 		exec(command_splitter(data->cmd->content, &data->start),
 			data->env, data);

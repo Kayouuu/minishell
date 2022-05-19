@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 14:47:44 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:43:26 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ static int	one_cmd(t_data *data)
 	redirection(data, 0);
 	if (g_signal_flags || data->cmd->content == NULL)
 		return (1);
-	if (special_case(command_splitter(data->cmd->content, &data->start),
-			data->env) == 0)
+	data->env->error_code = special_case(command_splitter(data->cmd->content,
+				&data->start), data->env);
+	if (data->env->error_code == -1)
 	{
 		data->pid = fork();
 		if (data->pid == -1)

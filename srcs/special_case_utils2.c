@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 14:48:30 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:47:55 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,6 @@ int	export(char **list, t_env *env)
 	{
 		export_no_arg(env);
 		return (0);
-	}
-	if (list[1][0] == '=')
-	{
-		ft_putendl_fd("minishell: export: not a valid identifier", 2);
-		return (1);
 	}
 	if (list[1][0] == '=')
 	{

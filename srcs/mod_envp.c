@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mod_envp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:36:03 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/18 16:09:42 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:01:20 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 static void	shell_lvl(char **envp, t_env *env, t_list_char *start, int i)
 {
-	if (!lstadd_back_char(&env->addon_env,
-			lstnew_char(ft_strjoin("SHLVL=",
-					ft_itoa((int)ft_atoi(&envp[i][6]) + 1)))))
+	char	*str;
+
+	str = ft_itoa((int)ft_atoi(&envp[i][6]) + 1);
+	if (!str || !lstadd_back_char(&env->addon_env,
+			lstnew_char(ft_strjoin("SHLVL=", str))))
 	{
+		if (str)
+			free(str);
 		lstclear_char(&start, free);
 		error(1, "Malloc error");
 	}
+	free(str);
 }
 
 void	env_tab_to_list(char **envp, t_env *env)

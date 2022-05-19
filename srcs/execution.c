@@ -6,23 +6,36 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 14:44:53 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:47:44 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	check_pipe(t_data *data)
+static char	*check_pipe(t_data *data, char **cmd, t_env *env)
 {
+	char	*tmp;
+
 	fstat(data->p[1], &data->stat);
 	if ((unsigned int)data->stat.st_size >= 65536)
 		close(data->p[1]);
+	if (ft_strnstr(cmd[0], "minishell\0", ft_strlen(cmd[0])) != NULL)
+		g_signal_flags = 1;
+	tmp = get_path(env, cmd[0]);
+	if (tmp == NULL)
+	{
+		dprintf(2, "minishell: Unable to find a path for the command\n");
+		exit(127);
+	}
+	return (tmp);
 }
 
 static void	signalhandler(int status)
 {
-	(void)status;
-	printf("\n");
+	if (status == SIGQUIT)
+		printf("Quit\n");
+	if (g_signal_flags && status != SIGQUIT)
+		printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 }
@@ -52,7 +65,7 @@ t_env	start_execution(t_list_char **cmd, t_env *env)
 	t_data	data;
 
 	signal(SIGINT, signalhandler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, signalhandler);
 	data.old_stdin = dup(1);
 	data.cmd = *cmd;
 	data.start = *cmd;
@@ -78,10 +91,7 @@ void	exec(char **cmd, t_env *env, t_data *data)
 		free_all(cmd);
 		exit(0);
 	}
-	check_pipe(data);
-	tmp = get_path(env, cmd[0]);
-	if (tmp == NULL)
-		error(1, "minishell: Unable to find a path for the command");
+	tmp = check_pipe(data, cmd, env);
 	free(cmd[0]);
 	cmd[0] = tmp;
 	env->envp = env_list_to_tab(env);

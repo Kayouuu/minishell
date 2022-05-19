@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 13:30:07 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:36:12 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ int	ft_iswhitespace(char c)
 
 static char	**put_in_char_array(t_list_char *cmd, t_list_char **start)
 {
-	char		**commands;
 	t_list_char	*temp;
-	char		*tmp;
+	char		**commands;
 	int			i;
 
 	i = 0;
@@ -35,9 +34,7 @@ static char	**put_in_char_array(t_list_char *cmd, t_list_char **start)
 	{
 		if (!is_useless(cmd->content))
 		{
-			tmp = cmd->content;
-			commands[i] = remove_quote(start, cmd->content);
-			i++;
+			commands[i++] = remove_quote(start, cmd->content);
 			cmd = cmd->next;
 		}
 		else

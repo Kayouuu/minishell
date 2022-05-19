@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 11:28:57 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:25:21 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	export_no_arg(t_env *env)
 	return ;
 }
 
-void	export(char **list, t_env *env)
+int	export(char **list, t_env *env)
 {
 	int		i;
 	char	*var;
@@ -62,15 +62,21 @@ void	export(char **list, t_env *env)
 	if (!list[1])
 	{
 		export_no_arg(env);
-		return ;
+		return (0);
+	}
+	if (list[1][0] == '=')
+	{
+		ft_putendl_fd("minishell: export: not a valid identifier", 2);
+		return (1);
 	}
 	while (list[1][i] && list[1][i] != '=')
 		i++;
 	var = ft_substr(list[1], 0, ++i);
 	if (!var)
-		return ;
+		return (1);
 	env_replace_line(&env, var, &list[1][i]);
 	free(var);
+	return (0);
 }
 
 void	leave_this(char **list)

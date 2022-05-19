@@ -6,13 +6,13 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/18 17:16:37 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:27:53 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	get_pwd(void)
+static int	get_pwd(void)
 {
 	char	*cwd;
 
@@ -20,11 +20,11 @@ static void	get_pwd(void)
 	if (cwd == NULL)
 	{
 		ft_putendl_fd("minishell: Probleme with the path", 2);
-		return ;
+		return (1);
 	}
 	printf("%s\n", cwd);
 	free(cwd);
-	return ;
+	return (0);
 }
 
 static void	write_loop(int i, char **list)
@@ -69,16 +69,31 @@ static void	echo(char **list)
 
 int	special_case(char **list, t_env *env)
 {
+	int	error;
+
+	error = 0;
 	if (list[0] && ft_memcmp(list[0], "pwd\0", 4) == 0)
-		get_pwd();
+	{
+		error = get_pwd();
+		if (error == 1)
+			return (error);
+	}
 	else if (list[0] && ft_memcmp(list[0], "env\0", 4) == 0)
 		write_env(env);
 	else if (list[0] && ft_memcmp(list[0], "echo\0", 5) == 0)
 		echo(list);
 	else if (list[0] && ft_memcmp(list[0], "cd\0", 3) == 0)
-		go_to(list, env);
+	{
+		error = go_to(list, env);
+		if (error == 1)
+			return (error);
+	}
 	else if (list[0] && ft_memcmp(list[0], "export\0", 7) == 0)
-		export(list, env);
+	{
+		error = export(list, env);
+		if (error == 1)
+			return (1);
+	}
 	else if (list[0] && ft_memcmp(list[0], "unset\0", 7) == 0)
 		env_remove_line(env, list[1]);
 	else if (list[0] && ft_memcmp(list[0], "exit\0", 7) == 0)
@@ -86,8 +101,8 @@ int	special_case(char **list, t_env *env)
 	else
 	{
 		free_all(list);
-		return (0);
+		return (-1);
 	}
 	free_all(list);
-	return (1);
+	return (error);
 }

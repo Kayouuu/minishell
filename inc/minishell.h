@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 17:17:07 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:43:53 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,13 +229,13 @@ int			special_case(char **list, t_env *env);
 
 /*	SPECIAL_CASE_UTILS1.C	*/
 
-void		go_to(char **list, t_env *env);
+int			go_to(char **list, t_env *env);
 char		*return_pwd(void);
 
 /*	SPECIAL_CASE_UTILS2.C	*/
 
 void		write_env(t_env *env);
-void		export(char **list, t_env *env);
+int			export(char **list, t_env *env);
 void		leave_this(char **list);
 
 /*****************************************

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 15:28:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:44:53 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ static void	signalhandler(int status)
 	rl_replace_line("", 0);
 }
 
-static t_data	one_cmd(t_data data)
+static int	one_cmd(t_data *data)
 {
-	redirection(&data, 0);
-	if (g_signal_flags || data.cmd->content == NULL)
-		return (data);
-	if (special_case(command_splitter(data.cmd->content, &data.start),
-			data.env) == 0)
+	redirection(data, 0);
+	if (g_signal_flags || data->cmd->content == NULL)
+		return (1);
+	if (special_case(command_splitter(data->cmd->content, &data->start),
+			data->env) == 0)
 	{
-		data.pid = fork();
-		if (data.pid == -1)
+		data->pid = fork();
+		if (data->pid == -1)
 			error(0, "");
-		if (data.pid == 0)
-			exec(command_splitter(data.cmd->content, &data.start),
-				data.env, &data);
-		data.env->error_code = wait_loop(&data);
+		if (data->pid == 0)
+			exec(command_splitter(data->cmd->content, &data->start),
+				data->env, data);
+		data->env->error_code = wait_loop(data);
 	}
-	dup2(data.old_stdin, 1);
-	return (data);
+	dup2(data->old_stdin, 1);
+	return (0);
 }
 
 t_env	start_execution(t_list_char **cmd, t_env *env)
@@ -59,7 +59,7 @@ t_env	start_execution(t_list_char **cmd, t_env *env)
 	data.env = env;
 	data.old_stdout = dup(0);
 	if (lstsize_char(data.cmd) == 1)
-		data = one_cmd(data);
+		data.env->error_code = one_cmd(&data);
 	else
 		execution_pipe(&data);
 	dup2(data.old_stdout, 0);

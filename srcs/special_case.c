@@ -3,23 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   special_case.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:02:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 14:27:53 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:53:15 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	get_pwd(void)
+static int	get_pwd(char **list)
 {
 	char	*cwd;
 
+	if (list[1])
+	{
+		ft_putendl_fd("minishell: Too many arguments", 2);
+		return (1);
+	}
 	cwd = getcwd((char *) NULL, 1);
 	if (cwd == NULL)
 	{
-		ft_putendl_fd("minishell: Probleme with the path", 2);
+		ft_putendl_fd("minishell: Problem with the path", 2);
 		return (1);
 	}
 	printf("%s\n", cwd);
@@ -73,27 +78,15 @@ int	special_case(char **list, t_env *env)
 
 	error = 0;
 	if (list[0] && ft_memcmp(list[0], "pwd\0", 4) == 0)
-	{
-		error = get_pwd();
-		if (error == 1)
-			return (error);
-	}
+		error = get_pwd(list);
 	else if (list[0] && ft_memcmp(list[0], "env\0", 4) == 0)
 		write_env(env);
 	else if (list[0] && ft_memcmp(list[0], "echo\0", 5) == 0)
 		echo(list);
 	else if (list[0] && ft_memcmp(list[0], "cd\0", 3) == 0)
-	{
 		error = go_to(list, env);
-		if (error == 1)
-			return (error);
-	}
 	else if (list[0] && ft_memcmp(list[0], "export\0", 7) == 0)
-	{
 		error = export(list, env);
-		if (error == 1)
-			return (1);
-	}
 	else if (list[0] && ft_memcmp(list[0], "unset\0", 7) == 0)
 		env_remove_line(env, list[1]);
 	else if (list[0] && ft_memcmp(list[0], "exit\0", 7) == 0)

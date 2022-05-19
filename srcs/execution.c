@@ -6,19 +6,28 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 13:33:17 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:59:22 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	check_pipe(t_data *data, char **cmd)
+static char	*check_pipe(t_data *data, char **cmd, t_env *env)
 {
+	char	*tmp;
+
 	fstat(data->p[1], &data->stat);
 	if ((unsigned int)data->stat.st_size >= 65536)
 		close(data->p[1]);
 	if (ft_strnstr(cmd[0], "minishell\0", ft_strlen(cmd[0])) != NULL)
 		g_signal_flags = 1;
+	tmp = get_path(env, cmd[0]);
+	if (tmp == NULL)
+	{
+		dprintf(2, "minishell: Unable to find a path for the command\n");
+		exit(127);
+	}
+	return (tmp);
 }
 
 static void	signalhandler(int status)
@@ -81,10 +90,7 @@ void	exec(char **cmd, t_env *env, t_data *data)
 		free_all(cmd);
 		exit(0);
 	}
-	check_pipe(data, cmd);
-	tmp = get_path(env, cmd[0]);
-	if (tmp == NULL)
-		error(1, "minishell: Unable to find a path for the command");
+	tmp = check_pipe(data, cmd, env);
 	free(cmd[0]);
 	cmd[0] = tmp;
 	env->envp = env_list_to_tab(env);

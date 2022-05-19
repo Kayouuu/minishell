@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 11:28:57 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:22:23 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,18 @@ void	export(char **list, t_env *env)
 		export_no_arg(env);
 		return ;
 	}
+	if (list[1][0] == '=')
+	{
+		printf("export: `%s': not a valid identifier\n", list[1]);
+		return ;
+	}
 	while (list[1][i] && list[1][i] != '=')
 		i++;
 	var = ft_substr(list[1], 0, ++i);
 	if (!var)
 		return ;
+	if (list[1][i - 1] != '=')
+		i++;
 	env_replace_line(&env, var, &list[1][i]);
 	free(var);
 }

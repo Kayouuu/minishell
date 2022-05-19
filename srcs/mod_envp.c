@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:36:03 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 12:51:31 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:01:20 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	shell_lvl(char **envp, t_env *env, t_list_char *start, int i)
 	if (!str || !lstadd_back_char(&env->addon_env,
 			lstnew_char(ft_strjoin("SHLVL=", str))))
 	{
+		if (str)
+			free(str);
 		lstclear_char(&start, free);
 		error(1, "Malloc error");
 	}

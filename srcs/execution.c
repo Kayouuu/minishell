@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 15:28:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:20:14 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	check_pipe(t_data *data)
 static void	signalhandler(int status)
 {
 	(void)status;
-	printf("\n");
+	if (g_signal_flags)
+		printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 }
@@ -87,6 +88,8 @@ void	exec(char **cmd, t_env *env, t_data *data)
 	env->envp = env_list_to_tab(env);
 	if (data->cmd->next == NULL)
 		dup2(data->old_stdin, 1);
+	if (ft_strnstr(cmd[0], "minishell\0", ft_strlen(cmd[0])) != NULL)
+		g_signal_flags = 1;
 	if (execve(cmd[0], cmd, env->envp) < 0)
 	{
 		free_all(cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 15:10:07 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:13:09 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ typedef struct s_env
 	int			limiter_check;
 }				t_env;
 
+typedef struct s_pipe
+{
+	int	in;
+	int	out;
+}				t_pipe;
+
 typedef struct s_data
 {
 	int			old_stdin;
@@ -78,12 +84,6 @@ typedef struct s_data
 	t_pipe		pipes[2];
 	struct stat	stat;
 }				t_data;
-
-typedef struct s_pipe
-{
-	int	in;
-	int	out;
-}				t_pipe;
 
 //miltn -> man i love the norme :D jk
 

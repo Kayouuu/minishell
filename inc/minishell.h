@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 16:13:09 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:40:51 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ char		*return_pwd(void);
 
 void		write_env(t_env *env);
 void		export(char **list, t_env *env);
+void		leave_this(char **list);
 
 /*****************************************
  *										 *

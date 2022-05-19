@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 13:59:22 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:28:32 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ static char	*check_pipe(t_data *data, char **cmd, t_env *env)
 
 static void	signalhandler(int status)
 {
-	(void)status;
-	if (g_signal_flags)
+	if (status == SIGQUIT)
+		printf("Quit\n");
+	if (g_signal_flags && status != SIGQUIT)
 		printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -64,7 +65,7 @@ t_env	start_execution(t_list_char **cmd, t_env *env)
 	t_data	data;
 
 	signal(SIGINT, signalhandler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, signalhandler);
 	data.old_stdin = dup(1);
 	data.cmd = *cmd;
 	data.start = *cmd;

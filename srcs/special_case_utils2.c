@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 17:47:55 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 10:42:46 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	leave_this(char **list)
 	long int	nbr;
 
 	i = -1;
+	if (!list[1])
+		exit (0);
 	while (list[1][++i])
 	{
 		if (list[1][i] < '!' || list[1][i] > '?')

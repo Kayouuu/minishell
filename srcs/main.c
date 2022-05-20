@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 14:47:40 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/20 10:34:02 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ static t_env	while_main(t_env *env, char *cmd, t_list_char *command,
 	start = &command;
 	*env = start_execution(&command, env);
 	clear_list(start);
-	if (env->error_code > 0)
-		exit (env->error_code);
 	return (*env);
 }
 

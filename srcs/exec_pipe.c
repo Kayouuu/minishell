@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 17:40:23 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:00:54 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void	forking(t_data *data, int i)
 		error(0, "");
 	if (data->pid == 0)
 	{
-		redirection(data, i);
+		if (!redirection(data, i))
+			exit(1);
 		data->env->error_code = special_case(
 				command_splitter(data->cmd->content, &data->start), data->env);
 		if (data->env->error_code >= 0)
@@ -71,7 +72,8 @@ int	execution_pipe(t_data *data)
 	i = 0;
 	while (data->cmd != NULL)
 	{
-		if (data->cmd->content && !ft_memcmp(data->cmd->content, "|\0", 2))
+		if (data->cmd->next && data->cmd->content
+			&& !ft_memcmp(data->cmd->content, "|\0", 2))
 			data->cmd = data->cmd->next;
 		if (data->cmd->next && !ft_memcmp(data->cmd->next->content, "|\0", 2))
 			if (create_pipe(data) == 1)

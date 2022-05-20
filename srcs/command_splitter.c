@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 13:36:12 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:43:20 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static char	**put_in_char_array(t_list_char *cmd, t_list_char **start)
 
 static char	set_quote(char *cmd, t_index var)
 {
-	if (cmd[var.j] == var.quote)
+	if (cmd[var.j] == var.quote && var.quote != '0')
 		var.quote = '0';
-	if (cmd[var.j] == '\'' && var.quote == '0')
+	else if (cmd[var.j] == '\'' && var.quote == '0')
 		var.quote = '\'';
 	else if (cmd[var.j] == '"' && var.quote == '0')
 		var.quote = '"';
@@ -67,6 +67,7 @@ static t_list_char	*command_splitter_loop(char *cmd, t_index var,
 	while (cmd && cmd[var.i])
 	{
 		var.j = var.i;
+		var.quote = '0';
 		while (cmd[var.j])
 		{
 			var.quote = set_quote(cmd, var);

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/17 14:26:58 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:27:25 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ static t_index	skip_no_env_var(t_index var, char *cmd)
 		var.j++;
 	}
 	if (cmd[var.j] == '$' && ft_isalnum(cmd[var.j + 1]) == 0)
-		var.j += 1;
-	if (var.j > 0 && cmd[var.j - 1] == '$' && cmd[var.j] == '?')
+	{
+		while (cmd[var.j] && !ft_iswhitespace(cmd[var.j]))
+			var.j++;
+		var.can_replace = 1;
+	}
+	else if (var.j > 0 && cmd[var.j - 1] == '$' && cmd[var.j] == '?')
 	{
 		var.j += 1;
 		if (cmd[var.j] != '$' && cmd[var.j])
@@ -80,6 +84,8 @@ char	*replace_env_var(char *cmd, t_env env)
 	var.i = 0;
 	var.can_replace = 1;
 	var.new_cmd = NULL;
+	if (cmd && cmd[0] == '\0')
+		return (cmd);
 	while (cmd != NULL && cmd[var.i] != '\0')
 	{
 		var = skip_no_env_var(var, cmd);
@@ -95,7 +101,6 @@ char	*replace_env_var(char *cmd, t_env env)
 	var.new_cmd = ft_strjoin_gnl(var.new_cmd, "\0");
 	check_malloc(var.new_cmd);
 	free(cmd);
-	var.i = 0;
 	var.new_cmd = replace_env_var_exit_status(var, var.new_cmd, env);
 	return (var.new_cmd);
 }

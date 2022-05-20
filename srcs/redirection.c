@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/20 12:25:20 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:29:32 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,8 @@ static int	single_rout(t_data *data, int i)
 	return (1);
 }
 
-static void	this_is_pipe(t_data *data)
+static void	this_is_pipe(t_data *data, int j)
 {
-	if (dup2(data->p[1], 1) < 0)
-		error(0, "");
-	if (close(data->p[1]) < 0)
-		error(0, "");
-	if (close(data->p[0]) < 0)
-		error(0, "");
-}
-
-int	redirection(t_data *data, int j)
-{
-	int	i;
-
-	i = -1;
 	if (j > 0)
 	{
 		if (dup2(data->fdd[0], 0) < 0)
@@ -97,7 +84,22 @@ int	redirection(t_data *data, int j)
 		close(data->fdd[1]);
 	}
 	if (data->cmd->next && ft_memcmp(data->cmd->next->content, "|\0", 2) == 0)
-		this_is_pipe(data);
+	{
+		if (dup2(data->p[1], 1) < 0)
+			error(0, "");
+		if (close(data->p[1]) < 0)
+			error(0, "");
+		if (close(data->p[0]) < 0)
+			error(0, "");
+	}
+}
+
+int	redirection(t_data *data, int j)
+{
+	int	i;
+
+	i = -1;
+	this_is_pipe(data, j);
 	while (data->cmd->type[++i] != -1)
 	{
 		if (data->cmd->type[i] == SINGLE_RIN)

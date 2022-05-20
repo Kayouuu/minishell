@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 12:21:31 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 11:06:56 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:14:08 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ char	*while_here_doc(t_data *data, char *buffer, t_here_doc *here_doc,
 		return (NULL);
 	if ((ft_memcmp(buffer, here_doc->limiter,
 				ft_strlen(here_doc->limiter) + 1)))
+	{
 		buffer = write_buffer_in_file(data->cmd->type[current],
 				data->env, here_doc->tmp_file_fd, buffer);
+	}
 	return (buffer);
 }
 

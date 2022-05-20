@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:00:53 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/09 09:56:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:18:18 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ char	*replace_env_var_exit_status(t_index var, char *cmd, t_env env)
 	char	*new_str;
 	char	c[2];
 
+	var.i = -1;
 	var.can_replace = 1;
 	c[1] = '\0';
 	new_str = NULL;
-	while (var.i <= (int)ft_strlen(cmd) && cmd[var.i])
+	while (++var.i <= (int)ft_strlen(cmd) && cmd[var.i])
 	{
 		c[0] = cmd[var.i];
 		if (cmd[var.i] == '\'')
@@ -51,7 +52,6 @@ char	*replace_env_var_exit_status(t_index var, char *cmd, t_env env)
 		new_str = ft_strjoin_gnl(new_str, c);
 		if (!new_str)
 			exit_error_msg("Malloc error");
-		var.i++;
 	}
 	free(var.new_cmd);
 	return (new_str);

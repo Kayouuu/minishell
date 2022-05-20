@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/20 11:38:34 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:16:09 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	export(char **list, t_env *env)
 	return (0);
 }
 
-void	leave_this(char **list)
+int	leave_this(char **list)
 {
 	int			i;
 	long int	nbr;
@@ -92,7 +92,7 @@ void	leave_this(char **list)
 		if (list[1][i] < '!' || list[1][i] > '?')
 		{
 			ft_putendl_fd("minishell: exit: numeric argument required", 2);
-			exit (255);
+			return (255);
 		}
 	}
 	nbr = ft_atoi(list[1]);

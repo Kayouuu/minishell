@@ -6,13 +6,13 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/20 16:29:32 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:48:33 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	single_rin(t_data *data, int i)
+static int	single_rin(t_data *data, int i)
 {
 	int	fd;
 
@@ -24,15 +24,18 @@ static void	single_rin(t_data *data, int i)
 	fd = open(data->cmd->redirection_file[i],
 			O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd < 0)
-		error(0, "");
+	{
+		perror("minishell");
+		return (0);
+	}
 	if (dup2(fd, 1) < 0)
 		error(0, "");
 	if (close(fd) < 0)
 		error(0, "");
-	return ;
+	return (1);
 }
 
-static void	double_rin(t_data *data, int i)
+static int	double_rin(t_data *data, int i)
 {
 	int	fd;
 
@@ -44,12 +47,15 @@ static void	double_rin(t_data *data, int i)
 	fd = open(data->cmd->redirection_file[i],
 			O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (fd < 0)
-		error(0, "");
+	{
+		perror("minishell");
+		return (0);
+	}
 	if (dup2(fd, 1) < 0)
 		error(0, "");
 	if (close(fd) < 0)
 		error(0, "");
-	return ;
+	return (1);
 }
 
 static int	single_rout(t_data *data, int i)
@@ -103,9 +109,15 @@ int	redirection(t_data *data, int j)
 	while (data->cmd->type[++i] != -1)
 	{
 		if (data->cmd->type[i] == SINGLE_RIN)
-			single_rin(data, i);
+		{
+			if (!single_rin(data, i))
+				return (0);
+		}
 		else if (data->cmd->type[i] == DOUBLE_RIN)
-			double_rin(data, i);
+		{
+			if (!double_rin(data, i))
+				return (0);
+		}
 		else if (data->cmd->type[i] == SINGLE_ROUT)
 		{
 			if (!single_rout(data, i))

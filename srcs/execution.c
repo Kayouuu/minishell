@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 11:01:16 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:50:09 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ void	exec(char **cmd, t_env *env, t_data *data)
 	free(cmd[0]);
 	cmd[0] = tmp;
 	env->envp = env_list_to_tab(env);
-	if (data->cmd->next == NULL)
-		dup2(data->old_stdin, 1);
 	if (execve(cmd[0], cmd, env->envp) < 0)
 	{
 		free_all(cmd);

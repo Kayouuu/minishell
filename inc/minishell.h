@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 14:47:50 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/20 10:58:46 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int			execution_pipe(t_data *data);
 
 /*	REDIRECTION.C	*/
 
-void		redirection(t_data *data, int i);
+int			redirection(t_data *data, int i);
 
 /*	GET_PATH.C	*/
 

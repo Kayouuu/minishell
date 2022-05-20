@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/19 14:47:44 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:01:16 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static char	*check_pipe(t_data *data, char **cmd, t_env *env)
 
 static void	signalhandler(int status)
 {
-	if (status == SIGQUIT)
-		printf("Quit\n");
 	if (g_signal_flags && status != SIGQUIT)
 		printf("\n");
 	rl_on_new_line();
@@ -42,11 +40,13 @@ static void	signalhandler(int status)
 
 static int	one_cmd(t_data *data)
 {
-	redirection(data, 0);
+	if (!redirection(data, 0))
+		return (1);
 	if (g_signal_flags || data->cmd->content == NULL)
 		return (1);
-	if (special_case(command_splitter(data->cmd->content, &data->start),
-			data->env) == 0)
+	data->env->error_code = special_case(command_splitter(data->cmd->content,
+				&data->start), data->env);
+	if (data->env->error_code == -1)
 	{
 		data->pid = fork();
 		if (data->pid == -1)
@@ -57,7 +57,7 @@ static int	one_cmd(t_data *data)
 		data->env->error_code = wait_loop(data);
 	}
 	dup2(data->old_stdin, 1);
-	return (0);
+	return (data->env->error_code);
 }
 
 t_env	start_execution(t_list_char **cmd, t_env *env)

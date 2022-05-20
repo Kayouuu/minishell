@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 16:00:14 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:38:34 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,6 @@ int	export(char **list, t_env *env)
 	}
 	if (list[1][0] == '=')
 	{
-		ft_putendl_fd("minishell: export: not a valid identifier", 2);
-		return (1);
-	}
-	if (list[1][0] == '=')
-	{
 		printf("export: `%s': not a valid identifier\n", list[1]);
 		return (1);
 	}
@@ -90,6 +85,8 @@ void	leave_this(char **list)
 	long int	nbr;
 
 	i = -1;
+	if (!list[1])
+		exit (0);
 	while (list[1][++i])
 	{
 		if (list[1][i] < '!' || list[1][i] > '?')

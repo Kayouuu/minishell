@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 12:21:31 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 14:11:19 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:06:56 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	signalhandler(int status)
 {
 	(void)status;
 	g_signal_flags = 1;
+	printf("\n");
 	close(0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/18 12:06:04 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:25:20 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	double_rin(t_data *data, int i)
 	return ;
 }
 
-static void	single_rout(t_data *data, int i)
+static int	single_rout(t_data *data, int i)
 {
 	int	fd;
 
@@ -63,12 +63,15 @@ static void	single_rout(t_data *data, int i)
 	}
 	fd = open(data->cmd->redirection_file[i], O_RDONLY);
 	if (fd < 0)
-		error(0, "");
+	{
+		perror("minishell");
+		return (0);
+	}
 	if (dup2(fd, 0) < 0)
 		error(0, "");
 	if (close(fd) < 0)
 		error(0, "");
-	return ;
+	return (1);
 }
 
 static void	this_is_pipe(t_data *data)
@@ -81,7 +84,7 @@ static void	this_is_pipe(t_data *data)
 		error(0, "");
 }
 
-void	redirection(t_data *data, int j)
+int	redirection(t_data *data, int j)
 {
 	int	i;
 
@@ -102,8 +105,12 @@ void	redirection(t_data *data, int j)
 		else if (data->cmd->type[i] == DOUBLE_RIN)
 			double_rin(data, i);
 		else if (data->cmd->type[i] == SINGLE_ROUT)
-			single_rout(data, i);
+		{
+			if (!single_rout(data, i))
+				return (0);
+		}
 		else if (data->cmd->type[i] >= DOUBLE_ROUT)
 			double_rout();
 	}
+	return (1);
 }

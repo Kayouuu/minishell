@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 17:16:16 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 18:23:54 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_data
 	int			p[2];
 	int			fdd[2];
 	int			old_fd;
+	int			has_redirection;
 	pid_t		pid;
 	t_env		*env;
 	t_list_char	*cmd;

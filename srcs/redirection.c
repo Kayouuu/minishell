@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:03:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/20 17:48:33 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 18:25:09 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	single_rin(t_data *data, int i)
 		perror("minishell");
 		return (0);
 	}
+	if (data->cmd->next == NULL)
+		data->has_redirection = 1;
 	if (dup2(fd, 1) < 0)
 		error(0, "");
 	if (close(fd) < 0)
@@ -51,6 +53,8 @@ static int	double_rin(t_data *data, int i)
 		perror("minishell");
 		return (0);
 	}
+	if (data->cmd->next == NULL)
+		data->has_redirection = 1;
 	if (dup2(fd, 1) < 0)
 		error(0, "");
 	if (close(fd) < 0)

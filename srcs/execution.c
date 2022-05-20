@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 17:50:09 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/20 18:25:23 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_env	start_execution(t_list_char **cmd, t_env *env)
 	data.cmd = *cmd;
 	data.start = *cmd;
 	data.env = env;
+	data.has_redirection = 0;
 	data.old_stdout = dup(0);
 	if (lstsize_char(data.cmd) == 1)
 		data.env->error_code = one_cmd(&data);
@@ -95,6 +96,8 @@ void	exec(char **cmd, t_env *env, t_data *data)
 	free(cmd[0]);
 	cmd[0] = tmp;
 	env->envp = env_list_to_tab(env);
+	if (data->cmd->next == NULL && !data->has_redirection)
+		dup2(data->old_stdin, 1);
 	if (execve(cmd[0], cmd, env->envp) < 0)
 	{
 		free_all(cmd);

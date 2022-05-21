@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 18:57:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 19:16:29 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*check_pipe(t_data *data, char **cmd, t_env *env)
 	tmp = get_path(env, cmd[0]);
 	if (tmp == NULL)
 	{
-		ft_putendl_fd("minishell: Unable to find a path for the command\n", 2);
+		ft_putendl_fd("minishell: Unable to find a path for the command", 2);
 		exit(127);
 	}
 	return (tmp);

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 16:31:30 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 17:48:30 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ static int	open_file(void)
 	return (fd);
 }
 
-void	here_doc(t_data *data, int current, char *buffer)
+int	here_doc(t_data *data, int current, char *buffer)
 {
 	t_here_doc	here_doc;
 
 	here_doc.limiter = ft_strdup(data->cmd->redirection_file[current]);
 	here_doc.tmp_file_fd = open_file();
+	here_doc.stdin_cpy = dup(0);
 	while (buffer == NULL || (ft_memcmp(buffer, here_doc.limiter,
 				ft_strlen(here_doc.limiter) + 1)
 			|| data->env->limiter_check == 1))
@@ -59,8 +60,12 @@ void	here_doc(t_data *data, int current, char *buffer)
 		if (buffer == NULL || g_signal_flags)
 			break ;
 	}
+	dup2(here_doc.stdin_cpy, 0);
 	close(here_doc.tmp_file_fd);
 	if (buffer && g_signal_flags == 0)
 		free(buffer);
 	free(here_doc.limiter);
+	if (g_signal_flags)
+		return (0);
+	return (1);
 }

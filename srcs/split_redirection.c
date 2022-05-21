@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 13:51:27 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:07:38 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ void	split_redirection(t_list_char **cmd, t_env *env)
 					(*cmd)->redirection_file[i]);
 			data = init_data(env, cmd);
 			if ((*cmd)->type[i] == 4 || (*cmd)->type[i] == 5)
-				here_doc(&data, i, NULL);
+				if (!here_doc(&data, i, NULL))
+					break ;
 		}
 		(*cmd) = (*cmd)->next;
 	}

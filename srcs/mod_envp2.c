@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 13:18:06 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:46:07 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	replace_or_add_line(t_miltn *data, char *var, t_env **env)
 {
-	if (ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) == 0)
+	if ((*env)->addon_env
+		&& ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) == 0)
 	{
 		data->freeable = (*env)->addon_env;
 		data->new_link = lstnew_char(data->line);
@@ -44,14 +45,16 @@ void	env_replace_line(t_env **env, char *var, char *value)
 
 	data.start = (*env)->addon_env;
 	data.line = ft_strjoin(var, value);
-	if (ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) == 0)
+	if ((*env)->addon_env
+		&& ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) == 0)
 	{
 		data.new_link = lstnew_char(data.line);
 		data.new_link->next = (*env)->addon_env->next;
 		(*env)->addon_env = data.new_link;
 		return ;
 	}
-	while (ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) != 0)
+	while ((*env)->addon_env
+		&& ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) != 0)
 	{
 		if ((*env)->addon_env->next)
 		{
@@ -62,7 +65,8 @@ void	env_replace_line(t_env **env, char *var, char *value)
 			break ;
 	}
 	replace_or_add_line(&data, var, env);
-	(*env)->addon_env = data.start;
+	if (data.start)
+		(*env)->addon_env = data.start;
 	return ;
 }
 
@@ -99,6 +103,8 @@ void	env_remove_line(t_env *env, char *var)
 	char			*line;
 	t_list_char		*previous;
 
+	if (!env->addon_env)
+		return ;
 	line = ft_strjoin(var, "=");
 	if (!line)
 		exit_error_msg("Malloc error");

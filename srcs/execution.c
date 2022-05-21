@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 13:00:46 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:28:51 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,10 @@ void	exec(char **cmd, t_env *env, t_data *data)
 {
 	char	*tmp;
 
-	if (cmd[0] && (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3)
-			|| !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3)
-			|| !ft_memcmp(cmd[0], "|\0", 2)))
+	if (!cmd && ((!cmd[0] || cmd[0] == '\0') || (!ft_memcmp(cmd[0], "<\0", 2)
+				|| !ft_memcmp(cmd[0], "<<\0", 3) || !ft_memcmp(cmd[0], ">\0", 2)
+				|| !ft_memcmp(cmd[0], ">>\0", 3)
+				|| !ft_memcmp(cmd[0], "|\0", 2))))
 	{
 		free_all(cmd);
 		exit(0);

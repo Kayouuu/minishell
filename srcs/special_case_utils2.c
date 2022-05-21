@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/20 17:16:09 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:39:14 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	export(char **list, t_env *env)
 	}
 	if (list[1][0] == '=')
 	{
-		printf("export: `%s': not a valid identifier\n", list[1]);
+		dprintf(2, "export: `%s': not a valid identifier\n", list[1]);
 		return (1);
 	}
 	while (list[1][i] && list[1][i] != '=')

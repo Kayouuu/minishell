@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 11:49:58 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 12:49:21 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_list_char	*start_parsing(char *cmd, t_env *env)
 static void	signalhandler(int status)
 {
 	(void)status;
-	printf("\n");
+	if (!g_signal_flags)
+		printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -57,12 +58,12 @@ static void	signalhandler(int status)
 static t_env	while_main(t_env *env, char *cmd, t_list_char *command,
 	t_list_char **start)
 {
-	g_signal_flags = 0;
 	signal(SIGINT, signalhandler);
 	signal(SIGQUIT, SIG_IGN);
 	cmd = readline("minishell> ");
 	if (!cmd)
 		exit(1);
+	g_signal_flags = 0;
 	if (cmd[0] == '\0')
 	{
 		free(cmd);

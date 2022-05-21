@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 13:00:46 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:57:32 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*check_pipe(t_data *data, char **cmd, t_env *env)
 	tmp = get_path(env, cmd[0]);
 	if (tmp == NULL)
 	{
-		dprintf(2, "minishell: Unable to find a path for the command\n");
+		ft_putendl_fd("minishell: Unable to find a path for the command\n", 2);
 		exit(127);
 	}
 	return (tmp);

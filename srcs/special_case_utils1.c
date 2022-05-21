@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils1.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:38:04 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/21 14:06:52 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 19:12:38 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	cd_minus(t_env *env)
 		if (chdir(oldpwd) == -1)
 		{
 			perror("minishell");
+			env->addon_env = start;
 			return (1);
 		}
 		printf("%s\n", oldpwd);
@@ -31,6 +32,7 @@ static int	cd_minus(t_env *env)
 	else
 	{
 		ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+		env->addon_env = start;
 		return (1);
 	}
 	env->addon_env = start;
@@ -77,6 +79,7 @@ static int	cd_args(char **list, t_env *env, t_list_char *start, char *pwd)
 		if (chdir(get_envvar(env, "HOME=")) == -1)
 		{
 			perror("minishell");
+			env->addon_env = start;
 			return (1);
 		}
 	}

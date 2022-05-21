@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/20 17:16:09 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 19:38:31 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,66 @@ static void	export_no_arg(t_env *env)
 	return ;
 }
 
+static int	check_var(char *str)
+{
+	int	j;
+
+	j = -1;
+	while (str[++j])
+	{
+		if (str[j] == '=')
+			break ;
+		if (ft_isalnum(str[j]) != 1)
+			return (1);
+	}
+	return (0);
+}
+
 int	export(char **list, t_env *env)
 {
 	int		i;
+	int		j;
 	char	*var;
 
 	(void)env;
 	i = 0;
+	j = 0;
 	if (!list[1])
 	{
 		export_no_arg(env);
 		return (0);
 	}
-	if (list[1][0] == '=')
+	while (list[++j])
 	{
-		printf("export: `%s': not a valid identifier\n", list[1]);
-		return (1);
+		if (list[j][0] == '=' || check_var(list[j]) == 1)
+		{
+			printf("export: `%s': not a valid identifier\n", list[j]);
+			return (1);
+		}
+		while (list[j][i] && list[j][i] != '=')
+			i++;
+		var = ft_substr(list[j], 0, ++i);
+		if (!var)
+			return (1);
+		env_replace_line(&env, var, &list[j][i]);
+		free(var);
 	}
-	while (list[1][i] && list[1][i] != '=')
-		i++;
-	var = ft_substr(list[1], 0, ++i);
-	if (!var)
-		return (1);
-	env_replace_line(&env, var, &list[1][i]);
-	free(var);
+	return (0);
+}
+
+static int	while_loop(char **list, int j)
+{
+	int	i;
+
+	i = -1;
+	while (list[j][++i])
+	{
+		if (list[j][i] < '!' || list[j][i] > '?')
+		{
+			ft_putendl_fd("minishell: exit: numeric argument required", 2);
+			return (1);
+		}
+	}
 	return (0);
 }
 
@@ -83,18 +119,24 @@ int	leave_this(char **list)
 {
 	int			i;
 	long int	nbr;
+	int			j;
 
-	i = -1;
+	i = 1;
+	j = 0;
+	ft_putendl_fd("exit", 2);
 	if (!list[1])
 		exit (0);
-	while (list[1][++i])
+	if (list[2])
 	{
-		if (list[1][i] < '!' || list[1][i] > '?')
+		if (while_loop(list, j++) == 1)
 		{
-			ft_putendl_fd("minishell: exit: numeric argument required", 2);
-			return (255);
+			free_all(list);
+			return (0);
 		}
+			exit (255);
 	}
+	else if (while_loop(list, 1) == 1)
+		exit (255);
 	nbr = ft_atoi(list[1]);
 	free_all(list);
 	if (nbr <= 0 && nbr >= 255)

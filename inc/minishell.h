@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 18:23:54 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 13:51:37 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,12 @@ typedef struct s_here_doc
 	char	*limiter;
 	int		tmp_file_fd;	
 }				t_here_doc;
+
+typedef struct s_ghm
+{
+	char	*new_str;
+	char	c[2];
+}				t_ghm;
 
 int	g_signal_flags;
 

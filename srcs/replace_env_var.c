@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 16:27:25 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 14:00:16 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,24 @@ static void	check_malloc(char *malloced)
 		exit_error_msg("Malloc error");
 }
 
+static void	while_loop(t_index *var, char *cmd)
+{
+	if (cmd[var->j] == '\'')
+		var->can_replace ^= 1;
+	if (cmd[var->j + 1] && cmd[var->j + 1] == '$'
+		&& cmd[var->j + 2] && cmd[var->j + 2] == '?')
+		var->j++;
+	var->j++;
+}
+
 static t_index	skip_no_env_var(t_index var, char *cmd)
 {
 	var.j = var.i;
 	while (cmd[var.j] != '\0' && (cmd[var.j] != '$'
 			|| var.can_replace == 0))
-	{
-		if (cmd[var.j] == '\'')
-			var.can_replace ^= 1;
-		var.j++;
-	}
+		while_loop(&var, cmd);
+	if (cmd[var.j] == '$' && cmd[var.j + 1] == '?')
+		var.j += 1;
 	if (cmd[var.j] == '$' && ft_isalnum(cmd[var.j + 1]) == 0)
 	{
 		while (cmd[var.j] && !ft_iswhitespace(cmd[var.j]))
@@ -42,7 +50,8 @@ static t_index	skip_no_env_var(t_index var, char *cmd)
 	}
 	else if (var.j > 0 && cmd[var.j - 1] == '$' && cmd[var.j] == '?')
 	{
-		var.j += 1;
+		if (cmd[var.j + 1] && cmd[var.j + 1] != '$')
+			var.j += 1;
 		if (cmd[var.j] != '$' && cmd[var.j])
 			while (cmd[var.j])
 				var.j++;

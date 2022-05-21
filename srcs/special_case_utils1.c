@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils1.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:38:04 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/19 14:44:22 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/21 14:06:52 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,20 @@ int	go_to(char **list, t_env *env)
 	pwd = NULL;
 	if (list[1])
 	{
-		if (cd_args(list, env, start, pwd) == 1)
+		if (list[1][0] != '\0' && cd_args(list, env, start, pwd) == 1)
 			return (1);
 		return (0);
 	}
 	else
 	{
+		pwd = return_pwd();
+		env_replace_line(&env, "OLDPWD=", pwd);
 		if (chdir(get_envvar(env, "HOME=")) == -1)
 		{
 			perror("minishell");
+			free(pwd);
 			return (1);
 		}
-		pwd = return_pwd();
-		env_replace_line(&env, "OLDPWD=", pwd);
 		free(pwd);
 	}
 	env->addon_env = start;

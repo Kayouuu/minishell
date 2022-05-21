@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:38:54 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/20 12:23:08 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:23:42 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	forking(t_data *data, int i)
 	{
 		if (!redirection(data, i))
 			exit(1);
+		if (!data->cmd->content)
+			exit(1);
 		data->env->error_code = special_case(
 				command_splitter(data->cmd->content, &data->start), data->env);
 		if (data->env->error_code >= 0)
@@ -67,7 +69,7 @@ static int	while_loop(t_data *data, int i)
 	if (data->cmd->next && !ft_memcmp(data->cmd->next->content, "|\0", 2))
 		if (create_pipe(data) == 1)
 			return (data->env->error_code);
-	if (g_signal_flags || data->cmd->content == NULL)
+	if (g_signal_flags)
 		return (data->env->error_code);
 	forking(data, i);
 	if (i > 0)

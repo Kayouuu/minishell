@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 09:38:20 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 11:37:52 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:24:21 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,16 @@ int	check_parsing(t_list_char **start, t_list_char **cmd)
 	int	i;
 
 	i = 0;
+	if ((*cmd)->content && (*cmd)->content[0] == '|' && (*cmd)->next
+		&& (*cmd)->next->content && (*cmd)->next->content[0] == '|')
+	{
+		clear_list(start);
+		ft_putendl_fd("minishell: parse error near '|'", 2);
+		return (1);
+	}
 	while ((*cmd)->type[i] != -1)
 	{
-		if ((*cmd)->type[i] == 0)
+		if ((*cmd)->type[i] == 0 || (*cmd)->redirection_file[i][0] == '\0')
 		{
 			clear_list(start);
 			ft_putendl_fd("minishell: parse error", 2);

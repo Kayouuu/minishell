@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 13:51:37 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/21 17:48:02 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ typedef struct s_miltn
 typedef struct s_here_doc
 {
 	char	*limiter;
-	int		tmp_file_fd;	
+	int		tmp_file_fd;
+	int		stdin_cpy;	
 }				t_here_doc;
 
 typedef struct s_ghm
@@ -222,7 +223,7 @@ char		*get_path(t_env *env, char *cmd);
 /*	HERE_DOC.C	*/
 
 char		*write_buffer_in_file(int type, t_env *env, int fd, char *buffer);
-void		here_doc(t_data *data, int current, char *buffer);
+int			here_doc(t_data *data, int current, char *buffer);
 
 /*	HERE_DOC_UTILS.c	*/
 

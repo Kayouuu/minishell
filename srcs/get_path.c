@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:53:18 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/12 11:19:08 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:30:02 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*get_envvar(t_env *env, char *var)
 	env->addon_env = start;
 	return (NULL);
 }
+
 /*
 	this function take envp and a char * with the name of the command(cat, ...)
 	In the end exe is a char * with the path + the command(/bin/cat, ...)
@@ -41,14 +42,16 @@ char	*get_path(t_env *env, char *cmd)
 	char	**tmp;
 	int		i;
 
+	if (cmd[0] == '\0')
+		return (NULL);
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	path = get_envvar(env, "PATH=");
 	if (!path)
 		return (NULL);
-	i = 0;
+	i = -1;
 	tmp = ft_split(path, ':');
-	while (tmp[i])
+	while (tmp[++i])
 	{
 		exe = ft_strjoin_mod(tmp[i], cmd);
 		if (access(exe, X_OK | F_OK) == 0)
@@ -56,7 +59,6 @@ char	*get_path(t_env *env, char *cmd)
 			free_all(tmp);
 			return (exe);
 		}
-		i++;
 	}
 	free_all(tmp);
 	return (NULL);

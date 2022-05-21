@@ -6,7 +6,7 @@
 /*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 18:57:32 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/21 19:40:14 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*check_pipe(t_data *data, char **cmd, t_env *env)
 	tmp = get_path(env, cmd[0]);
 	if (tmp == NULL)
 	{
-		ft_putendl_fd("minishell: Unable to find a path for the command\n", 2);
+		ft_putendl_fd("minishell: Unable to find a path for the command", 2);
 		exit(127);
 	}
 	return (tmp);
@@ -85,9 +85,10 @@ void	exec(char **cmd, t_env *env, t_data *data)
 {
 	char	*tmp;
 
-	if (cmd[0] && (!ft_memcmp(cmd[0], "<\0", 2) || !ft_memcmp(cmd[0], "<<\0", 3)
-			|| !ft_memcmp(cmd[0], ">\0", 2) || !ft_memcmp(cmd[0], ">>\0", 3)
-			|| !ft_memcmp(cmd[0], "|\0", 2)))
+	if (!cmd && ((!cmd[0] || cmd[0] == '\0') || (!ft_memcmp(cmd[0], "<\0", 2)
+				|| !ft_memcmp(cmd[0], "<<\0", 3) || !ft_memcmp(cmd[0], ">\0", 2)
+				|| !ft_memcmp(cmd[0], ">>\0", 3)
+				|| !ft_memcmp(cmd[0], "|\0", 2))))
 	{
 		free_all(cmd);
 		exit(0);

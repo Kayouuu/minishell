@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils1.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:38:04 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/21 19:12:38 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:07:40 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	*return_pwd(void)
 	cwd = getcwd((char *) NULL, 1);
 	if (cwd == NULL)
 	{
-		ft_putendl_fd("minishell: Probleme with the path", 2);
+		ft_putendl_fd("minishell: Problem with the path", 2);
 		return (NULL);
 	}
 	return (cwd);

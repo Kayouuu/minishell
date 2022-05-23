@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/23 10:44:08 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/05/23 11:01:02 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ DIR_INCS	:=	inc
 CC		:=	gcc
 LDFLAGS := -L/usr/include -lreadline -L $(HOME)/.brew/opt/readline/lib -Llibft -lft
 CFLAGS	:=	-I $(DIR_INCS) -I $(HOME)/.brew/opt/readline/include -Wall -Wextra -Werror
-# CFLAGS	+= -fsanitize=address -g3
-# LDFLAGS += -fsanitize=address -g3
+CFLAGS	+= -fsanitize=address -g3
+LDFLAGS += -fsanitize=address -g3
 
 DIR_LIBFT	:=	libft
 

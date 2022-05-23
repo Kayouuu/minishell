@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/21 18:46:07 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:07:09 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	replace_or_add_line(t_miltn *data, char *var, t_env **env)
 {
-	if ((*env)->addon_env
+	if ((*env)->addon_env && (*env)->addon_env->content
 		&& ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) == 0)
 	{
 		data->freeable = (*env)->addon_env;
@@ -53,7 +53,7 @@ void	env_replace_line(t_env **env, char *var, char *value)
 		(*env)->addon_env = data.new_link;
 		return ;
 	}
-	while ((*env)->addon_env
+	while ((*env)->addon_env && (*env)->addon_env->content
 		&& ft_memcmp((*env)->addon_env->content, var, ft_strlen(var)) != 0)
 	{
 		if ((*env)->addon_env->next)

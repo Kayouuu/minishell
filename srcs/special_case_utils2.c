@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/23 10:48:15 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:13:48 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,22 @@ static void	export_no_arg(t_env *env)
 static int	check_var(char *str)
 {
 	int	j;
+	int	contain_char;
 
 	j = -1;
+	contain_char = 0;
 	while (str[++j])
 	{
 		if (str[j] == '=')
 			break ;
+		if (ft_isalpha(str[j]))
+			contain_char = 1;
 		if (ft_isalnum(str[j]) != 1)
 			return (1);
 	}
-	return (0);
+	if (contain_char)
+		return (0);
+	return (1);
 }
 
 int	export(char **list, t_env *env)

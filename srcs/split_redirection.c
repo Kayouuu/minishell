@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:11:59 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 18:07:38 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:57:18 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,12 @@ void	split_redirection(t_list_char **cmd, t_env *env)
 {
 	t_data		data;
 	t_list_char	*start;
-	char		*tmp;
 	int			i;
 
 	start = *cmd;
 	while (*cmd != NULL)
 	{
-		tmp = (*cmd)->content;
-		(*cmd)->content = ft_strtrim((*cmd)->content, " \t\n\b\f");
-		free(tmp);
+		(*cmd)->content = trim_char((*cmd)->content);
 		splitter(&start, cmd);
 		i = -1;
 		while ((*cmd)->redirection_file[++i])

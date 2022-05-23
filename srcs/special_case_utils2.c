@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/21 19:40:02 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:48:15 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	leave_this(char **list)
 			free_all(list);
 			return (0);
 		}
-			exit (255);
+		exit (255);
 	}
 	else if (while_loop(list, 1) == 1)
 		exit (255);

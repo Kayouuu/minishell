@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:56:14 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/18 10:06:12 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:57:13 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,14 @@ t_index	var_skipper(t_index var, t_list_char **cmd)
 	if (var.j < (int)ft_strlen((*cmd)->content) && (*cmd)->content[var.j])
 			var = loop_var_skipper(var, cmd);
 	return (var);
+}
+
+char	*trim_char(char *cmd)
+{
+	char	*tmp;
+
+	tmp = cmd;
+	cmd = ft_strtrim(cmd, " \t\b\n\f");
+	free(tmp);
+	return (cmd);
 }

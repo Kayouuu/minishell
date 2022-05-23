@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 17:48:02 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:57:44 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ int			type_setter(t_index var, t_list_char **cmd, t_list_char **start,
 
 int			iteration_nbr(char *cmd);
 t_index		var_skipper(t_index var, t_list_char **cmd);
+char		*trim_char(char *cmd);
 
 /*****************************************
  *										 *

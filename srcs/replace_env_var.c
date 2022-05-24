@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 14:00:16 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:43:42 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,12 @@ static t_index	skip_no_env_var(t_index var, char *cmd)
 		if (cmd[var.j + 1] && cmd[var.j + 1] != '$')
 			var.j += 1;
 		if (cmd[var.j] != '$' && cmd[var.j])
-			while (cmd[var.j])
+		{
+			while (cmd[var.j] && cmd[var.j] != '$')
 				var.j++;
+			if (cmd[var.j] && cmd[var.j + 1] == '?')
+				var.j += 2;
+		}
 	}
 	return (var);
 }

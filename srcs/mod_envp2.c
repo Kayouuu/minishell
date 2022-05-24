@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/24 09:51:30 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:13:24 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	env_remove_line(t_env *env, char *var)
 	char			*ln;
 	t_list_char		*previous;
 
-	if (!env->addon_env)
+	if (!env->addon_env || !var)
 		return ;
 	ln = ft_strjoin(var, "=");
 	if (!ln)

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/24 10:00:58 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:27:39 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ int	export(char **list, t_env *env)
 	while (list[++index.j])
 	{
 		if (list[index.j][0] == '=' || check_var(list[index.j]) == 1)
-			return ((printf("export: `%s': not a valid identifier\n",
-						list[index.j]) * 0) + 1);
+			return ((ft_putendl_fd("export: not a valid identifier", 2)));
 		while (list[index.j][index.i] && list[index.j][index.i] != '=')
+			index.i++;
+		if (list[index.j][index.i] != '=')
 			index.i++;
 		var = ft_substr(list[index.j], 0, ++index.i);
 		if (!var)

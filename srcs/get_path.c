@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:53:18 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/21 18:30:02 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:32:07 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*get_envvar(t_env *env, char *var)
 {
 	t_list_char	*start;
 
+	if (!env->addon_env)
+		return (NULL);
 	start = env->addon_env;
 	while (env->addon_env->content != NULL)
 	{

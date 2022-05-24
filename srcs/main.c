@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 19:17:20 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:21:31 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_env	while_main(t_env *env, char *cmd, t_list_char *command,
 	cmd = readline("minishell> ");
 	if (!cmd)
 	{
-		ft_putendl_fd("exit", 2);
+		ft_putendl_fd("exit", 1);
 		exit(env->error_code);
 	}
 	g_signal_flags = 0;

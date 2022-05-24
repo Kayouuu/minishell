@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/23 10:57:44 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:13:29 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_data
 	struct stat	stat;
 }				t_data;
 
-//miltn -> man i love the norme :D jk
+//miltn -> man i love the norm :D jk
 
 typedef struct s_miltn
 {

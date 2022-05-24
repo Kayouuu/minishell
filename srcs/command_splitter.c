@@ -6,13 +6,11 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:23:21 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/20 11:43:20 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:39:53 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-// MALLOC A PROTEGER
 
 int	ft_iswhitespace(char c)
 {

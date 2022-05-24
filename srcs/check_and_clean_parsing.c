@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 09:38:20 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/24 13:10:37 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:02:27 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	check_and_clean_parsing(t_list_char **cmd)
 	if ((*cmd)->content && (*cmd)->content[0] == '|')
 	{
 		ft_putendl_fd("minishell: unexpected token '|'", 2);
+		clear_list(&start);
 		return (0);
 	}
 	while (*cmd != NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/23 13:11:45 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:00:58 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,108 +75,28 @@ static int	check_var(char *str)
 
 int	export(char **list, t_env *env)
 {
-	int		i;
-	int		j;
+	t_index	index;
 	char	*var;
 
-	(void)env;
-	i = 0;
-	j = 0;
+	index.i = 0;
+	index.j = 0;
 	if (!list[1])
 	{
 		export_no_arg(env);
 		return (0);
 	}
-	while (list[++j])
+	while (list[++index.j])
 	{
-		if (list[j][0] == '=' || check_var(list[j]) == 1)
-		{
-			printf("export: `%s': not a valid identifier\n", list[j]);
-			return (1);
-		}
-		while (list[j][i] && list[j][i] != '=')
-			i++;
-		var = ft_substr(list[j], 0, ++i);
+		if (list[index.j][0] == '=' || check_var(list[index.j]) == 1)
+			return ((printf("export: `%s': not a valid identifier\n",
+						list[index.j]) * 0) + 1);
+		while (list[index.j][index.i] && list[index.j][index.i] != '=')
+			index.i++;
+		var = ft_substr(list[index.j], 0, ++index.i);
 		if (!var)
 			return (1);
-		env_replace_line(&env, var, &list[j][i]);
+		env_replace_line(&env, var, &list[index.j][index.i]);
 		free(var);
 	}
 	return (0);
-}
-
-static int	check_num(char **list, int j)
-{
-	int	i;
-
-	i = -1;
-	while (list[j][++i])
-	{
-		if (list[j][i] < '!' || list[j][i] > '9')
-		{
-			ft_putendl_fd("minishell: exit: numeric argument required", 2);
-			return (1);
-		}
-	}
-	return (0);
-}
-
-// static int	check_num(char *str)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (str[++i])
-// 		if (ft_isdigit(str[i]) == 0)
-// 			return (1);
-// 	return (0);
-// }
-
-int	leave_this(char **list)
-{
-	int			i;
-	long int	nbr;
-	int			j;
-
-	i = 1;
-	j = 0;
-	ft_putendl_fd("exit", 2);
-	if (!list[1])
-		exit (0);
-	else
-	{
-		if (check_num(list, 1) == 0)
-		{
-			if (list[2])
-			{
-				ft_putendl_fd("minishell: too many arguments", 2);
-				return (1);
-			}
-			nbr = ft_atoi(list[1]);
-			free_all(list);
-			if (nbr <= 0 && nbr >= 255)
-				exit (nbr);
-			else
-				exit (nbr % 256);
-		}
-		free_all(list);
-		exit(255);
-	}
-	// if (list[2])
-	// {
-	// 	if (while_loop(list, j++) == 1)
-	// 	{
-	// 		free_all(list);
-	// 		return (0);
-	// 	}
-	// 	exit (255);
-	// }
-	// else if (while_loop(list, 1) == 1)
-	// 	exit (255);
-	// nbr = ft_atoi(list[1]);
-	// free_all(list);
-	// if (nbr <= 0 && nbr >= 255)
-	// 	exit (nbr);
-	// else
-	// 	exit (nbr % 256);
 }

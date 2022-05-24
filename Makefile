@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/23 11:01:02 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/05/24 10:06:25 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ LST_SRCS	:=	main.c \
 				special_case.c \
 				special_case_utils1.c \
 				special_case_utils2.c \
+				special_case_utils3.c \
 				utils.c \
 				command_size_counter.c \
 				command_splitter.c \

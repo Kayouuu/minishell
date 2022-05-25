@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:26:08 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/24 16:46:16 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 11:58:37 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_env	start_execution(t_list_char **cmd, t_env *env)
 		data.env->error_code = one_cmd(&data);
 	else
 		execution_pipe(&data);
+	unlink("/tmp/.minishell_heredoc");
 	dup2(data.old_stdout, 0);
 	dup2(data.old_stdout, 1);
 	return (*data.env);

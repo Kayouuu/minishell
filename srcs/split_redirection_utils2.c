@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:56:14 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/23 10:57:13 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:47:54 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ char	*trim_char(char *cmd)
 {
 	char	*tmp;
 
+	if (!cmd)
+		return (cmd);
 	tmp = cmd;
 	cmd = ft_strtrim(cmd, " \t\b\n\f");
 	free(tmp);

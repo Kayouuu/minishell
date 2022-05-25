@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:41:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/24 10:50:12 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 11:53:19 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 	there's single/double quote), then find the name of the var wanted and copy
 	the string char by char
  */
-
-static void	check_malloc(char *malloced)
-{
-	if (!malloced)
-		exit_error_msg("Malloc error");
-}
 
 static void	while_loop(t_index *var, char *cmd)
 {
@@ -89,10 +83,25 @@ static t_index	replace(t_index var, char *cmd, t_env env)
 	return (var);
 }
 
+static void	while_loop_norm(t_env *env, char *cmd, t_index *var)
+{
+	char	*str;
+
+	(*var) = skip_no_env_var((*var), cmd);
+	if (var->i != var->j)
+	{
+		str = ft_stridup(cmd, var->i, var->j);
+		var->new_cmd = ft_strjoin_gnl(var->new_cmd, str);
+		free(str);
+		if (!var->new_cmd)
+			exit_error_msg("Malloc error");
+	}
+	(*var) = replace(*var, cmd, *env);
+}
+
 char	*replace_env_var(char *cmd, t_env env)
 {
 	t_index	var;
-	char	*str;
 
 	var.i = 0;
 	var.can_replace = 1;
@@ -100,20 +109,13 @@ char	*replace_env_var(char *cmd, t_env env)
 	if (cmd && cmd[0] == '\0')
 		return (cmd);
 	while (cmd != NULL && cmd[var.i] != '\0')
-	{
-		var = skip_no_env_var(var, cmd);
-		if (var.i != var.j)
-		{
-			str = ft_stridup(cmd, var.i, var.j);
-			var.new_cmd = ft_strjoin_gnl(var.new_cmd, str);
-			free(str);
-			check_malloc(var.new_cmd);
-		}
-		var = replace(var, cmd, env);
-	}
+		while_loop_norm(&env, cmd, &var);
 	var.new_cmd = ft_strjoin_gnl(var.new_cmd, "\0");
-	check_malloc(var.new_cmd);
+	if (!var.new_cmd)
+		exit_error_msg("Malloc error");
 	free(cmd);
 	var.new_cmd = replace_env_var_exit_status(var, var.new_cmd, env);
+	if (var.new_cmd == NULL)
+		var.new_cmd = ft_strdup("");
 	return (var.new_cmd);
 }

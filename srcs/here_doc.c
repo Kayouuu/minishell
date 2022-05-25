@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:29:15 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/21 17:48:30 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:00:08 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ int	here_doc(t_data *data, int current, char *buffer)
 		free(buffer);
 	free(here_doc.limiter);
 	if (g_signal_flags)
+	{
+		unlink("/tmp/.minishell_heredoc");
 		return (0);
+	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 09:54:50 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/24 10:04:51 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:03:06 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,13 @@ int	leave_this(char **list)
 		free_all(list);
 		exit(255);
 	}
+}
+
+void	unset_this(t_env *env, char **list)
+{
+	int	i;
+
+	i = 0;
+	while (list[++i])
+		env_remove_line(env, list[i]);
 }

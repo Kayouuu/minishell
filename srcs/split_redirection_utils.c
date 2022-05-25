@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:04:51 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/25 09:48:50 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:56:08 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*redirection_split(char *cmd)
 	c[0] = cmd[0];
 	c[1] = '\0';
 	i = 0;
+	new_str = NULL;
 	while (cmd[i] && (cmd[i] == '<' || cmd[i] == '>'))
 	{
 		if (i == 0)
@@ -84,7 +85,7 @@ int	set_redirection_type(char *redirection, char *cmd)
 	int		result;
 
 	result = 0;
-	if (redirection == NULL)
+	if (!redirection)
 		return (0);
 	if (!ft_memcmp(redirection, ">\0", 2))
 		result = SINGLE_RIN;
@@ -114,7 +115,8 @@ int	type_setter(t_index var, t_list_char **cmd, t_list_char **start,
 		exit(0);
 	}
 	redirection = redirection_split(str);
-	free(str);
+	if (str)
+		free(str);
 	result = set_redirection_type(redirection, (*cmd)->content);
 	return (result);
 }

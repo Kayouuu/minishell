@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/24 17:01:13 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:02:21 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	clear_list(t_list_char **start)
 	t_list_char	*tmp;
 	int			i;
 
-	while (*start != 0)
+	while (*start != NULL)
 	{
 		tmp = (*start)->next;
 		i = 0;
@@ -75,7 +75,9 @@ static t_env	while_main(t_env *env, char *cmd, t_list_char *command,
 	add_history(cmd);
 	command = start_parsing(cmd, env);
 	if (g_signal_flags || check_and_clean_parsing(&command) == 0)
+	{
 		return (*env);
+	}
 	start = &command;
 	*env = start_execution(&command, env);
 	clear_list(start);

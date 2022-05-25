@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/25 10:24:30 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:25:45 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_index
 typedef struct s_env
 {
 	char		**envp;
+	t_list_char *start;
 	t_list_char	*addon_env;
 	int			len_env;
 	int			error_code;
@@ -241,11 +242,12 @@ int			special_case(char **list, t_env *env);
 int			go_to(char **list, t_env *env);
 char		*return_pwd(void);
 
-/*	SPECIAL_CASE_UTILS2.C	*/
+/*	SPECIAL_CASE_UTILS2 + 3.C	*/
 
 void		write_env(t_env *env);
 int			export(char **list, t_env *env);
 int			leave_this(char **list);
+void		unset_this(t_env *env, char **list);
 
 /*****************************************
  *										 *

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:36:03 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/20 11:04:35 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/25 14:54:38 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,26 @@ void	env_tab_to_list(char **envp, t_env *env)
 {
 	int			i;
 	int			total;
-	t_list_char	*start;
 
 	i = -1;
 	total = 0;
-	start = env->addon_env;
+	env->start = env->addon_env;
 	while (envp[++i])
 	{
 		if (ft_memcmp(envp[i], "OLDPWD=", 7) != 0)
 		{
 			if (ft_memcmp(envp[i], "SHLVL=", 6) == 0)
-				shell_lvl(envp, env, start, i);
+				shell_lvl(envp, env, env->start, i);
 			else if (!lstadd_back_char(&env->addon_env,
 					lstnew_char(ft_strdup(envp[i]))))
 			{
-				lstclear_char(&start, free);
+				lstclear_char(&env->start, free);
 				error(1, "Malloc error");
 			}
 			total++;
 		}
 	}
 	env->len_env = total;
-	return ;
 }
 
 char	**env_list_to_tab(t_env *env)

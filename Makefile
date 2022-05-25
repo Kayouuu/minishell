@@ -6,7 +6,7 @@
 #    By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 12:17:01 by lbattest          #+#    #+#              #
-#    Updated: 2022/05/24 17:01:53 by psaulnie         ###   ########.fr        #
+#    Updated: 2022/05/25 10:26:55 by psaulnie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ DIR_OBJS	:=	.objs
 DIR_INCS	:=	inc
 
 CC		:=	gcc
-LDFLAGS := -L/usr/include -lreadline -L $(HOME)/.brew/opt/readline/lib -Llibft -lft
-CFLAGS	:=	-I $(DIR_INCS) -I $(HOME)/.brew/opt/readline/include -Wall -Wextra -Werror
+LDFLAGS := -L/usr/include -lreadline -L $(shell brew --prefix readline)/lib -Llibft -lft
+CFLAGS	:=	-I $(DIR_INCS) -I $(shell brew --prefix readline)/include -Wall -Wextra -Werror
 # CFLAGS	+= -fsanitize=address -g3
 # LDFLAGS += -fsanitize=address -g3
 
@@ -60,12 +60,9 @@ SRCS	:=	$(addprefix $(DIR_SRCS)/,$(LST_SRCS))
 OBJS	:=	$(addprefix $(DIR_OBJS)/,$(LST_OBJS))
 INCS	:=	$(addprefix $(DIR_INCS)/,$(LST_INCS))
 
-
-AR_LIBFT	:=	$(DIR_LIBFT)/libft.a
-
 all:	lib $(NAME)
 
-$(NAME):	$(AR_LIBFT) $(OBJS)
+$(NAME): $(OBJS)
 		$(CC) $(LDFLAGS) $^ -o $@
 
 $(DIR_OBJS)/%.o:	$(DIR_SRCS)/%.c $(INCS) Makefile | $(DIR_OBJS)

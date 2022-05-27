@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/24 13:27:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/27 16:35:28 by lbattest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,6 @@ void	write_env(t_env *env)
 	return ;
 }
 
-static void	export_no_arg(t_env *env)
-{
-	t_list_char	*start;
-
-	start = env->addon_env;
-	while (env->addon_env)
-	{
-		printf("declare -x %s\n", env->addon_env->content);
-		env->addon_env = env->addon_env->next;
-	}
-	env->addon_env = start;
-	return ;
-}
-
 static int	check_var(char *str)
 {
 	int	j;
@@ -73,31 +59,51 @@ static int	check_var(char *str)
 	return (1);
 }
 
+static int	while_loop(char *var, char **list, t_index *index, t_env *env)
+{
+	if (list[index->j][0] == '=' || check_var(list[index->j]) == 1)
+		return ((ft_putendl_fd("export: not a valid identifier", 2)));
+	while (list[index->j][index->i] && list[index->j][index->i] != '=')
+		index->i++;
+	if (list[index->j][index->i] == '=')
+	{
+		var = ft_substr(list[index->j], 0, index->i);
+		if (!var)
+			return (1);
+		env_remove_line(env, var);
+		free(var);
+		index->i++;
+	}
+	var = ft_substr(list[index->j], 0, index->i);
+	if (!var)
+		return (1);
+	env_replace_line(&env, var, &list[index->j][index->i]);
+	free(var);
+	return (0);
+}
+
 int	export(char **list, t_env *env)
 {
-	t_index	index;
-	char	*var;
+	t_index		index;
+	char		*var;
+	t_list_char	*start;
 
 	index.i = 0;
 	index.j = 0;
+	var = NULL;
 	if (!list[1])
 	{
-		export_no_arg(env);
+		start = env->addon_env;
+		while (env->addon_env)
+		{
+			printf("declare -x %s\n", env->addon_env->content);
+			env->addon_env = env->addon_env->next;
+		}
+		env->addon_env = start;
 		return (0);
 	}
 	while (list[++index.j])
-	{
-		if (list[index.j][0] == '=' || check_var(list[index.j]) == 1)
-			return ((ft_putendl_fd("export: not a valid identifier", 2)));
-		while (list[index.j][index.i] && list[index.j][index.i] != '=')
-			index.i++;
-		if (list[index.j][index.i] != '=')
-			index.i++;
-		var = ft_substr(list[index.j], 0, ++index.i);
-		if (!var)
+		if (while_loop(var, list, &index, env) == 1)
 			return (1);
-		env_replace_line(&env, var, &list[index.j][index.i]);
-		free(var);
-	}
 	return (0);
 }

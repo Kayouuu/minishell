@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:55 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/27 15:38:31 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:26:52 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ char		*return_pwd(void);
 void		write_env(t_env *env);
 int			export(char **list, t_env *env);
 int			leave_this(char **list);
+int			is_equal(char *str);
 void		unset_this(t_env *env, char **list);
 
 /*****************************************

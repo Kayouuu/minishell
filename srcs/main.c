@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:04:10 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/25 16:02:21 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:27:02 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static t_env	while_main(t_env *env, char *cmd, t_list_char *command,
 	command = start_parsing(cmd, env);
 	if (g_signal_flags || check_and_clean_parsing(&command) == 0)
 	{
+		env->error_code = 0;
 		return (*env);
 	}
 	start = &command;

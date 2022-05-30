@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/30 09:58:41 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:11:58 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	replace_or_add_line(t_miltn *data, char *var, t_env **env)
 		}
 		(*env)->len_env++;
 	}
-	return ;
 }
 
 void	env_replace_line(t_env **env, char *var, char *value)
@@ -115,11 +114,11 @@ void	env_remove_line(t_env *env, char *var)
 	if (!ln)
 		exit_error_msg("Malloc error");
 	start = env->addon_env;
-	if (ft_memcmp(env->addon_env->content, ln, ft_strlen(ln)) == 0
-		|| ft_memcmp(env->addon_env->next->content, var, ft_strlen(var) + 1)
-		== 0)
+	if (env->addon_env
+		&& (!ft_memcmp(env->addon_env->content, ln, ft_strlen(ln))
+			|| !ft_memcmp(env->addon_env->content, var, ft_strlen(var) + 1)))
 		start = unset_case_first_env_var(env);
-	else
+	else if (env->addon_env && env->addon_env->next)
 		unset_all_other_case(env, var, ln);
 	free(ln);
 	env->addon_env = start;

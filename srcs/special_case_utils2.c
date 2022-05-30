@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:44:20 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/27 16:35:28 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:38:40 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	is_equal(char *str)
+int	is_equal(char *str)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:00:53 by psaulnie          #+#    #+#             */
-/*   Updated: 2022/05/24 10:59:39 by psaulnie         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:20:38 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	while_loop(t_ghm *data, char *cmd, t_index *var, t_env env)
 	data->new_str = ft_strjoin_gnl(data->new_str, data->c);
 	if (!data->new_str)
 		exit_error_msg("Malloc error");
-	if (cmd[var->i] == '$' && cmd[var->i + 1] && cmd[var->i + 1] == '?')
+	if (cmd[var->i] == '$' && cmd[var->i + 1] && cmd[var->i + 1] == '?'
+		&& var->can_replace == 1)
 		var->i--;
 }
 

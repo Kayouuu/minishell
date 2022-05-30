@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mod_envp2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbattest <lbattest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psaulnie <psaulnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:16:10 by lbattest          #+#    #+#             */
-/*   Updated: 2022/05/27 16:12:57 by lbattest         ###   ########.fr       */
+/*   Updated: 2022/05/30 09:58:41 by psaulnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	unset_all_other_case(t_env *env, char *var, char *ln)
 	t_list_char		*previous;
 
 	while (ft_memcmp(env->addon_env->next->content, ln, ft_strlen(ln)) != 0
-		|| ft_memcmp(env->addon_env->next->content, var, ft_strlen(var) + 1)
+		|| ft_memcmp(env->addon_env->next->content, var, ft_strlen(var))
 		!= 0)
 	{
 		if (env->addon_env->next->next)
@@ -94,7 +94,7 @@ static void	unset_all_other_case(t_env *env, char *var, char *ln)
 			break ;
 	}
 	if (ft_memcmp(env->addon_env->next->content, ln, ft_strlen(ln)) == 0
-		|| ft_memcmp(env->addon_env->next->content, var, ft_strlen(var) + 1)
+		|| ft_memcmp(env->addon_env->next->content, var, ft_strlen(var))
 		== 0)
 	{
 		previous = env->addon_env->next;
